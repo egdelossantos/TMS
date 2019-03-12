@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "CallGroupMap";
+}
+
+@section scripts{
+   <script>
+       function initialize() {
+           ajaxHelper.ajaxGet({
+               url: '@Html.Raw(Url.Action("GetAddressesToPlot", "Map"))',
+               success: function (data) {
+                   var mapElement = document.getElementById("googleMap");
+                   plotAddressInMap(data, mapElement);
+               }
+           });
+       }; 
+       
+
+       window.onload = initialize;
+    </script>
+}
+
+<h2>CallGroupMap</h2>
+
+<div id="googleMap"></div>
+
+@section pageCss{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/page/googleMap.css")" />
+}
+

@@ -1,0 +1,15 @@
+﻿@model TerritoryManagementSystem.Models.HomeModel
+@{
+    ViewBag.Title = "Error Page";
+}
+
+<div class="container center-block">
+    <div>Error occured while authorizing user.</div>
+    <div>
+        Click @Html.ActionLink("here", "AutoLogOff", "Account", null, new { style = "text-decoration:underline; color:#08c;" }) to login again.
+    </div>
+</div>
+
+@section pageCss{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/page/home.css")" />
+}

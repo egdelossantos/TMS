@@ -1,0 +1,1800 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TerritoryDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CallActivity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallGroupId" Type="int" Nullable="false" />
+          <Property Name="CallTypeId" Type="int" Nullable="false" />
+          <Property Name="DateReleased" Type="datetime" Nullable="false" />
+          <Property Name="ReleasedToPublisherId" Type="int" Nullable="false" />
+          <Property Name="ReleasedByUserId" Type="int" Nullable="false" />
+          <Property Name="DateReturned" Type="datetime" />
+          <Property Name="ReturnedByPublisherId" Type="int" />
+          <Property Name="ReturnedToUserId" Type="int" />
+          <Property Name="CycleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CallActivityAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallActivityId" Type="int" Nullable="false" />
+          <Property Name="CallAddressId" Type="int" Nullable="false" />
+          <Property Name="DateFinished" Type="datetime" />
+          <Property Name="CallActivityStatusId" Type="int" />
+          <Property Name="Note" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="CallActivityStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsValidAddress" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CallActivityWarning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallTypeId" Type="int" Nullable="false" />
+          <Property Name="FromNumberOfDays" Type="int" Nullable="false" />
+          <Property Name="ToNumberOfDays" Type="int" Nullable="false" />
+          <Property Name="WarningSeverity" Type="int" Nullable="false" />
+          <Property Name="WarningColour" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CallAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Street" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SuburbId" Type="int" Nullable="false" />
+          <Property Name="MelwayRefNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RouteOrderFromKh" Type="int" />
+          <Property Name="CallGroupId" Type="int" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
+          <Property Name="LastCallDate" Type="datetime" />
+          <Property Name="LastCallActivityStatusId" Type="int" />
+          <Property Name="Longtitude" Type="float" />
+          <Property Name="Latitude" Type="float" />
+          <Property Name="Address" Type="nvarchar" MaxLength="602" StoreGeneratedPattern="Computed" />
+          <Property Name="GpsAddress" Type="nvarchar" MaxLength="551" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CallAddressNote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallAddressId" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateNoteAdded" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CallGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallGroupName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="GroupCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CurrentAssignCallActivityId" Type="int" />
+          <Property Name="LastAssignCallActivityId" Type="int" />
+          <Property Name="AllowAssistantToRelease" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CallType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallTypeName" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cycle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CycleNumber" Type="int" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="CycleName" Type="nvarchar" MaxLength="26" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Publisher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserRoleId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suburb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="SuburbName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SystemReference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CurrentCycleId" Type="int" />
+          <Property Name="CurrentCycleNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="LastPasswordFailureDate" Type="datetime" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordChangedDate" Type="datetime" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="webpages_PasswordResets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ResetQuestion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ResetAnswer" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="AddressGps" />
+            <PropertyRef Name="Number" />
+            <PropertyRef Name="Street" />
+            <PropertyRef Name="SuburbName" />
+            <PropertyRef Name="StateName" />
+            <PropertyRef Name="SuburbId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="1104" />
+          <Property Name="AddressGps" Type="nvarchar" MaxLength="1053" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Street" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SuburbName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="CallGroupId" Type="int" />
+          <Property Name="CallGroupName" Type="nvarchar" MaxLength="500" />
+          <Property Name="GroupCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="RouteOrderFromKh" Type="int" />
+          <Property Name="SuburbId" Type="int" Nullable="false" />
+          <Property Name="Longtitude" Type="float" />
+          <Property Name="Latitude" Type="float" />
+          <Property Name="MelwayRefNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastCallDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_CallActivity_CallActivityAddress">
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="1" />
+          <End Role="CallActivityAddress" Type="Self.CallActivityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivityAddress">
+              <PropertyRef Name="CallActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_CallGroup">
+          <End Role="CallGroup" Type="Self.CallGroup" Multiplicity="1" />
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="CallGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_CallType">
+          <End Role="CallType" Type="Self.CallType" Multiplicity="1" />
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="CallTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Cycle">
+          <End Role="Cycle" Type="Self.Cycle" Multiplicity="1" />
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cycle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="CycleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Publisher">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="ReleasedToPublisherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Publisher1">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="0..1" />
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="ReturnedByPublisherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Publisher2">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="ReleasedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Publisher3">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="0..1" />
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="ReturnedToUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivityAddress_CallActivityStatus">
+          <End Role="CallActivityStatus" Type="Self.CallActivityStatus" Multiplicity="0..1" />
+          <End Role="CallActivityAddress" Type="Self.CallActivityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivityStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivityAddress">
+              <PropertyRef Name="CallActivityStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivityAddress_CallAddress">
+          <End Role="CallAddress" Type="Self.CallAddress" Multiplicity="1" />
+          <End Role="CallActivityAddress" Type="Self.CallActivityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallAddress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivityAddress">
+              <PropertyRef Name="CallAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivityWarning_CallType">
+          <End Role="CallType" Type="Self.CallType" Multiplicity="1" />
+          <End Role="CallActivityWarning" Type="Self.CallActivityWarning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivityWarning">
+              <PropertyRef Name="CallTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallAddress_CallActivityStatus">
+          <End Role="CallActivityStatus" Type="Self.CallActivityStatus" Multiplicity="0..1" />
+          <End Role="CallAddress" Type="Self.CallAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivityStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallAddress">
+              <PropertyRef Name="LastCallActivityStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallAddress_CallGroup">
+          <End Role="CallGroup" Type="Self.CallGroup" Multiplicity="0..1" />
+          <End Role="CallAddress" Type="Self.CallAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallAddress">
+              <PropertyRef Name="CallGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallAddress_Suburb">
+          <End Role="Suburb" Type="Self.Suburb" Multiplicity="1" />
+          <End Role="CallAddress" Type="Self.CallAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suburb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallAddress">
+              <PropertyRef Name="SuburbId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallAddressNote_CallAddress">
+          <End Role="CallAddress" Type="Self.CallAddress" Multiplicity="1" />
+          <End Role="CallAddressNote" Type="Self.CallAddressNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallAddress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallAddressNote">
+              <PropertyRef Name="CallAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallGroup_CallActivity">
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="0..1" />
+          <End Role="CallGroup" Type="Self.CallGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallGroup">
+              <PropertyRef Name="CurrentAssignCallActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallGroup_CallActivity1">
+          <End Role="CallActivity" Type="Self.CallActivity" Multiplicity="0..1" />
+          <End Role="CallGroup" Type="Self.CallGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallGroup">
+              <PropertyRef Name="LastAssignCallActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PasswordResets">
+          <End Role="webpages_Membership" Type="Self.webpages_Membership" Multiplicity="1" />
+          <End Role="webpages_PasswordResets" Type="Self.webpages_PasswordResets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Membership">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="webpages_PasswordResets">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publisher_webpages_Roles">
+          <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="0..1" />
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Publisher">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_State_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Suburb_State">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Suburb" Type="Self.Suburb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Suburb">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemReference_Cycle">
+          <End Role="Cycle" Type="Self.Cycle" Multiplicity="0..1" />
+          <End Role="SystemReference" Type="Self.SystemReference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cycle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemReference">
+              <PropertyRef Name="CurrentCycleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInRoles_MembershipUserId">
+          <End Role="webpages_Membership" Type="Self.webpages_Membership" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Membership">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInRoles_RoleId">
+          <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_webpages_Membership_Publisher">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+          <End Role="webpages_Membership" Type="Self.webpages_Membership" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="webpages_Membership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DeactivateCallAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="callAddressId" Type="int" Mode="In" />
+          <Parameter Name="approvedDate" Type="datetime" Mode="In" />
+          <Parameter Name="approvedBy" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetMapActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fromDate" Type="date" Mode="In" />
+          <Parameter Name="toDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="GetMapActivityDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateFrom" Type="date" Mode="In" />
+          <Parameter Name="dateTo" Type="date" Mode="In" />
+        </Function>
+        <Function Name="GetMapActivitySummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateFrom" Type="date" Mode="In" />
+          <Parameter Name="dateTo" Type="date" Mode="In" />
+        </Function>
+        <Function Name="GetUnReturnedCallAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="publisherId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUnreturnedMap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="publisherId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="TerritoryDataModelStoreContainer">
+          <EntitySet Name="CallActivity" EntityType="Self.CallActivity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CallActivityAddress" EntityType="Self.CallActivityAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CallActivityStatus" EntityType="Self.CallActivityStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CallActivityWarning" EntityType="Self.CallActivityWarning" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CallAddress" EntityType="Self.CallAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CallAddressNote" EntityType="Self.CallAddressNote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CallGroup" EntityType="Self.CallGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CallType" EntityType="Self.CallType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cycle" EntityType="Self.Cycle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publisher" EntityType="Self.Publisher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suburb" EntityType="Self.Suburb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemReference" EntityType="Self.SystemReference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_PasswordResets" EntityType="Self.webpages_PasswordResets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwAddress" EntityType="Self.vwAddress" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwAddress].[Id] AS [Id], 
+    [vwAddress].[Address] AS [Address], 
+    [vwAddress].[AddressGps] AS [AddressGps], 
+    [vwAddress].[Unit] AS [Unit], 
+    [vwAddress].[Number] AS [Number], 
+    [vwAddress].[Street] AS [Street], 
+    [vwAddress].[SuburbName] AS [SuburbName], 
+    [vwAddress].[StateName] AS [StateName], 
+    [vwAddress].[PostCode] AS [PostCode], 
+    [vwAddress].[CallGroupId] AS [CallGroupId], 
+    [vwAddress].[CallGroupName] AS [CallGroupName], 
+    [vwAddress].[GroupCode] AS [GroupCode], 
+    [vwAddress].[RouteOrderFromKh] AS [RouteOrderFromKh], 
+    [vwAddress].[SuburbId] AS [SuburbId], 
+    [vwAddress].[Longtitude] AS [Longtitude], 
+    [vwAddress].[Latitude] AS [Latitude], 
+    [vwAddress].[MelwayRefNo] AS [MelwayRefNo], 
+    [vwAddress].[LastCallDate] AS [LastCallDate]
+    FROM [dbo].[vwAddress] AS [vwAddress]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CallActivity_CallActivityAddress" Association="Self.FK_CallActivity_CallActivityAddress">
+            <End Role="CallActivity" EntitySet="CallActivity" />
+            <End Role="CallActivityAddress" EntitySet="CallActivityAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_CallGroup" Association="Self.FK_CallActivity_CallGroup">
+            <End Role="CallGroup" EntitySet="CallGroup" />
+            <End Role="CallActivity" EntitySet="CallActivity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_CallType" Association="Self.FK_CallActivity_CallType">
+            <End Role="CallType" EntitySet="CallType" />
+            <End Role="CallActivity" EntitySet="CallActivity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Cycle" Association="Self.FK_CallActivity_Cycle">
+            <End Role="Cycle" EntitySet="Cycle" />
+            <End Role="CallActivity" EntitySet="CallActivity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Publisher" Association="Self.FK_CallActivity_Publisher">
+            <End Role="Publisher" EntitySet="Publisher" />
+            <End Role="CallActivity" EntitySet="CallActivity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Publisher1" Association="Self.FK_CallActivity_Publisher1">
+            <End Role="Publisher" EntitySet="Publisher" />
+            <End Role="CallActivity" EntitySet="CallActivity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Publisher2" Association="Self.FK_CallActivity_Publisher2">
+            <End Role="Publisher" EntitySet="Publisher" />
+            <End Role="CallActivity" EntitySet="CallActivity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Publisher3" Association="Self.FK_CallActivity_Publisher3">
+            <End Role="Publisher" EntitySet="Publisher" />
+            <End Role="CallActivity" EntitySet="CallActivity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivityAddress_CallActivityStatus" Association="Self.FK_CallActivityAddress_CallActivityStatus">
+            <End Role="CallActivityStatus" EntitySet="CallActivityStatus" />
+            <End Role="CallActivityAddress" EntitySet="CallActivityAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivityAddress_CallAddress" Association="Self.FK_CallActivityAddress_CallAddress">
+            <End Role="CallAddress" EntitySet="CallAddress" />
+            <End Role="CallActivityAddress" EntitySet="CallActivityAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivityWarning_CallType" Association="Self.FK_CallActivityWarning_CallType">
+            <End Role="CallType" EntitySet="CallType" />
+            <End Role="CallActivityWarning" EntitySet="CallActivityWarning" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallAddress_CallActivityStatus" Association="Self.FK_CallAddress_CallActivityStatus">
+            <End Role="CallActivityStatus" EntitySet="CallActivityStatus" />
+            <End Role="CallAddress" EntitySet="CallAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallAddress_CallGroup" Association="Self.FK_CallAddress_CallGroup">
+            <End Role="CallGroup" EntitySet="CallGroup" />
+            <End Role="CallAddress" EntitySet="CallAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallAddress_Suburb" Association="Self.FK_CallAddress_Suburb">
+            <End Role="Suburb" EntitySet="Suburb" />
+            <End Role="CallAddress" EntitySet="CallAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallAddressNote_CallAddress" Association="Self.FK_CallAddressNote_CallAddress">
+            <End Role="CallAddress" EntitySet="CallAddress" />
+            <End Role="CallAddressNote" EntitySet="CallAddressNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallGroup_CallActivity" Association="Self.FK_CallGroup_CallActivity">
+            <End Role="CallActivity" EntitySet="CallActivity" />
+            <End Role="CallGroup" EntitySet="CallGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallGroup_CallActivity1" Association="Self.FK_CallGroup_CallActivity1">
+            <End Role="CallActivity" EntitySet="CallActivity" />
+            <End Role="CallGroup" EntitySet="CallGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PasswordResets" Association="Self.FK_PasswordResets">
+            <End Role="webpages_Membership" EntitySet="webpages_Membership" />
+            <End Role="webpages_PasswordResets" EntitySet="webpages_PasswordResets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publisher_webpages_Roles" Association="Self.FK_Publisher_webpages_Roles">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="Publisher" EntitySet="Publisher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_Country" Association="Self.FK_State_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="State" EntitySet="State" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Suburb_State" Association="Self.FK_Suburb_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Suburb" EntitySet="Suburb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemReference_Cycle" Association="Self.FK_SystemReference_Cycle">
+            <End Role="Cycle" EntitySet="Cycle" />
+            <End Role="SystemReference" EntitySet="SystemReference" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInRoles_MembershipUserId" Association="Self.FK_UsersInRoles_MembershipUserId">
+            <End Role="webpages_Membership" EntitySet="webpages_Membership" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInRoles_RoleId" Association="Self.FK_UsersInRoles_RoleId">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_webpages_Membership_Publisher" Association="Self.FK_webpages_Membership_Publisher">
+            <End Role="Publisher" EntitySet="Publisher" />
+            <End Role="webpages_Membership" EntitySet="webpages_Membership" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TerritoryDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TerritoryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CallActivityWarnings" EntityType="TerritoryDataModel.CallActivityWarning" />
+          <EntitySet Name="CallAddressNotes" EntityType="TerritoryDataModel.CallAddressNote" />
+          <EntitySet Name="CallTypes" EntityType="TerritoryDataModel.CallType" />
+          <EntitySet Name="Countries" EntityType="TerritoryDataModel.Country" />
+          <EntitySet Name="States" EntityType="TerritoryDataModel.State" />
+          <EntitySet Name="Suburbs" EntityType="TerritoryDataModel.Suburb" />
+          <EntitySet Name="webpages_Membership" EntityType="TerritoryDataModel.webpages_Membership" />
+          <EntitySet Name="webpages_PasswordResets" EntityType="TerritoryDataModel.webpages_PasswordResets" />
+          <EntitySet Name="webpages_Roles" EntityType="TerritoryDataModel.webpages_Roles" />
+          <AssociationSet Name="FK_CallActivityWarning_CallType" Association="TerritoryDataModel.FK_CallActivityWarning_CallType">
+            <End Role="CallType" EntitySet="CallTypes" />
+            <End Role="CallActivityWarning" EntitySet="CallActivityWarnings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_Country" Association="TerritoryDataModel.FK_State_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Suburb_State" Association="TerritoryDataModel.FK_Suburb_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="Suburb" EntitySet="Suburbs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PasswordResets" Association="TerritoryDataModel.FK_PasswordResets">
+            <End Role="webpages_Membership" EntitySet="webpages_Membership" />
+            <End Role="webpages_PasswordResets" EntitySet="webpages_PasswordResets" />
+          </AssociationSet>
+          <AssociationSet Name="webpages_UsersInRoles" Association="TerritoryDataModel.webpages_UsersInRoles">
+            <End Role="webpages_Membership" EntitySet="webpages_Membership" />
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+          </AssociationSet>
+          <EntitySet Name="CallActivityStatus" EntityType="TerritoryDataModel.CallActivityStatu" />
+          <FunctionImport Name="GetUnReturnedCallAddress" ReturnType="Collection(TerritoryDataModel.GetUnReturnedCallAddress_Result)">
+          <Parameter Name="publisherId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Cycles" EntityType="TerritoryDataModel.Cycle" />
+          <EntitySet Name="SystemReferences" EntityType="TerritoryDataModel.SystemReference" />
+          <AssociationSet Name="FK_SystemReference_Cycle" Association="TerritoryDataModel.FK_SystemReference_Cycle">
+            <End Role="Cycle" EntitySet="Cycles" />
+            <End Role="SystemReference" EntitySet="SystemReferences" />
+          </AssociationSet>
+          <EntitySet Name="CallActivities" EntityType="TerritoryDataModel.CallActivity" />
+          <AssociationSet Name="FK_CallActivity_CallType" Association="TerritoryDataModel.FK_CallActivity_CallType">
+            <End Role="CallType" EntitySet="CallTypes" />
+            <End Role="CallActivity" EntitySet="CallActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Cycle" Association="TerritoryDataModel.FK_CallActivity_Cycle">
+            <End Role="Cycle" EntitySet="Cycles" />
+            <End Role="CallActivity" EntitySet="CallActivities" />
+          </AssociationSet>
+          <EntitySet Name="CallActivityAddresses" EntityType="TerritoryDataModel.CallActivityAddress" />
+          <AssociationSet Name="FK_CallActivity_CallActivityAddress" Association="TerritoryDataModel.FK_CallActivity_CallActivityAddress">
+            <End Role="CallActivity" EntitySet="CallActivities" />
+            <End Role="CallActivityAddress" EntitySet="CallActivityAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivityAddress_CallActivityStatus" Association="TerritoryDataModel.FK_CallActivityAddress_CallActivityStatus">
+            <End Role="CallActivityStatu" EntitySet="CallActivityStatus" />
+            <End Role="CallActivityAddress" EntitySet="CallActivityAddresses" />
+          </AssociationSet>
+          <FunctionImport Name="GetMapActivity" ReturnType="Collection(TerritoryDataModel.GetMapActivity_Result)">
+            <Parameter Name="fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="toDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="Publishers" EntityType="TerritoryDataModel.Publisher" />
+          <AssociationSet Name="FK_CallActivity_Publisher" Association="TerritoryDataModel.FK_CallActivity_Publisher">
+            <End Role="Publisher" EntitySet="Publishers" />
+            <End Role="CallActivity" EntitySet="CallActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Publisher1" Association="TerritoryDataModel.FK_CallActivity_Publisher1">
+            <End Role="Publisher" EntitySet="Publishers" />
+            <End Role="CallActivity" EntitySet="CallActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Publisher2" Association="TerritoryDataModel.FK_CallActivity_Publisher2">
+            <End Role="Publisher" EntitySet="Publishers" />
+            <End Role="CallActivity" EntitySet="CallActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallActivity_Publisher3" Association="TerritoryDataModel.FK_CallActivity_Publisher3">
+            <End Role="Publisher" EntitySet="Publishers" />
+            <End Role="CallActivity" EntitySet="CallActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publisher_webpages_Roles" Association="TerritoryDataModel.FK_Publisher_webpages_Roles">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="Publisher" EntitySet="Publishers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_webpages_Membership_Publisher" Association="TerritoryDataModel.FK_webpages_Membership_Publisher">
+            <End Role="Publisher" EntitySet="Publishers" />
+            <End Role="webpages_Membership" EntitySet="webpages_Membership" />
+          </AssociationSet>
+          <EntitySet Name="CallAddresses" EntityType="TerritoryDataModel.CallAddress" />
+          <AssociationSet Name="FK_CallActivityAddress_CallAddress" Association="TerritoryDataModel.FK_CallActivityAddress_CallAddress">
+            <End Role="CallAddress" EntitySet="CallAddresses" />
+            <End Role="CallActivityAddress" EntitySet="CallActivityAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallAddress_CallActivityStatus" Association="TerritoryDataModel.FK_CallAddress_CallActivityStatus">
+            <End Role="CallActivityStatu" EntitySet="CallActivityStatus" />
+            <End Role="CallAddress" EntitySet="CallAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallAddress_Suburb" Association="TerritoryDataModel.FK_CallAddress_Suburb">
+            <End Role="Suburb" EntitySet="Suburbs" />
+            <End Role="CallAddress" EntitySet="CallAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallAddressNote_CallAddress" Association="TerritoryDataModel.FK_CallAddressNote_CallAddress">
+            <End Role="CallAddress" EntitySet="CallAddresses" />
+            <End Role="CallAddressNote" EntitySet="CallAddressNotes" />
+          </AssociationSet>
+          <EntitySet Name="vwAddresses" EntityType="TerritoryDataModel.vwAddress" />
+          <EntitySet Name="CallGroups" EntityType="TerritoryDataModel.CallGroup" />
+          <AssociationSet Name="FK_CallActivity_CallGroup" Association="TerritoryDataModel.FK_CallActivity_CallGroup">
+            <End Role="CallGroup" EntitySet="CallGroups" />
+            <End Role="CallActivity" EntitySet="CallActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallGroup_CallActivity" Association="TerritoryDataModel.FK_CallGroup_CallActivity">
+            <End Role="CallActivity" EntitySet="CallActivities" />
+            <End Role="CallGroup" EntitySet="CallGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallGroup_CallActivity1" Association="TerritoryDataModel.FK_CallGroup_CallActivity1">
+            <End Role="CallActivity" EntitySet="CallActivities" />
+            <End Role="CallGroup" EntitySet="CallGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CallAddress_CallGroup" Association="TerritoryDataModel.FK_CallAddress_CallGroup">
+            <End Role="CallGroup" EntitySet="CallGroups" />
+            <End Role="CallAddress" EntitySet="CallAddresses" />
+          </AssociationSet>
+          <FunctionImport Name="GetMapActivitySummary" ReturnType="Collection(TerritoryDataModel.GetMapActivitySummary_Result)">
+            <Parameter Name="dateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="dateTo" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetUnreturnedMap" ReturnType="Collection(TerritoryDataModel.GetUnreturnedMap_Result)">
+          <Parameter Name="publisherId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeactivateCallAddress">
+            <Parameter Name="callAddressId" Mode="In" Type="Int32" />
+            <Parameter Name="approvedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="approvedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetMapActivityDetail" ReturnType="Collection(TerritoryDataModel.GetMapActivityDetail_Result)">
+            <Parameter Name="dateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="dateTo" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          </EntityContainer>
+        <EntityType Name="CallActivityWarning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallTypeId" Type="Int32" Nullable="false" />
+          <Property Name="FromNumberOfDays" Type="Int32" Nullable="false" />
+          <Property Name="ToNumberOfDays" Type="Int32" Nullable="false" />
+          <Property Name="WarningSeverity" Type="Int32" Nullable="false" />
+          <Property Name="WarningColour" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CallType" Relationship="TerritoryDataModel.FK_CallActivityWarning_CallType" FromRole="CallActivityWarning" ToRole="CallType" />
+        </EntityType>
+        <EntityType Name="CallAddressNote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallAddressId" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateNoteAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CallAddress" Relationship="TerritoryDataModel.FK_CallAddressNote_CallAddress" FromRole="CallAddressNote" ToRole="CallAddress" />
+        </EntityType>
+        <EntityType Name="CallType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallTypeName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CallActivityWarnings" Relationship="TerritoryDataModel.FK_CallActivityWarning_CallType" FromRole="CallType" ToRole="CallActivityWarning" />
+          <NavigationProperty Name="CallActivities" Relationship="TerritoryDataModel.FK_CallActivity_CallType" FromRole="CallType" ToRole="CallActivity" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="States" Relationship="TerritoryDataModel.FK_State_Country" FromRole="Country" ToRole="State" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Country" Relationship="TerritoryDataModel.FK_State_Country" FromRole="State" ToRole="Country" />
+          <NavigationProperty Name="Suburbs" Relationship="TerritoryDataModel.FK_Suburb_State" FromRole="State" ToRole="Suburb" />
+        </EntityType>
+        <EntityType Name="Suburb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="SuburbName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PostCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="State" Relationship="TerritoryDataModel.FK_Suburb_State" FromRole="Suburb" ToRole="State" />
+          <NavigationProperty Name="CallAddresses" Relationship="TerritoryDataModel.FK_CallAddress_Suburb" FromRole="Suburb" ToRole="CallAddress" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsConfirmed" Type="Boolean" />
+          <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="webpages_PasswordResets" Relationship="TerritoryDataModel.FK_PasswordResets" FromRole="webpages_Membership" ToRole="webpages_PasswordResets" />
+          <NavigationProperty Name="webpages_Roles" Relationship="TerritoryDataModel.webpages_UsersInRoles" FromRole="webpages_Membership" ToRole="webpages_Roles" />
+          <NavigationProperty Name="Publisher" Relationship="TerritoryDataModel.FK_webpages_Membership_Publisher" FromRole="webpages_Membership" ToRole="Publisher" />
+        </EntityType>
+        <EntityType Name="webpages_PasswordResets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ResetQuestion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ResetAnswer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="webpages_Membership" Relationship="TerritoryDataModel.FK_PasswordResets" FromRole="webpages_PasswordResets" ToRole="webpages_Membership" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="webpages_Membership" Relationship="TerritoryDataModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="webpages_Membership" />
+          <NavigationProperty Name="Publishers" Relationship="TerritoryDataModel.FK_Publisher_webpages_Roles" FromRole="webpages_Roles" ToRole="Publisher" />
+        </EntityType>
+        <Association Name="FK_CallActivityWarning_CallType">
+          <End Type="TerritoryDataModel.CallType" Role="CallType" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallActivityWarning" Role="CallActivityWarning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivityWarning">
+              <PropertyRef Name="CallTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_State_Country">
+          <End Type="TerritoryDataModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="TerritoryDataModel.State" Role="State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Suburb_State">
+          <End Type="TerritoryDataModel.State" Role="State" Multiplicity="1" />
+          <End Type="TerritoryDataModel.Suburb" Role="Suburb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Suburb">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PasswordResets">
+          <End Type="TerritoryDataModel.webpages_Membership" Role="webpages_Membership" Multiplicity="1" />
+          <End Type="TerritoryDataModel.webpages_PasswordResets" Role="webpages_PasswordResets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Membership">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="webpages_PasswordResets">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="webpages_UsersInRoles">
+          <End Type="TerritoryDataModel.webpages_Membership" Role="webpages_Membership" Multiplicity="*" />
+          <End Type="TerritoryDataModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
+        </Association>
+        <EntityType Name="CallActivityStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsValidAddress" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CallActivityAddresses" Relationship="TerritoryDataModel.FK_CallActivityAddress_CallActivityStatus" FromRole="CallActivityStatu" ToRole="CallActivityAddress" />
+          <NavigationProperty Name="CallAddresses" Relationship="TerritoryDataModel.FK_CallAddress_CallActivityStatus" FromRole="CallActivityStatu" ToRole="CallAddress" />
+        </EntityType>
+        <ComplexType Name="GetUnReturnedCallAddress_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="CallTypeId" Nullable="false" />
+          <Property Type="String" Name="CallTypeName" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="CallGroupId" Nullable="false" />
+          <Property Type="String" Name="CallGroupName" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="CallActivityAddressId" Nullable="false" />
+          <Property Type="Int32" Name="CallAddressId" Nullable="false" />
+          <Property Type="Int32" Name="CallActivityStatusId" Nullable="true" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CallActivityStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="1104" />
+          <Property Type="DateTime" Name="DateReleased" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ReleasedToPublisherId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="DaysOut" Nullable="true" />
+          <Property Type="Int32" Name="WarningSeverity" Nullable="false" />
+          <Property Type="String" Name="WarningColour" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CycleName" Nullable="true" MaxLength="26" />
+          <Property Type="Int32" Name="RouteOrderFromKh" Nullable="true" />
+          <Property Type="String" Name="MelwayRefNo" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="LastCallDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="Cycle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CycleNumber" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="CycleName" Type="String" MaxLength="26" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="SystemReferences" Relationship="TerritoryDataModel.FK_SystemReference_Cycle" FromRole="Cycle" ToRole="SystemReference" />
+          <NavigationProperty Name="CallActivities" Relationship="TerritoryDataModel.FK_CallActivity_Cycle" FromRole="Cycle" ToRole="CallActivity" />
+        </EntityType>
+        <EntityType Name="SystemReference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CurrentCycleId" Type="Int32" />
+          <Property Name="CurrentCycleNumber" Type="Int32" />
+          <NavigationProperty Name="Cycle" Relationship="TerritoryDataModel.FK_SystemReference_Cycle" FromRole="SystemReference" ToRole="Cycle" />
+        </EntityType>
+        <Association Name="FK_SystemReference_Cycle">
+          <End Type="TerritoryDataModel.Cycle" Role="Cycle" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.SystemReference" Role="SystemReference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cycle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemReference">
+              <PropertyRef Name="CurrentCycleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CallActivity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallGroupId" Type="Int32" Nullable="false" />
+          <Property Name="CallTypeId" Type="Int32" Nullable="false" />
+          <Property Name="DateReleased" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReleasedToPublisherId" Type="Int32" Nullable="false" />
+          <Property Name="ReleasedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="DateReturned" Type="DateTime" Precision="3" />
+          <Property Name="ReturnedByPublisherId" Type="Int32" />
+          <Property Name="ReturnedToUserId" Type="Int32" />
+          <Property Name="CycleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CallType" Relationship="TerritoryDataModel.FK_CallActivity_CallType" FromRole="CallActivity" ToRole="CallType" />
+          <NavigationProperty Name="Cycle" Relationship="TerritoryDataModel.FK_CallActivity_Cycle" FromRole="CallActivity" ToRole="Cycle" />
+          <NavigationProperty Name="CallActivityAddresses" Relationship="TerritoryDataModel.FK_CallActivity_CallActivityAddress" FromRole="CallActivity" ToRole="CallActivityAddress" />
+          <NavigationProperty Name="Publisher" Relationship="TerritoryDataModel.FK_CallActivity_Publisher" FromRole="CallActivity" ToRole="Publisher" />
+          <NavigationProperty Name="Publisher1" Relationship="TerritoryDataModel.FK_CallActivity_Publisher1" FromRole="CallActivity" ToRole="Publisher" />
+          <NavigationProperty Name="Publisher2" Relationship="TerritoryDataModel.FK_CallActivity_Publisher2" FromRole="CallActivity" ToRole="Publisher" />
+          <NavigationProperty Name="Publisher3" Relationship="TerritoryDataModel.FK_CallActivity_Publisher3" FromRole="CallActivity" ToRole="Publisher" />
+          <NavigationProperty Name="CallGroup" Relationship="TerritoryDataModel.FK_CallActivity_CallGroup" FromRole="CallActivity" ToRole="CallGroup" />
+          <NavigationProperty Name="CallGroups" Relationship="TerritoryDataModel.FK_CallGroup_CallActivity" FromRole="CallActivity" ToRole="CallGroup" />
+          <NavigationProperty Name="CallGroups1" Relationship="TerritoryDataModel.FK_CallGroup_CallActivity1" FromRole="CallActivity" ToRole="CallGroup" />
+          </EntityType>
+        <Association Name="FK_CallActivity_CallType">
+          <End Type="TerritoryDataModel.CallType" Role="CallType" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="CallTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Cycle">
+          <End Type="TerritoryDataModel.Cycle" Role="Cycle" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cycle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="CycleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CallActivityAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallActivityId" Type="Int32" Nullable="false" />
+          <Property Name="CallAddressId" Type="Int32" Nullable="false" />
+          <Property Name="DateFinished" Type="DateTime" Precision="3" />
+          <Property Name="CallActivityStatusId" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="CallActivity" Relationship="TerritoryDataModel.FK_CallActivity_CallActivityAddress" FromRole="CallActivityAddress" ToRole="CallActivity" />
+          <NavigationProperty Name="CallActivityStatu" Relationship="TerritoryDataModel.FK_CallActivityAddress_CallActivityStatus" FromRole="CallActivityAddress" ToRole="CallActivityStatu" />
+          <NavigationProperty Name="CallAddress" Relationship="TerritoryDataModel.FK_CallActivityAddress_CallAddress" FromRole="CallActivityAddress" ToRole="CallAddress" />
+        </EntityType>
+        <Association Name="FK_CallActivity_CallActivityAddress">
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallActivityAddress" Role="CallActivityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivityAddress">
+              <PropertyRef Name="CallActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivityAddress_CallActivityStatus">
+          <End Type="TerritoryDataModel.CallActivityStatu" Role="CallActivityStatu" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.CallActivityAddress" Role="CallActivityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivityStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivityAddress">
+              <PropertyRef Name="CallActivityStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetMapActivity_Result">
+          <Property Type="Int32" Name="RowNum" Nullable="false" />
+          <Property Type="Int32" Name="CallGroupId" Nullable="false" />
+          <Property Type="String" Name="GroupCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MapName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="DateReleased" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateReturned" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PublisherName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ActivityCount" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Publisher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserRoleId" Type="Int32" />
+          <NavigationProperty Name="CallActivities" Relationship="TerritoryDataModel.FK_CallActivity_Publisher" FromRole="Publisher" ToRole="CallActivity" />
+          <NavigationProperty Name="CallActivities1" Relationship="TerritoryDataModel.FK_CallActivity_Publisher1" FromRole="Publisher" ToRole="CallActivity" />
+          <NavigationProperty Name="CallActivities2" Relationship="TerritoryDataModel.FK_CallActivity_Publisher2" FromRole="Publisher" ToRole="CallActivity" />
+          <NavigationProperty Name="CallActivities3" Relationship="TerritoryDataModel.FK_CallActivity_Publisher3" FromRole="Publisher" ToRole="CallActivity" />
+          <NavigationProperty Name="webpages_Roles" Relationship="TerritoryDataModel.FK_Publisher_webpages_Roles" FromRole="Publisher" ToRole="webpages_Roles" />
+          <NavigationProperty Name="webpages_Membership" Relationship="TerritoryDataModel.FK_webpages_Membership_Publisher" FromRole="Publisher" ToRole="webpages_Membership" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_CallActivity_Publisher">
+          <End Type="TerritoryDataModel.Publisher" Role="Publisher" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="ReleasedToPublisherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Publisher1">
+          <End Type="TerritoryDataModel.Publisher" Role="Publisher" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="ReturnedByPublisherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Publisher2">
+          <End Type="TerritoryDataModel.Publisher" Role="Publisher" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="ReleasedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallActivity_Publisher3">
+          <End Type="TerritoryDataModel.Publisher" Role="Publisher" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="ReturnedToUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publisher_webpages_Roles">
+          <End Type="TerritoryDataModel.webpages_Roles" Role="webpages_Roles" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.Publisher" Role="Publisher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Publisher">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_webpages_Membership_Publisher">
+          <End Type="TerritoryDataModel.Publisher" Role="Publisher" Multiplicity="1" />
+          <End Type="TerritoryDataModel.webpages_Membership" Role="webpages_Membership" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="webpages_Membership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CallAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SuburbId" Type="Int32" Nullable="false" />
+          <Property Name="MelwayRefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RouteOrderFromKh" Type="Int32" />
+          <Property Name="CallGroupId" Type="Int32" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="LastCallDate" Type="DateTime" Precision="3" />
+          <Property Name="LastCallActivityStatusId" Type="Int32" />
+          <Property Name="Longtitude" Type="Double" />
+          <Property Name="Latitude" Type="Double" />
+          <NavigationProperty Name="CallActivityAddresses" Relationship="TerritoryDataModel.FK_CallActivityAddress_CallAddress" FromRole="CallAddress" ToRole="CallActivityAddress" />
+          <NavigationProperty Name="CallActivityStatu" Relationship="TerritoryDataModel.FK_CallAddress_CallActivityStatus" FromRole="CallAddress" ToRole="CallActivityStatu" />
+          <NavigationProperty Name="Suburb" Relationship="TerritoryDataModel.FK_CallAddress_Suburb" FromRole="CallAddress" ToRole="Suburb" />
+          <NavigationProperty Name="CallAddressNotes" Relationship="TerritoryDataModel.FK_CallAddressNote_CallAddress" FromRole="CallAddress" ToRole="CallAddressNote" />
+          <Property Name="Address" Type="String" MaxLength="602" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="GpsAddress" Type="String" Nullable="false" MaxLength="551" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="CallGroup" Relationship="TerritoryDataModel.FK_CallAddress_CallGroup" FromRole="CallAddress" ToRole="CallGroup" />
+        </EntityType>
+        <Association Name="FK_CallActivityAddress_CallAddress">
+          <End Type="TerritoryDataModel.CallAddress" Role="CallAddress" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallActivityAddress" Role="CallActivityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallAddress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivityAddress">
+              <PropertyRef Name="CallAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallAddress_CallActivityStatus">
+          <End Type="TerritoryDataModel.CallActivityStatu" Role="CallActivityStatu" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.CallAddress" Role="CallAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivityStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallAddress">
+              <PropertyRef Name="LastCallActivityStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallAddress_Suburb">
+          <End Type="TerritoryDataModel.Suburb" Role="Suburb" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallAddress" Role="CallAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suburb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallAddress">
+              <PropertyRef Name="SuburbId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallAddressNote_CallAddress">
+          <End Type="TerritoryDataModel.CallAddress" Role="CallAddress" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallAddressNote" Role="CallAddressNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallAddress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallAddressNote">
+              <PropertyRef Name="CallAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="AddressGps" />
+            <PropertyRef Name="Number" />
+            <PropertyRef Name="Street" />
+            <PropertyRef Name="SuburbName" />
+            <PropertyRef Name="StateName" />
+            <PropertyRef Name="SuburbId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="1104" FixedLength="false" Unicode="true" />
+          <Property Name="AddressGps" Type="String" Nullable="false" MaxLength="1053" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SuburbName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PostCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CallGroupId" Type="Int32" />
+          <Property Name="CallGroupName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="GroupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RouteOrderFromKh" Type="Int32" />
+          <Property Name="SuburbId" Type="Int32" Nullable="false" />
+          <Property Name="Longtitude" Type="Double" />
+          <Property Name="Latitude" Type="Double" />
+          <Property Name="MelwayRefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastCallDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CallGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallGroupName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="GroupCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentAssignCallActivityId" Type="Int32" />
+          <Property Name="LastAssignCallActivityId" Type="Int32" />
+          <Property Name="AllowAssistantToRelease" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CallActivities" Relationship="TerritoryDataModel.FK_CallActivity_CallGroup" FromRole="CallGroup" ToRole="CallActivity" />
+          <NavigationProperty Name="CallActivity" Relationship="TerritoryDataModel.FK_CallGroup_CallActivity" FromRole="CallGroup" ToRole="CallActivity" />
+          <NavigationProperty Name="CallActivity1" Relationship="TerritoryDataModel.FK_CallGroup_CallActivity1" FromRole="CallGroup" ToRole="CallActivity" />
+          <NavigationProperty Name="CallAddresses" Relationship="TerritoryDataModel.FK_CallAddress_CallGroup" FromRole="CallGroup" ToRole="CallAddress" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_CallActivity_CallGroup">
+          <End Type="TerritoryDataModel.CallGroup" Role="CallGroup" Multiplicity="1" />
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallActivity">
+              <PropertyRef Name="CallGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallGroup_CallActivity">
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.CallGroup" Role="CallGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallGroup">
+              <PropertyRef Name="CurrentAssignCallActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallGroup_CallActivity1">
+          <End Type="TerritoryDataModel.CallActivity" Role="CallActivity" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.CallGroup" Role="CallGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallActivity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallGroup">
+              <PropertyRef Name="LastAssignCallActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CallAddress_CallGroup">
+          <End Type="TerritoryDataModel.CallGroup" Role="CallGroup" Multiplicity="0..1" />
+          <End Type="TerritoryDataModel.CallAddress" Role="CallAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CallGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CallAddress">
+              <PropertyRef Name="CallGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetMapActivitySummary_Result">
+          <Property Type="Int32" Name="TotalActiveMap" Nullable="true" />
+          <Property Type="Int32" Name="TotalNumberOfMap" Nullable="true" />
+          <Property Type="Int32" Name="TotalCompletedMap" Nullable="true" />
+          <Property Type="Int32" Name="NumberOfTimesDone" Nullable="true" />
+          <Property Type="Int32" Name="TotalNotDoneMap" Nullable="true" />
+          <Property Type="Int32" Name="CurrentCycle" Nullable="true" />
+          <Property Type="Int32" Name="CycleUndoneMap" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetUnreturnedMap_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="CallTypeId" Nullable="false" />
+          <Property Type="String" Name="CallTypeName" Nullable="false" />
+          <Property Type="Int32" Name="CallGroupId" Nullable="false" />
+          <Property Type="String" Name="CallGroupName" Nullable="false" />
+          <Property Type="DateTime" Name="DateReleased" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ReleasedToPublisherId" Nullable="false" />
+          <Property Type="String" Name="PublisherName" Nullable="false" />
+          <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ReleasedByUserId" Nullable="false" />
+          <Property Type="String" Name="ReleasedBy" Nullable="false" />
+          <Property Type="String" Name="CycleName" Nullable="false" />
+          <Property Type="Int32" Name="IsComplete" Nullable="false" />
+          <Property Type="Int32" Name="DaysOut" Nullable="false" />
+          <Property Type="Int32" Name="WarningSeverity" Nullable="false" />
+          <Property Type="String" Name="WarningColour" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetMapActivityDetail_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="CallGroupId" Nullable="false" />
+          <Property Type="String" Name="CallGroupName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="GroupCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="DateTime" Name="DateReleased" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateReturned" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CallTypeName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="CycleName" Nullable="true" MaxLength="26" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TerritoryDataModelStoreContainer" CdmEntityContainer="TerritoryEntities">
+          <EntitySetMapping Name="CallActivityWarnings">
+            <EntityTypeMapping TypeName="TerritoryDataModel.CallActivityWarning">
+              <MappingFragment StoreEntitySet="CallActivityWarning">
+                <ScalarProperty Name="WarningColour" ColumnName="WarningColour" />
+                <ScalarProperty Name="WarningSeverity" ColumnName="WarningSeverity" />
+                <ScalarProperty Name="ToNumberOfDays" ColumnName="ToNumberOfDays" />
+                <ScalarProperty Name="FromNumberOfDays" ColumnName="FromNumberOfDays" />
+                <ScalarProperty Name="CallTypeId" ColumnName="CallTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CallAddressNotes">
+            <EntityTypeMapping TypeName="TerritoryDataModel.CallAddressNote">
+              <MappingFragment StoreEntitySet="CallAddressNote">
+                <ScalarProperty Name="DateNoteAdded" ColumnName="DateNoteAdded" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CallAddressId" ColumnName="CallAddressId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CallTypes">
+            <EntityTypeMapping TypeName="TerritoryDataModel.CallType">
+              <MappingFragment StoreEntitySet="CallType">
+                <ScalarProperty Name="CallTypeName" ColumnName="CallTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="TerritoryDataModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="TerritoryDataModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suburbs">
+            <EntityTypeMapping TypeName="TerritoryDataModel.Suburb">
+              <MappingFragment StoreEntitySet="Suburb">
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="SuburbName" ColumnName="SuburbName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Membership">
+            <EntityTypeMapping TypeName="TerritoryDataModel.webpages_Membership">
+              <MappingFragment StoreEntitySet="webpages_Membership">
+                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_PasswordResets">
+            <EntityTypeMapping TypeName="TerritoryDataModel.webpages_PasswordResets">
+              <MappingFragment StoreEntitySet="webpages_PasswordResets">
+                <ScalarProperty Name="ResetAnswer" ColumnName="ResetAnswer" />
+                <ScalarProperty Name="ResetQuestion" ColumnName="ResetQuestion" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Roles">
+            <EntityTypeMapping TypeName="TerritoryDataModel.webpages_Roles">
+              <MappingFragment StoreEntitySet="webpages_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="TerritoryDataModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+            <EndProperty Name="webpages_Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="webpages_Membership">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="CallActivityStatus">
+            <EntityTypeMapping TypeName="TerritoryDataModel.CallActivityStatu">
+              <MappingFragment StoreEntitySet="CallActivityStatus">
+                <ScalarProperty Name="IsValidAddress" ColumnName="IsValidAddress" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUnReturnedCallAddress" FunctionName="TerritoryDataModel.Store.GetUnReturnedCallAddress">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TerritoryDataModel.GetUnReturnedCallAddress_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CallTypeId" ColumnName="CallTypeId" />
+                <ScalarProperty Name="CallTypeName" ColumnName="CallTypeName" />
+                <ScalarProperty Name="CallGroupId" ColumnName="CallGroupId" />
+                <ScalarProperty Name="CallGroupName" ColumnName="CallGroupName" />
+                <ScalarProperty Name="CallActivityAddressId" ColumnName="CallActivityAddressId" />
+                <ScalarProperty Name="CallAddressId" ColumnName="CallAddressId" />
+                <ScalarProperty Name="CallActivityStatusId" ColumnName="CallActivityStatusId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CallActivityStatus" ColumnName="CallActivityStatus" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="DateReleased" ColumnName="DateReleased" />
+                <ScalarProperty Name="ReleasedToPublisherId" ColumnName="ReleasedToPublisherId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="DaysOut" ColumnName="DaysOut" />
+                <ScalarProperty Name="WarningSeverity" ColumnName="WarningSeverity" />
+                <ScalarProperty Name="WarningColour" ColumnName="WarningColour" />
+                <ScalarProperty Name="CycleName" ColumnName="CycleName" />
+                <ScalarProperty Name="RouteOrderFromKh" ColumnName="RouteOrderFromKh" />
+                <ScalarProperty Name="MelwayRefNo" ColumnName="MelwayRefNo" />
+                <ScalarProperty Name="LastCallDate" ColumnName="LastCallDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Cycles">
+            <EntityTypeMapping TypeName="TerritoryDataModel.Cycle">
+              <MappingFragment StoreEntitySet="Cycle">
+                <ScalarProperty Name="CycleName" ColumnName="CycleName" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="CycleNumber" ColumnName="CycleNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemReferences">
+            <EntityTypeMapping TypeName="TerritoryDataModel.SystemReference">
+              <MappingFragment StoreEntitySet="SystemReference">
+                <ScalarProperty Name="CurrentCycleNumber" ColumnName="CurrentCycleNumber" />
+                <ScalarProperty Name="CurrentCycleId" ColumnName="CurrentCycleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CallActivities">
+            <EntityTypeMapping TypeName="TerritoryDataModel.CallActivity">
+              <MappingFragment StoreEntitySet="CallActivity">
+                <ScalarProperty Name="CycleId" ColumnName="CycleId" />
+                <ScalarProperty Name="ReturnedToUserId" ColumnName="ReturnedToUserId" />
+                <ScalarProperty Name="ReturnedByPublisherId" ColumnName="ReturnedByPublisherId" />
+                <ScalarProperty Name="DateReturned" ColumnName="DateReturned" />
+                <ScalarProperty Name="ReleasedByUserId" ColumnName="ReleasedByUserId" />
+                <ScalarProperty Name="ReleasedToPublisherId" ColumnName="ReleasedToPublisherId" />
+                <ScalarProperty Name="DateReleased" ColumnName="DateReleased" />
+                <ScalarProperty Name="CallTypeId" ColumnName="CallTypeId" />
+                <ScalarProperty Name="CallGroupId" ColumnName="CallGroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CallActivityAddresses">
+            <EntityTypeMapping TypeName="TerritoryDataModel.CallActivityAddress">
+              <MappingFragment StoreEntitySet="CallActivityAddress">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CallActivityStatusId" ColumnName="CallActivityStatusId" />
+                <ScalarProperty Name="DateFinished" ColumnName="DateFinished" />
+                <ScalarProperty Name="CallAddressId" ColumnName="CallAddressId" />
+                <ScalarProperty Name="CallActivityId" ColumnName="CallActivityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetMapActivity" FunctionName="TerritoryDataModel.Store.GetMapActivity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TerritoryDataModel.GetMapActivity_Result">
+                <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+                <ScalarProperty Name="CallGroupId" ColumnName="CallGroupId" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="MapName" ColumnName="MapName" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="DateReleased" ColumnName="DateReleased" />
+                <ScalarProperty Name="DateReturned" ColumnName="DateReturned" />
+                <ScalarProperty Name="PublisherName" ColumnName="PublisherName" />
+                <ScalarProperty Name="ActivityCount" ColumnName="ActivityCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Publishers">
+            <EntityTypeMapping TypeName="TerritoryDataModel.Publisher">
+              <MappingFragment StoreEntitySet="Publisher">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CallAddresses">
+            <EntityTypeMapping TypeName="TerritoryDataModel.CallAddress">
+              <MappingFragment StoreEntitySet="CallAddress">
+                <ScalarProperty Name="GpsAddress" ColumnName="GpsAddress" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longtitude" ColumnName="Longtitude" />
+                <ScalarProperty Name="LastCallActivityStatusId" ColumnName="LastCallActivityStatusId" />
+                <ScalarProperty Name="LastCallDate" ColumnName="LastCallDate" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="CallGroupId" ColumnName="CallGroupId" />
+                <ScalarProperty Name="RouteOrderFromKh" ColumnName="RouteOrderFromKh" />
+                <ScalarProperty Name="MelwayRefNo" ColumnName="MelwayRefNo" />
+                <ScalarProperty Name="SuburbId" ColumnName="SuburbId" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAddresses">
+            <EntityTypeMapping TypeName="TerritoryDataModel.vwAddress">
+              <MappingFragment StoreEntitySet="vwAddress">
+                <ScalarProperty Name="LastCallDate" ColumnName="LastCallDate" />
+                <ScalarProperty Name="MelwayRefNo" ColumnName="MelwayRefNo" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longtitude" ColumnName="Longtitude" />
+                <ScalarProperty Name="SuburbId" ColumnName="SuburbId" />
+                <ScalarProperty Name="RouteOrderFromKh" ColumnName="RouteOrderFromKh" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="CallGroupName" ColumnName="CallGroupName" />
+                <ScalarProperty Name="CallGroupId" ColumnName="CallGroupId" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="SuburbName" ColumnName="SuburbName" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="AddressGps" ColumnName="AddressGps" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CallGroups">
+            <EntityTypeMapping TypeName="TerritoryDataModel.CallGroup">
+              <MappingFragment StoreEntitySet="CallGroup">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AllowAssistantToRelease" ColumnName="AllowAssistantToRelease" />
+                <ScalarProperty Name="LastAssignCallActivityId" ColumnName="LastAssignCallActivityId" />
+                <ScalarProperty Name="CurrentAssignCallActivityId" ColumnName="CurrentAssignCallActivityId" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="CallGroupName" ColumnName="CallGroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetMapActivitySummary" FunctionName="TerritoryDataModel.Store.GetMapActivitySummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TerritoryDataModel.GetMapActivitySummary_Result">
+                <ScalarProperty Name="TotalActiveMap" ColumnName="TotalActiveMap" />
+                <ScalarProperty Name="TotalNumberOfMap" ColumnName="TotalNumberOfMap" />
+                <ScalarProperty Name="TotalCompletedMap" ColumnName="TotalCompletedMap" />
+                <ScalarProperty Name="NumberOfTimesDone" ColumnName="NumberOfTimesDone" />
+                <ScalarProperty Name="TotalNotDoneMap" ColumnName="TotalNotDoneMap" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUnreturnedMap" FunctionName="TerritoryDataModel.Store.GetUnreturnedMap">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TerritoryDataModel.GetUnreturnedMap_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CallTypeId" ColumnName="CallTypeId" />
+                <ScalarProperty Name="CallTypeName" ColumnName="CallTypeName" />
+                <ScalarProperty Name="CallGroupId" ColumnName="CallGroupId" />
+                <ScalarProperty Name="CallGroupName" ColumnName="CallGroupName" />
+                <ScalarProperty Name="DateReleased" ColumnName="DateReleased" />
+                <ScalarProperty Name="ReleasedToPublisherId" ColumnName="ReleasedToPublisherId" />
+                <ScalarProperty Name="PublisherName" ColumnName="PublisherName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="ReleasedByUserId" ColumnName="ReleasedByUserId" />
+                <ScalarProperty Name="ReleasedBy" ColumnName="ReleasedBy" />
+                <ScalarProperty Name="CycleName" ColumnName="CycleName" />
+                <ScalarProperty Name="IsComplete" ColumnName="IsComplete" />
+                <ScalarProperty Name="DaysOut" ColumnName="DaysOut" />
+                <ScalarProperty Name="WarningSeverity" ColumnName="WarningSeverity" />
+                <ScalarProperty Name="WarningColour" ColumnName="WarningColour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeactivateCallAddress" FunctionName="TerritoryDataModel.Store.DeactivateCallAddress" />
+          <FunctionImportMapping FunctionImportName="GetMapActivityDetail" FunctionName="TerritoryDataModel.Store.GetMapActivityDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TerritoryDataModel.GetMapActivityDetail_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CallGroupId" ColumnName="CallGroupId" />
+                <ScalarProperty Name="CallGroupName" ColumnName="CallGroupName" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateReleased" ColumnName="DateReleased" />
+                <ScalarProperty Name="DateReturned" ColumnName="DateReturned" />
+                <ScalarProperty Name="CallTypeName" ColumnName="CallTypeName" />
+                <ScalarProperty Name="CycleName" ColumnName="CycleName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,7 @@
+packages/DotNetOpenAuth.AspNet.4.1.4.12333/DotNetOpenAuth.AspNet.4.1.4.12333.nupkg
+packages/
+bin/
+obj/
+*.user
+*.suo
+TMS.Web/Properties/PublishProfiles/TMSWeb.pubxml

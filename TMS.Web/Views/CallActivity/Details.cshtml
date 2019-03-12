@@ -1,0 +1,151 @@
+﻿@using TMS.Web.Helpers
+@using TerritoryManagementSystem.Models
+@model TerritoryManagementSystem.Models.CallActivityModel
+@{
+    ViewBag.Title = "Call Activity Assignment";
+    ViewBag.CancelText = "Cancel";
+    ActionBarModel actionBarModel = new ActionBarModel(ViewBag.Title, Url.Action("Index", "CallActivity")) { ShowSaveExit = true };
+    var allowAssign = ViewBag.LoggedInPublisher.IsElder || ViewBag.LoggedInPublisher.IsAssistantBrother;        
+    var hasSomeDone = (bool)(!allowAssign || (Model.IsEditMode && allowAssign && Model.CallActivityAddresses.Count(w => w.CallActivityStatusId != null && w.CallActivityStatusId > 0) > 0));
+    var allDone = (bool)(!allowAssign || (Model.IsEditMode && allowAssign && Model.CallActivityAddresses.Count(w => w.CallActivityStatusId != null && w.CallActivityStatusId > 0) == Model.CallActivityAddresses.Count));
+}
+
+@section pageCss{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/page/callActivity.css")" />
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        var now = new Date();
+
+        $('.datepicker').datepicker({            
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            endDate: 0,
+            maxDate: 0
+        })
+
+        $(document).ready(function () {
+            $("#CallActivity_CallGroupId").change(function () {
+                var callGroup = $("#CallActivity_CallGroupId").val();
+                $.ajax({
+                    type: "get",
+                    url: "GetAddressesByGroup?callGroupId=" + callGroup,
+                    dataType: "html",
+                    data: "CallActivity_CallGroupId=" + callGroup,
+                    contentType: "application/x-www-form-urlencoded;charset=utf-8",                 
+                    success: function (result) { validate(result); },
+                    error: function (e) { display(e); }
+                });
+            });
+        });
+        function validate(result) {
+            $("#addressList").html("");
+            $("#addressList").html(result);
+        }
+        function display(e) { }
+    </script>
+}
+
+@section actionBar
+{
+    @Html.Partial("_ViewActionBar", actionBarModel)
+}
+
+<div>
+@using (Html.BeginForm("Details", "CallActivity", FormMethod.Post))
+{
+    <div class="container">
+        @Html.HiddenFor(m => m.CallActivity.Id)
+
+        @if (allDone){
+            @Html.HiddenFor(m => m.CallActivity.CallTypeId)
+        }
+
+        @if (hasSomeDone){
+            @Html.HiddenFor(m => m.CallActivity.ReleasedToPublisherId)
+        }
+
+        @if (Model.IsEditMode)
+        {            
+            @Html.HiddenFor(m => m.CallActivity.CallGroupId)            
+            @Html.HiddenFor(m => m.CallActivity.CycleId)            
+            <div class="row">
+                <div class="span12 row-fluid">
+                    <div class="cycleText">Released During @Model.CallActivity.Cycle.CycleName.ToUpper()</div>
+                </div>
+            </div>
+        }
+        
+        <div class="row">
+            <div class="span8">
+                <div class="row-fluid">
+                    <div class="span6">
+                        @Html.DropDownListWithLabelFor(m => m.CallActivity.CallTypeId, Model.CallTypessSelectList, "Call Type", allDone)
+                        @Html.ValidationMessagesFor(m => m.CallActivity.CallTypeId)
+                    </div>
+
+                    <div class="span4">
+                        @Html.DropDownListWithLabelFor(m => m.CallActivity.ReleasedToPublisherId, Model.PublishersSelectList, "Publisher", hasSomeDone)
+                        @Html.ValidationMessagesFor(m => m.CallActivity.ReleasedToPublisherId)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span8">
+                <div class="row-fluid">
+                    @{                        
+                        var attrDate = WebHelper.ControlToReadOnly(false, new { @class = "datepicker inputHeight20", placeholder = "yyyy-mm-dd" });
+                        if (!ViewBag.LoggedInPublisher.IsElder)
+                        {
+                            attrDate = WebHelper.ControlToReadOnly(true, new { @class = "inputHeight20", placeholder = "yyyy-mm-dd" });
+                        }
+                    }
+                    <div class="span6">
+                        @Html.Label("Date Released", new { @class = "dropdownLabel" })                        
+                        @Html.TextBoxFor(m => m.CallActivity.DateReleased, "{0:yyyy-MM-dd}", attrDate)
+                        @Html.ValidationMessagesFor(m => m.CallActivity.DateReleased)
+                    </div>
+                        
+                    @if (Model.IsEditMode && ViewBag.LoggedInPublisher.IsElder)
+                    {                      
+                        <div class="span4">
+                            @Html.Label("Date Completed " + @Model.CallActivity.TempDateReleased, new { @class = "dropdownLabel" })
+                            @Html.TextBoxFor(m => m.CallActivity.DateReturned, "{0:yyyy-MM-dd}", attrDate)
+                            @Html.ValidationMessagesFor(m => m.CallActivity.DateReturned)
+                        </div>
+                    }                                                             
+                </div>                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span8">
+                        <div class="pull-left">
+                            @Html.DropDownListWithLabelFor(m => m.CallActivity.CallGroupId, Model.AvailableMapsSelectList, "Map", Model.IsEditMode)
+                            @Html.ValidationMessagesFor(m => m.CallActivity.CallGroupId)
+                        </div>                                    
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(@Model.CallActivity.TempDateReleased))
+                    {
+                        <div class="pull-right" style="margin-top: -23px; margin-right: 18px;">
+                            <span class="error">* <i>Please try to do again ""Not At Home 1" address(es).</i></span>
+                        </div>
+                    }                    
+                </div>
+            </div>
+        </div>        
+
+        <div id="addressList" style="margin-right:18px;">
+            @Html.Partial("_CallActivityAddress", Model)
+        </div> 
+
+        <input id="btnsave" type="submit" class="hide" />
+    </div>
+}
+</div>

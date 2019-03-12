@@ -1,0 +1,91 @@
+﻿@using TMS.Web.Helpers
+@using TerritoryManagementSystem.Models
+@model TerritoryManagementSystem.Models.ReportsModel
+@{
+    ViewBag.Title = "Activity Summary Report";
+    ViewBag.PrintText = "Generate Report";
+    ViewBag.printerHref = Url.Action("MapActivitySummary", "Reports", new { dateFrom = Model.DateFrom, dateTo = Model.DateTo });
+    ActionBarModel actionBarModel = new ActionBarModel(Model.ReportTitle, "") { ShowPrinter = true };
+
+    var printButton = new ActionBarModel.CustomToolBarButton()
+    {
+        Href = "",
+        SpanClass = "icon-print",
+        Title = "Generate Report",
+        OnClickJavascript = " return OnGenerateReport(); "
+    };
+    var customButtons = new List<ActionBarModel.CustomToolBarButton> { printButton };
+}
+
+@section actionBar
+{  
+    @Html.Partial("_ViewActionBar", new ActionBarModel(Model.ReportTitle) { CustomButtons = customButtons })
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        var now = new Date();
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            endDate: 0,
+            maxDate: 0
+        })       
+
+    function OnGenerateReport() {
+        var dateFrom = $("#dateFrom").val();
+        var dateTo = $("#dateTo").val();
+
+        if (dateFrom == undefined || dateFrom == "" || dateTo == undefined || dateTo == "")
+        {
+            alert('Dates must not be empty.');
+            return false;
+        }
+
+        if (dateFrom > dateTo) {
+            alert('Date From must not be later than Date To.');
+            return false;
+        }
+
+        var url = '@Html.Raw(Url.Action("MapActivitySummary", "Reports"))';
+        var params = {
+            dateFrom: dateFrom,
+            dateTo: dateTo
+        };
+
+        window.open(url + '?' + $.param(params));       
+    }
+    </script>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span3">
+                    @Html.Label("Date From", new { @class = "dropdownLabel" })
+                    @Html.TextBoxFor(m => m.DateFrom, new
+        {
+            id = "dateFrom",
+            @class = "datepicker inputHeight20",
+            placeholder = "yyyy-mm-dd",
+            Value = @Model.DateFrom.ToString("yyyy-MM-dd")
+        })
+                </div>
+
+                <div class="span3">
+                    @Html.Label("Date To", new { @class = "dropdownLabel" })
+                    @Html.TextBoxFor(m => m.DateTo, new
+                                                {
+                                                    id = "dateTo",
+                                                    @class = "datepicker inputHeight20",
+                                                    placeholder = "yyyy-mm-dd",
+                                                    Value = @Model.DateTo.ToString("yyyy-MM-dd")
+                                                })
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

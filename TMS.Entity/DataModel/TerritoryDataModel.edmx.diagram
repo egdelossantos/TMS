@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0f0618c84bd4489c99cc08e0ad759b6d" Name="Diagram1">
+        <EntityTypeShape EntityType="TerritoryDataModel.CallActivityWarning" Width="1.5" PointX="0.875" PointY="10.625" />
+        <EntityTypeShape EntityType="TerritoryDataModel.CallAddressNote" Width="1.5" PointX="5.25" PointY="14.5" />
+        <EntityTypeShape EntityType="TerritoryDataModel.CallType" Width="1.5" PointX="0.75" PointY="8.375" />
+        <EntityTypeShape EntityType="TerritoryDataModel.Country" Width="1.5" PointX="4.25" PointY="18.5" />
+        <EntityTypeShape EntityType="TerritoryDataModel.State" Width="1.5" PointX="1.5" PointY="18.5" />
+        <EntityTypeShape EntityType="TerritoryDataModel.Suburb" Width="1.5" PointX="0.75" PointY="14.375" />
+        <EntityTypeShape EntityType="TerritoryDataModel.webpages_Membership" Width="1.5" PointX="7.375" PointY="8.375" />
+        <EntityTypeShape EntityType="TerritoryDataModel.webpages_PasswordResets" Width="1.5" PointX="9.125" PointY="11.5" />
+        <EntityTypeShape EntityType="TerritoryDataModel.webpages_Roles" Width="1.5" PointX="9.125" PointY="9.625" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivityWarning_CallType" />
+        <AssociationConnector Association="TerritoryDataModel.FK_State_Country" />
+        <AssociationConnector Association="TerritoryDataModel.FK_Suburb_State" />
+        <AssociationConnector Association="TerritoryDataModel.FK_PasswordResets" />
+        <AssociationConnector Association="TerritoryDataModel.webpages_UsersInRoles" />
+        <EntityTypeShape EntityType="TerritoryDataModel.CallActivityStatu" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="TerritoryDataModel.Cycle" Width="1.5" PointX="3.375" PointY="9.875" />
+        <EntityTypeShape EntityType="TerritoryDataModel.SystemReference" Width="1.5" PointX="5.625" PointY="21.125" />
+        <AssociationConnector Association="TerritoryDataModel.FK_SystemReference_Cycle" />
+        <EntityTypeShape EntityType="TerritoryDataModel.CallActivity" Width="1.5" PointX="16" PointY="2.875" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_CallType" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_Cycle" />
+        <EntityTypeShape EntityType="TerritoryDataModel.CallActivityAddress" Width="1.5" PointX="18.25" PointY="5.375" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_CallActivityAddress" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivityAddress_CallActivityStatus" />
+        <EntityTypeShape EntityType="TerritoryDataModel.Publisher" Width="1.5" PointX="5.125" PointY="5.875" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_Publisher" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_Publisher1" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_Publisher2" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_Publisher3" />
+        <AssociationConnector Association="TerritoryDataModel.FK_Publisher_webpages_Roles" />
+        <AssociationConnector Association="TerritoryDataModel.FK_webpages_Membership_Publisher" />
+        <EntityTypeShape EntityType="TerritoryDataModel.CallAddress" Width="1.5" PointX="20.5" PointY="6.5" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivityAddress_CallAddress" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallAddress_CallActivityStatus" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallAddress_Suburb" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallAddressNote_CallAddress" />
+        <EntityTypeShape EntityType="TerritoryDataModel.vwAddress" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TerritoryDataModel.CallGroup" Width="1.5" PointX="18.25" PointY="0.75" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_CallGroup" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallGroup_CallActivity" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallGroup_CallActivity1" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallAddress_CallGroup" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

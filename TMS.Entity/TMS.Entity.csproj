@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D4F8B539-F422-43E8-B29E-70A95EC6F737}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TMS.Entity</RootNamespace>
+    <AssemblyName>TMS.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataModel\CallActivity.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CallActivityAddress.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CallActivityStatu.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CallActivityWarning.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CallAddress.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CallAddressNote.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CallGroup.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CallType.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Country.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Cycle.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GetMapActivityDetail_Result.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GetMapActivitySummary_Result.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GetMapActivity_Result.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GetUnReturnedCallAddress_Result.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GetUnreturnedMap_Result.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Interfaces\IEntity.cs" />
+    <Compile Include="DataModel\MetaData\CallActivityAddress.cs" />
+    <Compile Include="DataModel\MetaData\CallActivityStatu.cs" />
+    <Compile Include="DataModel\MetaData\CallActivityWarning.cs" />
+    <Compile Include="DataModel\MetaData\CallAddressNote.cs" />
+    <Compile Include="DataModel\MetaData\CallActivity.cs" />
+    <Compile Include="DataModel\MetaData\CallAddress.cs" />
+    <Compile Include="DataModel\MetaData\CallGroup.cs" />
+    <Compile Include="DataModel\MetaData\SystemReference.cs" />
+    <Compile Include="DataModel\MetaData\Cycle.cs" />
+    <Compile Include="DataModel\MetaData\CallType.cs" />
+    <Compile Include="DataModel\MetaData\Country.cs" />
+    <Compile Include="DataModel\MetaData\Publisher.cs" />
+    <Compile Include="DataModel\MetaData\State.cs" />
+    <Compile Include="DataModel\MetaData\Suburb.cs" />
+    <Compile Include="DataModel\PlotAddressInMapModel.cs" />
+    <Compile Include="DataModel\Publisher.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\State.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Suburb.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\SystemReference.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TerritoryDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TerritoryDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TerritoryDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TerritoryDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TerritoryDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\vwAddress.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\webpages_Membership.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\webpages_PasswordResets.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\webpages_Roles.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\ActivityStatusEnum.cs" />
+    <Compile Include="Enum\CallTypeEnum.cs" />
+    <Compile Include="Enum\PublisherEnum.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DataModel\TerritoryDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TerritoryDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataModel\TerritoryDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TerritoryDataModel.edmx</DependentUpon>
+      <LastGenOutput>TerritoryDataModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DataModel\TerritoryDataModel.edmx.diagram">
+      <DependentUpon>TerritoryDataModel.edmx</DependentUpon>
+    </None>
+    <None Include="DataModel\TerritoryDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TerritoryDataModel.edmx</DependentUpon>
+      <LastGenOutput>TerritoryDataModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TMS.Common\TMS.Common.csproj">
+      <Project>{ba13fe3f-fda6-416d-93d3-7b56146d1fb6}</Project>
+      <Name>TMS.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

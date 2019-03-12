@@ -1,0 +1,62 @@
+﻿@using TMS.Web.Helpers
+@using TerritoryManagementSystem.Models
+@model TerritoryManagementSystem.Models.ReportsModel
+
+@{
+    ViewBag.Title = Model.ReportTitle;
+    ActionBarModel actionBarModel = new ActionBarModel(ViewBag.Title) { ShowCancel = false };
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        var now = new Date();
+
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            endDate: 0,
+            maxDate: 0
+        })
+
+        //$(document).ready(function () {
+        //    $("#btnGenerate").click(function () {
+        //        var dateFrom = moment($("#dateFrom").val()).format("YYYY-MM-DD");
+        //        var dateTo = moment($("#dateTo").val()).format("YYYY-MM-DD");
+        //        $.ajax({
+        //            type: "get",
+        //            url: "MapActivityPDFReport",
+        //            dataType: "html",
+        //            data: {
+        //                dateFrom: dateFrom,
+        //                dateTo: dateTo,
+        //                extension: "pdf"
+        //            },
+        //            contentType: "application/x-www-form-urlencoded;charset=utf-8",                    
+        //            success: function (result) { validate(result); },
+        //            error: function (e) { display(e); }
+        //        });
+        //    });
+
+
+        //});
+        //function validate(result) {
+        //    $("#report").html("");
+        //    $("#report").html(result);
+        //}
+        //function display(e) { }
+    </script>
+}
+
+@section actionBar
+{
+    @Html.Partial("_ViewActionBar", actionBarModel)
+}
+
+<div>
+    @Html.Partial("_DateFilter", Model)
+</div>
+
+@*<div id="report">
+    @Html.Partial("_MapActivityReport", Model)
+</div>*@ 

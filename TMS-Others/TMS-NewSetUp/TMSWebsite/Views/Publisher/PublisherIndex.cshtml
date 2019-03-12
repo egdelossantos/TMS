@@ -1,0 +1,53 @@
+﻿@using TMS.Web.Helpers
+@using TerritoryManagementSystem.Models
+
+@{   
+    var createAction = ViewBag.CreateAction;
+    var dataSourceUrl = ViewBag.DataSourceUrl;
+    var editUrl = ViewBag.EditUrl;
+    var actionBarModel = new ActionBarModel(ViewBag.Title) { ShowCreate = true, CreateHref = @Url.Action(createAction) };
+}
+
+@section scriptFiles{  
+    <script type="text/javascript" src="@Url.Content("~/scripts/datatables.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/tms/tms.datatable.js")"></script>
+}
+
+@section scriptBody{
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var options = {
+                elementId: '#publisherListing',
+                ajaxSource: '@Url.Action(dataSourceUrl, "Publisher")',
+                ajaxProperty: 'publishers',
+                columns: [                   
+                    { mData: "name"},
+                    { mData: "emailaddress" },
+                    { mData: "phonenumber" },                  
+                    { mData: "isActive", mRender: tmsDatatable.renderCheckbox, bSearchable: false, sType: 'string' },
+                    { mData: "id", mRender: tmsDatatable.renderFullButtons, bSearchable: false, sType: 'string' }]
+            };
+
+            tmsDatatable.init(options);
+    });
+    </script>
+}
+
+@section actionBar{
+    @Html.Partial("_ViewActionBar", actionBarModel)
+}
+
+@Html.Partial("_IndexTableTemplates", new IndexTableModel { EditLink = Url.Action(editUrl, "Publisher"), DeleteLink = Url.Action("DeactivateEmployee", "Publisher") })
+
+<table id="publisherListing" class="display">
+    <thead>
+        <tr>            
+            <th>Name</th>
+            <th>Email Address</th>
+            <th>Phone Number</th>            
+            <th>Active</th>
+            <th style="min-width: 60px"></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>

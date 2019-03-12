@@ -1,0 +1,63 @@
+﻿    <div class="container" data-ng-controller="menu.controller">
+    <div class="pull-left" style="width:100%;">
+        <div class="pull-left">
+            <a href='@Url.Action("Index", "Home")' class="logo"></a>
+        </div>
+        <div class="pull-left">
+            <ul id="menu">
+                @if (Request.IsAuthenticated)
+                {
+                    <li><a href="~/CallActivity" target="_self"><i class="icon-calendar"></i> CALL ACTIVITY</a></li>
+
+                    if (ViewBag.LoggedInPublisher.IsTerritoryOverseer)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="menuReport">
+                                <i class="icon-file"></i> REPORT
+                            </a>
+                            <ul class="dropdown-menu noUnderline" id="reportsubmenu">
+                                <li class="noPadding">
+                                    @Html.ActionLink("Activity Summary Report", "ActivitySummaryReport", "ReportsFilter")
+                                </li>
+                                <li class="noPadding">
+                                    @Html.ActionLink("Current Map Address", "CurrentMapAddressReport", "Reports", null, new { target = "_blank" })
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="menuManage">
+                                <i class="icon-wrench"></i> MANAGE
+                            </a>
+                            <ul class="dropdown-menu noUnderline" id="managesubmenu">
+                                <li class="noPadding">
+                                    @Html.ActionLink("Set Maps To Be Released", "MapsAllowedToBeReleased", "Map")
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    
+                    <li>
+                       
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()                                
+                                <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-off"></i> LOG OUT</a>                               
+                            }
+                        
+                    </li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Territory Management System", "Index", "Home")</li>
+                }
+            </ul>
+        </div>
+        @*<div class="pull-right">
+            <section id="login">
+                @Html.Partial("_LoginPartial")
+            </section>
+        </div>*@
+        
+    </div>
+</div>
+

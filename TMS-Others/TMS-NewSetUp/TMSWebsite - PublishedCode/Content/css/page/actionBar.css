@@ -1,0 +1,79 @@
+﻿.actionBarWrap
+{
+    border-bottom: 1px solid #e6e6e6;
+    border-right:none;
+    border-left:none;            
+    margin-bottom: 20px;
+    height: 40px;
+}
+
+.actionBar
+{
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.actionBar h4
+{    
+    float: left;
+    color: #4e94ab;
+}
+
+.actionBar h5
+{    
+    float: left;
+    color: #4e94ab;
+}
+
+.actionBarHeader1 {
+    color: #4e94ab;
+    font-weight:bold;
+    font-size: 1em;
+}
+
+.actionBarHeader2
+{
+    color: #4e94ab;
+    font-weight:bold;
+    font-size: 1.3em;
+}
+
+.actionBar ul li
+{
+    padding: 10px 15px 0;
+    height: 30px;
+    border-right: solid 1px #E6E6E6;
+}
+
+.actionBar ul li:first-child
+{
+    border-left: solid 1px #E6E6E6;
+}
+
+.actionButtonBar{
+    margin-top:10px;
+}
+
+ul.hList{margin:0; padding:0;}
+
+ul.hList li {
+	display:inline;
+	float:left;
+	margin:0; padding:0;
+}
+
+.actionBarright {
+	float: right !important;
+}
+
+.actionBarleft {
+	float: left !important;
+}
+
+.clr {
+	clear:both;
+	height:0;
+	line-height:0;
+	display:block;
+	float:none;
+}

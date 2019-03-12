@@ -1,0 +1,15 @@
+﻿.accordion{
+    margin-bottom: 0px;
+}
+
+.tblAddress td, .tblAddress th{
+    border: none;
+}
+
+.tblAddress{
+    width:100%;
+}
+
+.divAddress{
+    padding-left: 30px;
+}

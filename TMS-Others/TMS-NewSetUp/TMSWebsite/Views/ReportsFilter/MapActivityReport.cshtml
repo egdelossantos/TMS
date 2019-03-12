@@ -1,0 +1,35 @@
+﻿@model TerritoryManagementSystem.Models.ReportsModel
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span3">
+                    @Html.Label("Date From", new { @class = "dropdownLabel" })
+                    @Html.TextBoxFor(m => m.DateFrom, new { 
+                                                            id = "dateFrom", 
+                                                            @class = "datepicker inputHeight20", 
+                                                            placeholder = "yyyy-mm-dd",
+                                                            Value = @Model.DateFrom.ToString("yyyy-MM-dd")
+                                                        })                    
+                </div>
+
+                <div class ="span3">
+                    @Html.Label("Date To", new { @class = "dropdownLabel" })
+                    @Html.TextBoxFor(m => m.DateTo, new
+                                                        {
+                                                            id = "dateFrom",
+                                                            @class = "datepicker inputHeight20",
+                                                            placeholder = "yyyy-mm-dd",
+                                                            Value = @Model.DateFrom.ToString("yyyy-MM-dd")
+                                                        })
+                     
+                </div>
+
+                <div class="span4" style="margin-top:32px;">
+                    @Html.ActionLink("Generate Report", "MapActivityPDFReport", "Reports", new { extension = "pdf" }, new { target="_blank" })                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

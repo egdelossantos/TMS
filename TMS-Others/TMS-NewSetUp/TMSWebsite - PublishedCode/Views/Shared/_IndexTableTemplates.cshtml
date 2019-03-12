@@ -1,0 +1,29 @@
+﻿@model TerritoryManagementSystem.Models.IndexTableModel
+
+<script id="fullButtonTemplate" type="text/html">
+    <div class="btnListWrap">
+        <ul class="btnList">
+            <li><a href="@Model.EditLink?id=$id$" class="i16 editSml hasTip" title="Edit" id="edit_$id$">Edit</a></li>
+            <li>
+                <form action="@Model.DeleteLink" method="post">
+                    <input type="hidden" id="id" name="id" value="$id$" />                   
+                    <button type="submit" class="deleteSml hasTip" title="Deactivate agent?" id="deactivate_$id$"></button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script id="editButtonTemplate" type="text/html">
+    <div class="btnListWrap">
+        <ul class="btnList">
+            <li><a href="@Model.EditLink?id=$id$" class="i16 editSml hasTip" title="Edit" id="editLink_$id$">Edit</a></li>            
+        </ul>
+    </div>
+</script>
+    
+<script id="checkboxTemplate" type="text/html">
+    <div class="custom-checkbox">
+        <label class="$labelClass$"></label>
+    </div>
+</script>

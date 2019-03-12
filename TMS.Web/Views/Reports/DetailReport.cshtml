@@ -1,0 +1,31 @@
+﻿@model TerritoryManagementSystem.Models.DetailReportModel
+<h4>@Model.ReportTitle</h4>
+<h5>Period : @Model.ReportPeriod</h5>
+<br />
+
+<table cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="5%">&nbsp;</td>
+        <td width="30%"><h5>Publisher</h5></td>
+        <td width="20%"><h5>Date Released</h5></td>
+        <td width="20%"><h5>Date Returned</h5></td>
+        <td width="25%"><h5>Call Type</h5></td>
+    </tr>
+    @foreach (var callGroup in Model.CallGroupList.OrderBy(o => o.CallGroupName))
+    {
+        <tr cellpadding="2">
+            <td colspan="5" width="100%"><h5>@callGroup.CallGroupName.ToUpper() (@callGroup.CallAddresses.Count())</h5></td>
+        </tr>
+
+        foreach (var activity in Model.Result.Where(w => w.CallGroupId == callGroup.Id).OrderBy(o => o.DateReleased).ToList())
+        {
+            <tr >
+                <td width="5%">&nbsp;</td>
+                <td width="30%"><h5>@activity.Name</h5></td>
+                <td width="20%"><h5>@string.Format("{0:d}", @activity.DateReleased)</h5></td>
+                <td width="20%"><h5>@string.Format("{0:d}", @activity.DateReturned)</h5></td>
+                <td width="25%"><h5>@activity.CallTypeName</h5></td>
+            </tr>
+        }
+    }
+</table>

@@ -1,0 +1,107 @@
+﻿@model TerritoryManagementSystem.Models.ActionBarModel 
+              
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/page/actionBar.css")" />
+
+<div class="actionBarWrap">
+    <div class="actionBar">
+        <div class="actionBarleft">
+            <div class="actionBarHeader1">
+                @ViewBag.LoggedInPublisher.Name (@ViewBag.CurrentCycle.CycleName)
+            </div>
+            <div class="actionBarHeader2">
+                @Model.Title
+            </div>                      
+        </div>
+
+        <div class="actionBarright actionButtonBar">
+            <ul class="hList">
+                @if (Model.ShowBackward)
+                {
+                    <li class="noUnderline actions">
+                        <a href="@ViewBag.backwardHref" data-bind="click: actionBar.confirmAction"><i class="icon-hand-left"></i> Back</a>
+                    </li>
+                }
+
+                @if (Model.ShowForward)
+                {
+                    <li class="noUnderline actions">
+                        <a href="@ViewBag.forwardHref" data-bind="click: actionBar.confirmAction"><i class="icon-hand-right"></i> Next </a>
+                    </li>
+                }
+
+                @if (Model.ShowSave)
+                {
+                    <li class="noUnderline actions">
+                        <a href="javascript:;" onclick=" return actionBar.saveOnly(); " id="linkSave"><i class="icon-file"></i> Save </a>
+                    </li>
+                }
+
+                @if (Model.ShowSaveExit)
+                {
+                    <li class="noUnderline actions">
+                        <a href="javascript:;" onclick=" return actionBar.saveExit();" id="linkSaveAndExit"><i class="icon-file"></i> Save &amp; Exit</a>
+                    </li>
+                }
+
+                @if (Model.ShowSaveContinue)
+                {
+                    <li class="noUnderline actions">
+                        <a href="javascript:;" onclick=" return actionBar.saveOnly(); " id="linkSaveAndContinue"><i class="icon-ok"></i> @(ViewBag.SaveText ?? "Save & Continue") </a>
+                    </li>
+                }
+
+                @if (Model.ShowCancel)
+                {
+                    <li class="noUnderline actions">
+                        <a href="@Model.CancelHref" data-bind="click: actionBar.confirmAction"><i class="icon-minus-sign"></i> @(ViewBag.CancelText ?? "Cancel") </a>
+                    </li>
+                }
+
+                @if (Model.ShowLaunch)
+                {
+                    <li> <a href="" class="button xLarge"><span><span class="icon icoLaunch"></span>Launch </span> </a></li>
+                }
+
+                @if (Model.ShowCreate)
+                {
+                    <li class="noUnderline actions">
+                        <a href="@Model.CreateHref"><i class="icon-plus"></i> Create New</a>
+                    </li>
+                }
+
+                @foreach (var t in Model.CustomButtons)
+                {
+                    var href = t.Href;
+                    var onclickJavascript = t.OnClickJavascript;
+                    if (!string.IsNullOrEmpty(onclickJavascript))
+                    {
+                        href = "javascript:;";
+                    }
+                    <li class="noUnderline actions">
+                        @if (string.IsNullOrEmpty(t.ButtonId))
+                        {
+                            <a href="@href" onclick="@Html.Raw(onclickJavascript)"><i class="@t.SpanClass"></i> @t.Title</a>
+                        }
+                        else
+                        {
+                            <a href="@href" id="@t.ButtonId" onclick="@Html.Raw(onclickJavascript)"><i class="@t.SpanClass"></i> @t.Title</a>
+                        }
+                    </li>
+                }
+
+                @if (Model.ShowDelete)
+                {
+                    <li class="noUnderline actions">
+                        <a href="@ViewBag.deleteHref"><i class="icon-trash"></i> Delete</a>
+                    </li>
+                }
+
+                @if (Model.ShowPrinter)
+                {
+                    <li><a href="@ViewBag.printerHref" class="button xLarge" target="_blank"><span><span class="icon-file"></span>@(ViewBag.PrintText ?? "Print")</span> </a></li>
+                }
+            </ul>
+        </div>
+        <div class="clr"> </div>
+    </div>
+</div>

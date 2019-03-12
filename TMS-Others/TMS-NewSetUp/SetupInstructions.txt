@@ -1,0 +1,38 @@
+SetUp Instructions:
+
+Database:
+1. Create the database. Name it whatever you like. For Example in this case: TestDB
+2. Create login account in the database server
+3. Run DBScript.sql to create tables, stored procedures and functions
+4. Run PopulateReferenceTables.sql to populate reference tables
+5. Populate map address and publishers by following the template in InsertTemplates.xlsx
+
+
+Website
+1. Download the website code from 
+2. Setup website in IIS - name it whatever you like
+3. Point the website to the location of the website code
+4. Make sure that the Static Content setting in IIS is enabled
+	To install the Static Content feature on the Windows Vista and Windows 7 client operating systems, follow these steps:
+	a. Click Start, and then click Control Panel.
+	b. Double-click Programs and Features.
+	c. Click Turn Windows features on or off.
+		Note If you are prompted for an administrator password or for a confirmation, type the password or click Continue. 
+	d. Expand Internet Information Services --> World Wide Web Services --> Common HTTP Features --> Click the Static Content check box to install, and then click OK.
+5. Check and update the connection string in config file (Config\connectionstring.config) 
+	data source=<IP ADDRESS OR DB SERVER NAME>  eg data source=10.0.0.1 
+	initial catalog=<DATABASE NAME>
+	user id=<DB USERNAME>
+	password=<DB PASSWORD>
+6. Copy the connectionstring.config to bin\Config
+7. check the url path in Scripts\tms-bootstrap\require.config.js file
+8. Update congregation name in Views\Shared\_Layout.cshtml - replace <CONGREGATION NAME> with the correct name
+9. Get your own goole map api key - and use it in Views\Shared\_Layout.cshtml
+	@Scripts.Render("https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap")
+
+
+Note:
+When testing assigning of map to publisher in your localhost, please take note that you will get an error when you click the button "Assign Map to Publisher".
+The error is HTTP Error 404.0 - Not Found and your URL is http://localhost/CallActivity/Details?id=0
+To make this work, simply add the website name you setup in IIS here http://localhost/YOUR_WEBSITE_NAME/CallActivity/Details?id=0
+In this case for example, if the website name is TMSTest then the URL should be http://localhost/TMSTest/CallActivity/Details?id=0

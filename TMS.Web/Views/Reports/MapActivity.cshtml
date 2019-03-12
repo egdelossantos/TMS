@@ -1,0 +1,19 @@
+﻿@model TerritoryManagementSystem.Models.MapActivityReportModel
+
+<table>
+    <tr>
+        <th>Map Name</th>
+        <th>Publisher</th>
+        <th>Date Released</th>
+        <th>Date Returned</th>
+    </tr>
+    @foreach (var mapActivity in Model.MapActivities)
+    {
+        <tr>
+            <td>@mapActivity.MapNameDisplay</td>
+            <td>@mapActivity.PublisherName</td>
+            <td>@mapActivity.DateReleased</td>
+            <td>@mapActivity.DateReturned</td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,1 @@
+alter table Suburb add PostCode nvarchar(10)

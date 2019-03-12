@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />       
+        <title>@ViewBag.Title - Territory Management System</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        @Styles.Render("~/tms/css")
+        @Scripts.Render("~/bundles/modernizr")          
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/bootstrap/css/bootstrap.min.css")" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/bootstrap/css/datepicker.css")" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/toastr.min.css")" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/sorting.css")" />       
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/datatables.css")" />
+        @RenderSection("pageCss", required: false)
+    </head>
+    <body>
+        <header>
+            <div style="background-color: #4e94ab; ">
+                @Html.Partial("_ViewHeader")                
+            </div>          
+        </header>
+       
+        <div id="body">               
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                <div id="wrapper">
+                    @if (IsSectionDefined("actionBar"))
+                    {
+                        @RenderSection("actionBar")
+                    }
+                    @RenderBody()
+
+                    <div id="copyright" dir="ltr">
+                        <div class="text-center">
+                            <p>&copy; @DateTime.Now.Year <b>Territory Management System - Kings Park Filipino Congregation</b></p>
+                        </div>
+                    </div>
+                </div>
+            </section>            
+        </div>      
+               
+        @Scripts.Render("~/scripts/tms-bootstrap/require.config.js")
+        @Scripts.Render("~/scripts/libs/require/require.js")        
+        @Scripts.Render("~/scripts/tms-bootstrap/spa.startup.js")        
+        @Scripts.Render("~/scripts/jquery-2.0.3.min.js")    
+        @Scripts.Render("~/scripts/bootstrap-datepicker.js")
+        @Scripts.Render("~/scripts/moment.js")
+        @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyCSBJ9jDvWV1QS27UTuh59F6kBhepYJ5Js&callback=initMap")
+        @Scripts.Render("~/scripts/mapwithmarker.js")        
+        @Scripts.Render("~/scripts/page/actionBarFunctions.js")      
+        @Scripts.Render("~/scripts/page/tmx.ajax.js") 
+        @Scripts.Render("~/scripts/page/mapPlotter.js") 
+       
+        @RenderSection("scripts", required: false)
+        
+        @if (IsSectionDefined("scriptFiles"))
+        {
+            @RenderSection("scriptFiles")
+        }
+        
+        @if (IsSectionDefined("scriptBody"))
+        {
+            @RenderSection("scriptBody")
+        } 
+    </body>
+</html>

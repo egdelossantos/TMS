@@ -1,0 +1,17 @@
+﻿@model TerritoryManagementSystem.Models.SummaryReportModel
+
+<h4>@Model.ReportTitle</h4>
+<h5>Period : @Model.ReportPeriod</h5>
+<br />
+<br />
+<div><h5>PERIOD STATISTICS:</h5></div>
+<div><h5>Total Number of Maps : @Model.Result.TotalNumberOfMap</h5></div>
+<div><h5>Number of Completed Maps : @Model.Result.TotalCompletedMap</h5></div>
+<div><h5>Number of Times Completed : @Model.Result.NumberOfTimesDone</h5></div>
+<div><h5>Number of Undone Maps during this period : @Model.Result.TotalNotDoneMap</h5></div>
+<br />
+<br />
+<div><h5>CURRENT STATISTICS:</h5></div>
+<div><h5>Active Maps : @Model.Result.TotalActiveMap</h5></div>
+<div><h5>Cycle : @Model.Result.CurrentCycle</h5></div>
+<div><h5>Undone Maps in Cycle @Model.Result.CurrentCycle : @Model.Result.CycleUndoneMap</h5></div>

@@ -1,0 +1,9 @@
+﻿.googleMap { 
+    height: 500px; 
+    width:400px; 
+    margin: 10px; 
+    padding: 10px;
+}
+.gm-style img { max-width: none; }
+.gm-style label { width: auto; display: inline; }
+.labels { color: black;  font-family: Arial; font-size: 11px; font-weight: bold; text-align: center; width: 12px; }

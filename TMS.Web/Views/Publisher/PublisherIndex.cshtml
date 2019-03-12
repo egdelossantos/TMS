@@ -1,0 +1,50 @@
+﻿@using TMS.Web.Helpers
+@using TerritoryManagementSystem.Models
+
+@{   
+    var createAction = ViewBag.CreateAction;
+    var dataSourceUrl = ViewBag.DataSourceUrl;
+    var editUrl = ViewBag.EditUrl;
+    var actionBarModel = new ActionBarModel(ViewBag.Title) { ShowCreate = true, CreateHref = @Url.Action(createAction) };
+}
+
+@section actionBar{
+    @Html.Partial("_ViewActionBar", actionBarModel)
+}
+
+
+    <div data-ng-controller="publisher.controller" data-ng-init="initList()" class="container">
+    <div class="table-responsive">
+        <div style="margin-bottom: 5px; padding:0px;">
+            <div style="float:left;">
+                <span>Filter &nbsp;</span>
+                <input type="text" ng-model="filterTerms.searchTerm" placeholder="Search by publisher name, email address or phone number" style="width: 400px;" />
+            </div>
+        </div>
+        <table class="table table-bordered table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email Address</th>
+                    <th>Phone Number</th>
+                    <th>Role</th>
+                    <th>Active</th>
+                </tr>
+            </thead>
+            <tbody data-ng-repeat="publisher in Publishers.publishers | publisherFilter: filterTerms.searchTerm">
+                <tr>
+                    <td class="span1"><b>{{ $index + 1 }}</b></td>
+                    <td class="span4">{{ publisher.name }}</td>
+                    <td class="span2">{{ publisher.emailaddress }}</td>
+                    <td class="span2">{{ publisher.phonenumber }}</td>
+                    <td class="span2">{{ publisher.roleName }}</td>
+                    <td class="span1">{{ publisher.isActive ? 'Yes' : 'No' }}</td>
+                </tr>
+            </tbody>
+            <tr ng-show="!Publishers.publishers.length">
+                <td colspan="6" style="text-align: center; margin-top: 10px; color: #4e94ab;">No call activity found</td>
+            </tr>
+        </table>
+    </div>
+</div>

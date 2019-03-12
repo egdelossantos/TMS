@@ -1,0 +1,62 @@
+﻿@using TMS.Web.Helpers
+@model TerritoryManagementSystem.Models.CallActivityModel
+@{
+    var allowEdit = Model.IsEditMode;
+}
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-condensed">
+        <tr>
+            <th>
+                Address
+            </th>
+            <th style="text-align:center">
+                Suggested<br />Route Order
+            </th>
+             
+            @if (Model.IsEditMode)
+            {
+                <th style="text-align:center">
+                    Called On
+                </th>
+                <th>
+                    Status
+                </th>
+            }
+        </tr>
+        @for (var i = 0; i < Model.CallActivityAddresses.Count; i++)
+        {            
+            var address = Model.CallActivityAddresses[i];
+            var status = address.CallActivityStatu == null ? string.Empty : address.CallActivityStatu.Status;
+            var dateFinished = string.Format("{0:yyyy-MM-dd}", Model.CallActivityAddresses[i].DateFinished);
+            <tr>
+                <td>
+                    @Html.HiddenFor(m => m.CallActivityAddresses[i].Id)
+                    @Html.HiddenFor(m => m.CallActivityAddresses[i].CallAddressId)                    
+                    @Html.HiddenFor(m => m.CallActivityAddresses[i].CallActivityId)
+                    @Html.HiddenFor(m => m.CallActivityAddresses[i].DateFinished)
+                    @Model.CallActivityAddresses[i].CallAddress.AddressDisplay
+                </td>
+                <td style="text-align:center">
+                    @Model.CallActivityAddresses[i].CallAddress.RouteOrderFromKh
+                </td>
+
+                @if (Model.IsEditMode)
+                {
+                    <td style="text-align:center">
+                        @dateFinished
+                    </td>
+                    <td>
+                        @if (allowEdit) { 
+                            @Html.DropDownListFor(m => m.CallActivityAddresses[i].CallActivityStatusId, new SelectList(Model.Status, "Id", "Status", address.CallActivityStatusId), new { @class = "selectTable" })                       
+                        }
+                        else
+                        {
+                            <label class="selectTable">@status</label>                            
+                        }
+                    </td>
+                }                
+            </tr>
+        }
+    </table>
+</div>
