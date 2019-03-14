@@ -32,6 +32,13 @@ namespace TMS.Logic.Service
             return publisher;
         }
 
+        public IList<webpages_Roles> GetUserRoles()
+        {
+            var userRoles = publisherRepository.GetUserRoles();
+
+            return userRoles.ToList();
+        }
+
         // activeOnly = true will show only active publishers 
         // activeOny = false will show all publishers regardless of status
         public IList<Publisher> GetPublishers(bool activeOnly = true)
@@ -48,6 +55,29 @@ namespace TMS.Logic.Service
             }
 
             return publishersList;
+        }
+
+        public string ValidatePublisher(Publisher publisher)
+        {
+            if (string.IsNullOrEmpty(publisher.Name))
+                return "Name is required.";
+
+            if (string.IsNullOrEmpty(publisher.EmailAddress))
+                return "Email Address is required.";
+
+            var emailPublisher = publisherRepository.GetPublisherByEmail(publisher.EmailAddress);
+            if (emailPublisher != null && publisher.Id != emailPublisher.Id)
+                return "Email Address is owned by someone else.";
+
+            return string.Empty;
+        }
+         
+        public Publisher SavePublisher(Publisher publisher)
+        {
+            var publisherId = publisherRepository.SavePublisher(publisher.Id, publisher.EmailAddress, publisher.Name, publisher.PhoneNumber, publisher.UserRoleId ?? 3);
+            var dbPublisher = GetPublisherById(publisherId);           
+
+            return dbPublisher;
         }
     }
 }

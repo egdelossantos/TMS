@@ -1,0 +1,18 @@
+﻿@using TMS.Web.Helpers
+@model TerritoryManagementSystem.Models.PublisherModel
+
+@Html.HiddenFor(m => m.Publisher.Id)
+
+@Html.LabelFor(m => m.Publisher.EmailAddress)
+@Html.TextBoxFor(m => m.Publisher.EmailAddress)
+@Html.ValidationMessagesFor(m => m.Publisher.EmailAddress)
+
+@Html.LabelFor(m => m.Publisher.Name)
+@Html.TextBoxFor(m => m.Publisher.Name)
+@Html.ValidationMessagesFor(m => m.Publisher.Name)
+
+@Html.LabelFor(m => m.Publisher.PhoneNumber)
+@Html.TextBoxFor(m => m.Publisher.PhoneNumber)
+@Html.ValidationMessagesFor(m => m.Publisher.PhoneNumber)
+
+@Html.DropDownListWithLabelFor(m => m.Publisher.UserRoleId, new SelectList(Model.UserRoles, "RoleId", "RoleName", Model.RoleId), "Active")

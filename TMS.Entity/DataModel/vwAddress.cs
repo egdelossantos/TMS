@@ -32,5 +32,7 @@ namespace TMS.Entity.DataModel
         public Nullable<double> Latitude { get; set; }
         public string MelwayRefNo { get; set; }
         public Nullable<System.DateTime> LastCallDate { get; set; }
+        public bool IsValid { get; set; }
+        public string CountryName { get; set; }
     }
 }

@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="TerritoryDataModel.Suburb" Width="1.5" PointX="0.75" PointY="14.375" />
         <EntityTypeShape EntityType="TerritoryDataModel.webpages_Membership" Width="1.5" PointX="7.375" PointY="8.375" />
         <EntityTypeShape EntityType="TerritoryDataModel.webpages_PasswordResets" Width="1.5" PointX="9.125" PointY="11.5" />
-        <EntityTypeShape EntityType="TerritoryDataModel.webpages_Roles" Width="1.5" PointX="9.125" PointY="9.625" />
+        <EntityTypeShape EntityType="TerritoryDataModel.webpages_Roles" Width="1.5" PointX="10" PointY="9.625" />
         <AssociationConnector Association="TerritoryDataModel.FK_CallActivityWarning_CallType" />
         <AssociationConnector Association="TerritoryDataModel.FK_State_Country" />
         <AssociationConnector Association="TerritoryDataModel.FK_Suburb_State" />

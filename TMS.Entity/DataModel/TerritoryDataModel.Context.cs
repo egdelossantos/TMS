@@ -119,5 +119,30 @@ namespace TMS.Entity.DataModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMapActivityDetail_Result>("GetMapActivityDetail", dateFromParameter, dateToParameter);
         }
+    
+        public virtual int SavePublisher(Nullable<int> id, string email, string name, string phoneNumber, Nullable<int> roleID)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var phoneNumberParameter = phoneNumber != null ?
+                new ObjectParameter("phoneNumber", phoneNumber) :
+                new ObjectParameter("phoneNumber", typeof(string));
+    
+            var roleIDParameter = roleID.HasValue ?
+                new ObjectParameter("roleID", roleID) :
+                new ObjectParameter("roleID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SavePublisher", idParameter, emailParameter, nameParameter, phoneNumberParameter, roleIDParameter);
+        }
     }
 }

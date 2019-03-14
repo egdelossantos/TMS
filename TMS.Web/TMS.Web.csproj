@@ -15,11 +15,13 @@
     <AssemblyName>TerritoryManagementSystem</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -224,6 +226,7 @@
     <Compile Include="Models\MapAddressReportModel.cs" />
     <Compile Include="Models\MapActivityReportModel.cs" />
     <Compile Include="Models\DetailReportModel.cs" />
+    <Compile Include="Models\PublisherModel.cs" />
     <Compile Include="Models\SummaryReportModel.cs" />
     <Compile Include="Models\ReportsModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
@@ -310,6 +313,8 @@
     <Content Include="Views\Reports\SummaryReport.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Reports\DetailReport.cshtml" />
+    <Content Include="Views\Publisher\CreatePublisher.cshtml" />
+    <Content Include="Views\Publisher\_PublisherDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap\img\glyphicons-halflings-white.png" />

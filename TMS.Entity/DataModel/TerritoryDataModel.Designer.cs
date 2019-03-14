@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'Z:\Code-Git\TMS-GIT\TMS.Entity\DataModel\TerritoryDataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Workspace\Code-Git\TMS\TMS.Entity\DataModel\TerritoryDataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

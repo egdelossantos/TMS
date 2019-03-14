@@ -200,21 +200,25 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
           <Key>
             <PropertyRef Name="Id" />
             <PropertyRef Name="AddressGps" />
+            <PropertyRef Name="IsValid" />
             <PropertyRef Name="Number" />
             <PropertyRef Name="Street" />
             <PropertyRef Name="SuburbName" />
             <PropertyRef Name="StateName" />
+            <PropertyRef Name="CountryName" />
             <PropertyRef Name="SuburbId" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Address" Type="nvarchar" MaxLength="1104" />
-          <Property Name="AddressGps" Type="nvarchar" MaxLength="1053" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="2107" />
+          <Property Name="AddressGps" Type="nvarchar" MaxLength="2056" Nullable="false" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="50" />
           <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Street" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="SuburbName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="StateName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="PostCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="CallGroupId" Type="int" />
           <Property Name="CallGroupName" Type="nvarchar" MaxLength="500" />
           <Property Name="GroupCode" Type="nvarchar" MaxLength="50" />
@@ -489,18 +493,6 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsersInRoles_MembershipUserId">
-          <End Role="webpages_Membership" Type="Self.webpages_Membership" Multiplicity="1" />
-          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="webpages_Membership">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="webpages_UsersInRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UsersInRoles_RoleId">
           <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
           <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
@@ -548,6 +540,13 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
         <Function Name="GetUnreturnedMap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="publisherId" Type="int" Mode="In" />
         </Function>
+        <Function Name="SavePublisher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="phoneNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="roleID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="TerritoryDataModelStoreContainer">
           <EntitySet Name="CallActivity" EntityType="Self.CallActivity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CallActivityAddress" EntityType="Self.CallActivityAddress" Schema="dbo" store:Type="Tables" />
@@ -572,12 +571,14 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
     [vwAddress].[Id] AS [Id], 
     [vwAddress].[Address] AS [Address], 
     [vwAddress].[AddressGps] AS [AddressGps], 
+    [vwAddress].[IsValid] AS [IsValid], 
     [vwAddress].[Unit] AS [Unit], 
     [vwAddress].[Number] AS [Number], 
     [vwAddress].[Street] AS [Street], 
     [vwAddress].[SuburbName] AS [SuburbName], 
     [vwAddress].[StateName] AS [StateName], 
     [vwAddress].[PostCode] AS [PostCode], 
+    [vwAddress].[CountryName] AS [CountryName], 
     [vwAddress].[CallGroupId] AS [CallGroupId], 
     [vwAddress].[CallGroupName] AS [CallGroupName], 
     [vwAddress].[GroupCode] AS [GroupCode], 
@@ -676,10 +677,6 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
           <AssociationSet Name="FK_SystemReference_Cycle" Association="Self.FK_SystemReference_Cycle">
             <End Role="Cycle" EntitySet="Cycle" />
             <End Role="SystemReference" EntitySet="SystemReference" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsersInRoles_MembershipUserId" Association="Self.FK_UsersInRoles_MembershipUserId">
-            <End Role="webpages_Membership" EntitySet="webpages_Membership" />
-            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersInRoles_RoleId" Association="Self.FK_UsersInRoles_RoleId">
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
@@ -831,6 +828,13 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
           <FunctionImport Name="GetMapActivityDetail" ReturnType="Collection(TerritoryDataModel.GetMapActivityDetail_Result)">
             <Parameter Name="dateFrom" Mode="In" Type="DateTime" />
             <Parameter Name="dateTo" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SavePublisher">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="phoneNumber" Mode="In" Type="String" />
+            <Parameter Name="roleID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="CallActivityWarning">
@@ -1322,10 +1326,12 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
             <PropertyRef Name="SuburbName" />
             <PropertyRef Name="StateName" />
             <PropertyRef Name="SuburbId" />
+            <PropertyRef Name="IsValid" />
+            <PropertyRef Name="CountryName" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="1104" FixedLength="false" Unicode="true" />
-          <Property Name="AddressGps" Type="String" Nullable="false" MaxLength="1053" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="2107" FixedLength="false" Unicode="true" />
+          <Property Name="AddressGps" Type="String" Nullable="false" MaxLength="2056" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Street" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -1341,6 +1347,8 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
           <Property Name="Latitude" Type="Double" />
           <Property Name="MelwayRefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastCallDate" Type="DateTime" Precision="3" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CallGroup">
           <Key>
@@ -1690,6 +1698,8 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
           <EntitySetMapping Name="vwAddresses">
             <EntityTypeMapping TypeName="TerritoryDataModel.vwAddress">
               <MappingFragment StoreEntitySet="vwAddress">
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
                 <ScalarProperty Name="LastCallDate" ColumnName="LastCallDate" />
                 <ScalarProperty Name="MelwayRefNo" ColumnName="MelwayRefNo" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
@@ -1774,6 +1784,7 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SavePublisher" FunctionName="TerritoryDataModel.Store.SavePublisher" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

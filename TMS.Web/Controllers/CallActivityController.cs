@@ -195,8 +195,6 @@ namespace TerritoryManagementSystem.Controllers
 
         private void HibernateCallActivityAddress(IList<CallActivityAddress> callActivityAddresses)
         {
-            //List<CallActivityAddress> list = new List<CallActivityAddress>();
-
             if (callActivityAddresses != null && callActivityAddresses.Any())
             {
                 foreach (var callAddress in callActivityAddresses)
