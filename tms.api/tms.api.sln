@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Maps", "Google.Maps\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Maps.Test", "Google.Maps.Test\Google.Maps.Test.csproj", "{0E81B878-EB72-4448-B763-F57EA495AA3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tms.api.logic", "tms.api.logic\tms.api.logic.csproj", "{7E07D582-3363-4062-AA95-D4A518635DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tms.address.maintenance", "tms.address.maintenance\tms.address.maintenance.csproj", "{85F33505-8023-43EB-ADA7-8E61C36A69B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{0E81B878-EB72-4448-B763-F57EA495AA3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E81B878-EB72-4448-B763-F57EA495AA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E81B878-EB72-4448-B763-F57EA495AA3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E07D582-3363-4062-AA95-D4A518635DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E07D582-3363-4062-AA95-D4A518635DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E07D582-3363-4062-AA95-D4A518635DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E07D582-3363-4062-AA95-D4A518635DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85F33505-8023-43EB-ADA7-8E61C36A69B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85F33505-8023-43EB-ADA7-8E61C36A69B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85F33505-8023-43EB-ADA7-8E61C36A69B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85F33505-8023-43EB-ADA7-8E61C36A69B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

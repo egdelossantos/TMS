@@ -77,23 +77,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config\tms.api.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Config.cs" />
-    <Compile Include="Common\StringCipher.cs" />
-    <Compile Include="Common\Utility.cs" />
-    <Compile Include="Map\MapService.cs" />
     <Compile Include="Map\Module.cs" />
-    <Compile Include="Model\Address.cs" />
-    <Compile Include="Model\MapRouteAddress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\tms.api.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -109,6 +102,10 @@
     <ProjectReference Include="..\Google.Maps\Google.Maps.csproj">
       <Project>{2a880395-1918-4cf8-bef5-f7225bb4274f}</Project>
       <Name>Google.Maps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tms.api.logic\tms.api.logic.csproj">
+      <Project>{7e07d582-3363-4062-aa95-d4a518635df4}</Project>
+      <Name>tms.api.logic</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

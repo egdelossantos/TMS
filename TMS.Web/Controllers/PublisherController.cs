@@ -37,7 +37,12 @@ namespace TerritoryManagementSystem.Controllers
         [HttpGet]
         public JsonResult GetPublishers()
         {
-            var publishers = publisherService.GetPublishers(false).Where(w => w.Id != 1).ToList(); // dont show publisher id 1 = admin
+            var publishers = publisherService.GetPublishers(false).Where(w => w.Id != 1)
+                            .OrderByDescending(o => o.IsActive)
+                            .ThenByDescending(e => e.IsTerritoryOverseer)
+                            .ThenByDescending(e => e.IsElder)
+                            .ThenByDescending(e => e.IsAssistantBrother)                            
+                            .ToList(); // dont show publisher id 1 = admin
 
             var publishersJson = PublisherConverter.PublishersToJsonSummary(publishers);
 
