@@ -9,6 +9,13 @@ using TMS.Logic.Repository;
 
 namespace TMS.Logic.Service
 {
+    public class ValidationResult
+    {
+        public string FieldName { get; set; }
+
+        public string ErrorMessage { get; set; }
+    }
+
     public class PublisherService
     {
         private readonly PublisherRepository publisherRepository;
@@ -57,19 +64,21 @@ namespace TMS.Logic.Service
             return publishersList;
         }
 
-        public string ValidatePublisher(Publisher publisher)
+        public List<ValidationResult> ValidatePublisher(Publisher publisher)
         {
+            var result = new List<ValidationResult>();
+
             if (string.IsNullOrEmpty(publisher.Name))
-                return "Name is required.";
+                result.Add(new ValidationResult { FieldName = "Name", ErrorMessage = "Name is required." });
 
             if (string.IsNullOrEmpty(publisher.EmailAddress))
-                return "Email Address is required.";
-
+                result.Add(new ValidationResult { FieldName = "EmailAddress", ErrorMessage = "Email Address is required." });
+            
             var emailPublisher = publisherRepository.GetPublisherByEmail(publisher.EmailAddress);
             if (emailPublisher != null && publisher.Id != emailPublisher.Id)
-                return "Email Address is owned by someone else.";
-
-            return string.Empty;
+                result.Add(new ValidationResult { FieldName = "EmailAddress", ErrorMessage = "Email Address is owned by someone else." });
+            
+            return result;
         }
          
         public Publisher SavePublisher(Publisher publisher)

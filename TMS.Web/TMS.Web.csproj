@@ -315,6 +315,7 @@
     <Content Include="Views\Reports\DetailReport.cshtml" />
     <Content Include="Views\Publisher\CreatePublisher.cshtml" />
     <Content Include="Views\Publisher\_PublisherDetails.cshtml" />
+    <Content Include="Views\Publisher\EditPublisher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap\img\glyphicons-halflings-white.png" />

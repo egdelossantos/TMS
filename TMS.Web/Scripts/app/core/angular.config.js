@@ -27,6 +27,7 @@ define(['console'],
 
         config.routes.publisher = {};
         config.routes.publisher.index = '/Publisher';
+        config.routes.publisher.details = '/tms/Publisher/EditPublisher/:id';
 
         //services
         config.core.services = {

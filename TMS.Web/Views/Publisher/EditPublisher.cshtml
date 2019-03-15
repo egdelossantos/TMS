@@ -1,0 +1,29 @@
+﻿@using TMS.Web.Helpers
+@using TerritoryManagementSystem.Models
+@model TerritoryManagementSystem.Models.PublisherModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Publisher";
+    ViewBag.CancelText = "Cancel";
+    ActionBarModel actionBarModel = new ActionBarModel(ViewBag.Title, Url.Action("Index", "Publisher")) { ShowSaveExit = true };
+}
+
+<h3>Create Publisher</h3>
+
+@section actionBar
+{
+    @Html.Partial("_ViewActionBar", actionBarModel)
+}
+
+@using (Html.BeginForm("EditPublisher", "Publisher", FormMethod.Post))
+{
+
+
+    <div id="publisherDetails" style="margin-right:18px;">
+        @Html.Partial("_PublisherDetails", Model)
+    </div>
+
+    <input id="btnsave" type="submit" class="hide" />
+}

@@ -5,6 +5,7 @@ using TMS.Logic.Service;
 using TMS.Web.JsonDtoConverters;
 using TerritoryManagementSystem.Models;
 using TMS.Entity.DataModel;
+using System.Collections.Generic;
 
 namespace TerritoryManagementSystem.Controllers
 {
@@ -74,6 +75,35 @@ namespace TerritoryManagementSystem.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult EditPublisher(int id)
+        {
+            var model = new PublisherModel
+            {
+                Publisher = publisherService.GetPublisherById(id),
+                UserRoles = publisherService.GetUserRoles()
+            };
+
+            model.RoleId = model.Publisher.UserRoleId ?? 0;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditPublisher(PublisherModel model)
+        {
+            if (SavePublisher(model))
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                model.RoleId = model.Publisher.UserRoleId ?? 0;
+                model.UserRoles = publisherService.GetUserRoles();
+                return View("EditPublisher", model);
+            }
+        }
+
         private bool SavePublisher(PublisherModel model)
         {
             var isSaved = false;
@@ -81,10 +111,11 @@ namespace TerritoryManagementSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                var validateResult = model.IsEditMode ? string.Empty : publisherService.ValidatePublisher(model.Publisher);
-                if (!string.IsNullOrWhiteSpace(validateResult))
+                var validationResult = model.IsEditMode ? new List<ValidationResult>() : publisherService.ValidatePublisher(model.Publisher);
+                if (validationResult.Count > 0)
                 {
-                    ModelState.AddModelError("Publisher.EmailAddress", validateResult);
+                    foreach (var result in validationResult)
+                        ModelState.AddModelError(string.Format("Publisher.{0}", "EmailAddress"), result.ErrorMessage);
                 }
                 else
                 {

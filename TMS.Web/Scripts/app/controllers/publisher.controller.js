@@ -19,7 +19,13 @@
             };
             // end of inits
 
-            // publishers Actions 
+            // publishers Actions
+            $scope.goToPublisherDetails = function (id) {
+                console.log(angularConfig.routes.publisher.details);
+                var url = angularConfig.routes.publisher.details.replace("/:id", "?id=" + id);
+                window.location.replace(url);
+            }
+
             $scope.getPublishers = function () {
                 var promise = publisherApiService.getPublishers();
                 promise.then(function(data) {
@@ -30,7 +36,12 @@
                     console.log(status);
                     toastr['error']("Error loading Publishers");
                 });
-            };            
+            };    
+
+            $scope.editPublisher = function (publisher) {
+                $scope.goToPublisherDetails(publisher.id);
+                return false;
+            };
             // end of publishers Actions
 
             console.groupEnd();
