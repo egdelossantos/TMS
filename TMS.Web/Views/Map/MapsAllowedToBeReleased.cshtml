@@ -35,17 +35,17 @@
                 var num = i + 1;
                 
                 <tr>
-                <td>
-                    <b>@num</b>
-                </td>
-                <td class="span8">
-                    @Html.HiddenFor(m => m.AvailableMaps[i].Id)
-                    @Model.AvailableMaps[i].CallGroupDetails
-                </td>
-                <td class="span4" style="text-align:center">
-                    @Html.CheckBoxFor(m => m.AvailableMaps[i].AllowAssistantToRelease)
-                </td>
-            </tr>
+                    <td>
+                        <b>@num</b>
+                    </td>
+                    <td class="span8">
+                        @Html.HiddenFor(m => m.AvailableMaps[i].Id)
+                        @Model.AvailableMaps[i].CallGroupDetails
+                    </td>
+                    <td class="span4" style="text-align:center">
+                        @Html.CheckBoxFor(m => m.AvailableMaps[i].AllowAssistantToRelease)
+                    </td>
+                </tr>
             }
             </table>
         </div>
