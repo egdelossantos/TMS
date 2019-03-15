@@ -78,7 +78,7 @@
                                         <td class="span2"><b>Status</b></td>
                                     </tr>
                                     <tr data-ng-repeat="callActivityAddress in callActivity.CallActivityAddresses">
-                                        <td class="span7">{{ callActivityAddress.AddressDisplay }}</td>
+                                        <td class="span7"><a data-ng-click="navigateToAddress(callActivityAddress)">{{ callActivityAddress.AddressDisplay }}</a></td>
                                         <td class="span3" style="text-align:center">{{ callActivityAddress.RouteOrder }}</td>
                                         <td class="span2">{{ callActivityAddress.Status }}</td>
                                     </tr>

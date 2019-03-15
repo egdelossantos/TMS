@@ -175,6 +175,14 @@
                 return false;
             };
 
+            $scope.navigateToAddress = function (callActivityAddress) {
+                var address = callActivityAddress.GpsAddress.replace(/ /g, "+"); 
+                var googleMapUrl = "https://www.google.com/maps/dir/?api=1&destination=[destination]";
+                var url = googleMapUrl.replace("[destination]", address);
+                window.open(url);
+                return false;
+            };
+
             $scope.sendEmail = function (callActivity, rowId) {
                 var divId = "#mapAddress" + rowId;
                 var htmlDiv = $(divId).html();
