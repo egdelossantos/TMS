@@ -10,8 +10,6 @@
     ActionBarModel actionBarModel = new ActionBarModel(ViewBag.Title, Url.Action("Index", "Publisher")) { ShowSaveExit = true };
 }
 
-<h3>Create Publisher</h3>
-
 @section actionBar
 {
     @Html.Partial("_ViewActionBar", actionBarModel)

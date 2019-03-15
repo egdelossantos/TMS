@@ -1,19 +1,19 @@
-
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE SavePublisher
+CREATE PROCEDURE [dbo].[SavePublisher]
 	 @id INT
 	,@email NVARCHAR(500)
 	,@name NVARCHAR(500)
 	,@phoneNumber NVARCHAR(500)
 	,@roleID INT
+	,@isActive BIT
 AS
 BEGIN
 	
-	UPDATE Publisher SET Name = @name, PhoneNumber = @phoneNumber, UserRoleId = @roleID WHERE Id = @id
+	UPDATE Publisher SET Name = @name, PhoneNumber = @phoneNumber, UserRoleId = @roleID, IsActive = @isActive WHERE Id = @id
 	IF @@ROWCOUNT > 0
 	BEGIN
 		UPDATE webpages_UsersInRoles SET RoleId = @roleID WHERE UserId = @id
@@ -46,4 +46,7 @@ BEGIN
 
 	SELECT @id
 END
+
 GO
+
+

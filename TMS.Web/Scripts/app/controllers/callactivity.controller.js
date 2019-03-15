@@ -179,7 +179,7 @@
                 var address = callActivityAddress.GpsAddress.replace(/ /g, "+"); 
                 var googleMapUrl = "https://www.google.com/maps/dir/?api=1&destination=[destination]";
                 var url = googleMapUrl.replace("[destination]", address);
-                window.open(url);
+                window.open(url, "_blank");
                 return false;
             };
 
