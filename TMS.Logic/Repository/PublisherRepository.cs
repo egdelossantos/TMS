@@ -26,11 +26,11 @@ namespace TMS.Logic.Repository
             return roles;
         }
 
-        public int SavePublisher(int id, string emailaddress, string name, string phoneNumber, int roleId)
+        public int SavePublisher(int id, string emailaddress, string name, string phoneNumber, int roleId, bool isActive)
         {
             using (TerritoryEntities context = new TerritoryEntities())
             {
-                var result = context.SavePublisher(id, emailaddress, name, phoneNumber, roleId);
+                var result = context.SavePublisher(id, emailaddress, name, phoneNumber, roleId, isActive);
                 return result;
             }
         }

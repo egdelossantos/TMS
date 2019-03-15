@@ -546,6 +546,7 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
           <Parameter Name="name" Type="nvarchar" Mode="In" />
           <Parameter Name="phoneNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="roleID" Type="int" Mode="In" />
+          <Parameter Name="isActive" Type="bit" Mode="In" />
         </Function>
         <EntityContainer Name="TerritoryDataModelStoreContainer">
           <EntitySet Name="CallActivity" EntityType="Self.CallActivity" Schema="dbo" store:Type="Tables" />
@@ -835,6 +836,7 @@ warning 6002: The table/view 'Territory.dbo.vwAddress' does not have a primary k
             <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="phoneNumber" Mode="In" Type="String" />
             <Parameter Name="roleID" Mode="In" Type="Int32" />
+            <Parameter Name="isActive" Mode="In" Type="Boolean" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="CallActivityWarning">

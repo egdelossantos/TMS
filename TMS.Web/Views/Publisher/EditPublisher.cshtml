@@ -19,11 +19,9 @@
 
 @using (Html.BeginForm("EditPublisher", "Publisher", FormMethod.Post))
 {
-
-
     <div id="publisherDetails" style="margin-right:18px;">
         @Html.Partial("_PublisherDetails", Model)
     </div>
 
-    <input id="btnsave" type="submit" class="hide" />
+    <input id="btnsave" type="submit" class="hide" />    
 }

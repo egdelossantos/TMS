@@ -120,7 +120,7 @@ namespace TMS.Entity.DataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMapActivityDetail_Result>("GetMapActivityDetail", dateFromParameter, dateToParameter);
         }
     
-        public virtual int SavePublisher(Nullable<int> id, string email, string name, string phoneNumber, Nullable<int> roleID)
+        public virtual int SavePublisher(Nullable<int> id, string email, string name, string phoneNumber, Nullable<int> roleID, Nullable<bool> isActive)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -142,7 +142,11 @@ namespace TMS.Entity.DataModel
                 new ObjectParameter("roleID", roleID) :
                 new ObjectParameter("roleID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SavePublisher", idParameter, emailParameter, nameParameter, phoneNumberParameter, roleIDParameter);
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SavePublisher", idParameter, emailParameter, nameParameter, phoneNumberParameter, roleIDParameter, isActiveParameter);
         }
     }
 }

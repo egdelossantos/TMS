@@ -14,14 +14,13 @@
 
 
 <div data-ng-controller="publisher.controller" data-ng-init="initList()" class="container">
-
-    <div style="margin-bottom: 5px; padding:0px;">
-        <div style="float:left;">
-            <span>Filter &nbsp;</span>
-            <input type="text" ng-model="filterTerms.searchTerm" placeholder="Search by publisher name, email address or phone number" style="width: 400px;" />
-        </div>
-    </div>
     <div class="table-responsive">
+        <div style="margin-bottom: 5px; padding:0px;">
+            <div style="float:left;">
+                <span>Filter &nbsp;</span>
+                <input type="text" ng-model="filterTerms.searchTerm" placeholder="Search by publisher name, email address or phone number" style="width: 400px;" />
+            </div>
+        </div>
         <table class="table table-striped ">
             <thead>
                 <tr>
@@ -34,14 +33,14 @@
                 </tr>
             </thead>
             <tbody data-ng-repeat="publisher in Publishers.publishers | publisherFilter: filterTerms.searchTerm">
-                    <tr>
-                        <td class="span1"><b>{{ $index + 1 }}</b></td>
-                        <td class="span4"><a data-ng-click="editPublisher(publisher)">{{ publisher.name }}</a></td>
-                        <td class="span2">{{ publisher.emailaddress }}</td>
-                        <td class="span2">{{ publisher.phonenumber }}</td>
-                        <td class="span2">{{ publisher.roleName }}</td>
-                        <td class="span1">{{ publisher.isActive ? 'Yes' : 'No' }}</td>
-                    </tr>
+                <tr>
+                    <td class="span1"><b>{{ $index + 1 }}</b></td>
+                    <td class="span4"><a data-ng-click="editPublisher(publisher)">{{ publisher.name }}</a></td>
+                    <td class="span2">{{ publisher.emailaddress }}</td>
+                    <td class="span2">{{ publisher.phonenumber }}</td>
+                    <td class="span2">{{ publisher.roleName }}</td>
+                    <td class="span1">{{ publisher.isActive ? 'Yes' : 'No' }}</td>
+                </tr>
             </tbody>
 
             <tr ng-show="!Publishers.publishers.length">

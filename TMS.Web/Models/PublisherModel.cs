@@ -13,6 +13,8 @@ namespace TerritoryManagementSystem.Models
 
         public int RoleId { get; set; }
 
+        public bool IsActive { get; set; }
+
         public IList<webpages_Roles> UserRoles { get; set; }
 
         public bool IsEditMode

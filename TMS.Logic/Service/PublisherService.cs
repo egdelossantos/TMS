@@ -83,7 +83,12 @@ namespace TMS.Logic.Service
          
         public Publisher SavePublisher(Publisher publisher)
         {
-            var publisherId = publisherRepository.SavePublisher(publisher.Id, publisher.EmailAddress, publisher.Name, publisher.PhoneNumber, publisher.UserRoleId ?? 3);
+            publisher.PhoneNumber = publisher.PhoneNumber ?? string.Empty;
+            publisher.UserName = publisher.UserName ?? "111";
+            publisher.UserRoleId = publisher.UserRoleId ?? 3;
+            publisher.IsActive = publisher.IsActive ?? false;
+
+            var publisherId = publisherRepository.SavePublisher(publisher.Id, publisher.EmailAddress, publisher.Name, publisher.PhoneNumber, publisher.UserRoleId ?? 3, publisher.IsActive ?? false);
             var dbPublisher = GetPublisherById(publisherId);           
 
             return dbPublisher;

@@ -54,6 +54,7 @@ namespace TerritoryManagementSystem.Controllers
             {
                 Publisher = new Publisher { Id = 0, IsActive = true },
                 RoleId = 0,
+                IsActive = true,
                 UserRoles = publisherService.GetUserRoles()
             };
 
@@ -63,6 +64,7 @@ namespace TerritoryManagementSystem.Controllers
         [HttpPost]
         public ActionResult CreatePublisher(PublisherModel model)
         {
+            model.Publisher.IsActive = model.IsActive;
             if (SavePublisher(model))
             {                
                 return RedirectToAction("Index");
@@ -85,6 +87,7 @@ namespace TerritoryManagementSystem.Controllers
             };
 
             model.RoleId = model.Publisher.UserRoleId ?? 0;
+            model.IsActive = model.Publisher.IsActive ?? false;
 
             return View(model);
         }
@@ -92,6 +95,7 @@ namespace TerritoryManagementSystem.Controllers
         [HttpPost]
         public ActionResult EditPublisher(PublisherModel model)
         {
+            model.Publisher.IsActive = model.IsActive;
             if (SavePublisher(model))
             {
                 return RedirectToAction("Index");
@@ -99,10 +103,11 @@ namespace TerritoryManagementSystem.Controllers
             else
             {
                 model.RoleId = model.Publisher.UserRoleId ?? 0;
+                model.IsActive = model.Publisher.IsActive ?? false;
                 model.UserRoles = publisherService.GetUserRoles();
                 return View("EditPublisher", model);
             }
-        }
+        }        
 
         private bool SavePublisher(PublisherModel model)
         {

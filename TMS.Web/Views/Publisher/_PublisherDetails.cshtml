@@ -15,4 +15,7 @@
 @Html.TextBoxFor(m => m.Publisher.PhoneNumber)
 @Html.ValidationMessagesFor(m => m.Publisher.PhoneNumber)
 
-@Html.DropDownListWithLabelFor(m => m.Publisher.UserRoleId, new SelectList(Model.UserRoles, "RoleId", "RoleName", Model.RoleId), "Active")
+@Html.DropDownListWithLabelFor(m => m.Publisher.UserRoleId, new SelectList(Model.UserRoles, "RoleId", "RoleName", Model.RoleId), "Role")
+
+@Html.LabelFor(m => m.IsActive)
+@Html.CheckBoxFor(m => m.IsActive)

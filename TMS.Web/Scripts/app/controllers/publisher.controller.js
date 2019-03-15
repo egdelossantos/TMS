@@ -42,6 +42,12 @@
                 $scope.goToPublisherDetails(publisher.id);
                 return false;
             };
+
+            $scope.activatePublisher = function (publisherId, isActive) {
+                alert(publisherId);
+                return false;
+            };
+            
             // end of publishers Actions
 
             console.groupEnd();
