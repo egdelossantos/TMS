@@ -4,8 +4,15 @@
 @Html.HiddenFor(m => m.Publisher.Id)
 
 @Html.LabelFor(m => m.Publisher.EmailAddress)
-@Html.TextBoxFor(m => m.Publisher.EmailAddress)
-@Html.ValidationMessagesFor(m => m.Publisher.EmailAddress)
+@if (Model.IsEditMode)
+{
+    @Html.TextBoxFor(m => m.Publisher.EmailAddress, new { @readonly = "readonly" })
+}
+else
+{
+    @Html.TextBoxFor(m => m.Publisher.EmailAddress)
+    @Html.ValidationMessagesFor(m => m.Publisher.EmailAddress)
+}
 
 @Html.LabelFor(m => m.Publisher.Name)
 @Html.TextBoxFor(m => m.Publisher.Name)
