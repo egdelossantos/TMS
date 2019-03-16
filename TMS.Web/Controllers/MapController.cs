@@ -10,12 +10,13 @@ using TerritoryManagementSystem.Models;
 using TMS.Common;
 using TMS.Logic.Service;
 using Newtonsoft.Json;
+using tms.api.Model;
 
 namespace TerritoryManagementSystem.Controllers
 {
     public class MapController : BaseController
     {
-        private MapService mapService;
+        private MapService mapService;       
         private PublisherService publisherService;
 
         public MapController(PublisherService publisherService, MapService mapService)
@@ -72,6 +73,33 @@ namespace TerritoryManagementSystem.Controllers
             mapService.UpdateAddressGeoCode(callAddresses);
 
             return RedirectToAction("Index", "CallActivity");
+        }
+
+        [HttpGet]
+        public ActionResult AddressBestRoute()
+        {
+            var model = new AddressBestRouteModel {
+                OriginAddress = "sssss",
+                DestinationAddress = string.Empty,
+                RouteAddress = new MapRouteAddress()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddressBestRoute(AddressBestRouteModel model)
+        {
+            var origin = string.Format("\"Origin\" : {0}", model.OriginAddress);
+            var destination = string.Format("\"Destinations\" : {0}", model.DestinationAddress);
+            var jsonString = string.Format("{{ {0}, {1} }}", origin, destination);
+            var routeAddress = JsonConvert.DeserializeObject<MapRouteAddress>(jsonString);
+
+            MapRouteAddress bestRoute = mapService.GetBestRoute(routeAddress);
+
+            model.Result = JsonConvert.SerializeObject(bestRoute);
+
+            ModelState.Clear();
+            return View(model);
         }
     }
 }
