@@ -20,13 +20,23 @@ namespace TMS.Logic.Service
         private readonly CallAddressRepository callAddressRepository;
         private readonly SystemReferenceRepository systemReferenceRepository;
         private readonly CycleRepository cycleRepository;
+        public Address KingdomHallLocation;
         
         public MapService(CallGroupRepository callGroupRepository, CallAddressRepository callAddressRepository, SystemReferenceRepository systemReferenceRepository, CycleRepository cycleRepository)
         {
             this.callGroupRepository = callGroupRepository;
             this.callAddressRepository = callAddressRepository;
             this.systemReferenceRepository = systemReferenceRepository;
-            this.cycleRepository = cycleRepository;            
+            this.cycleRepository = cycleRepository;
+            this.KingdomHallLocation = new Address
+            {
+                Unit = string.Empty,
+                Number = Config.KingdomHallNumber,
+                StreetName = Config.KingdomHallStreet,
+                Suburb = Config.KingdomHallSuburb,
+                State = Config.KingdomHallState,
+                Country = Config.KingdomHallCountry
+            };
         }
 
         public Cycle GetCurrentCycle()

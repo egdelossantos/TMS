@@ -77,11 +77,11 @@ namespace TerritoryManagementSystem.Controllers
 
         [HttpGet]
         public ActionResult AddressBestRoute()
-        {
+        {           
             var model = new AddressBestRouteModel {
-                OriginAddress = "sssss",
+                OriginAddress = JsonConvert.SerializeObject(mapService.KingdomHallLocation),
                 DestinationAddress = string.Empty,
-                RouteAddress = new MapRouteAddress()
+                RouteAddress = new MapRouteAddress { Origin = mapService.KingdomHallLocation, Destinations = new List<Address>() }
             };
             return View(model);
         }
@@ -94,11 +94,12 @@ namespace TerritoryManagementSystem.Controllers
             var jsonString = string.Format("{{ {0}, {1} }}", origin, destination);
             var routeAddress = JsonConvert.DeserializeObject<MapRouteAddress>(jsonString);
 
-            MapRouteAddress bestRoute = mapService.GetBestRoute(routeAddress);
-
-            model.Result = JsonConvert.SerializeObject(bestRoute);
+            model.RouteAddress = mapService.GetBestRoute(routeAddress);
+            
+            model.Result = JsonConvert.SerializeObject(model.RouteAddress);
 
             ModelState.Clear();
+
             return View(model);
         }
     }

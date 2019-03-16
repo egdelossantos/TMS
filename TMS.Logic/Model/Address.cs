@@ -20,8 +20,19 @@
 
         public decimal Latitude { get; set; }
 
-        public string GpsAddress {
+        public string CompleteAddress {
             get {
+                if (string.IsNullOrEmpty(Unit))
+                    return string.Format("{0} {1} {2}, {3}", Number, StreetName, Suburb, State);
+                else
+                    return string.Format("{0}/{1} {2}, {3}, {4}", Unit, Number, StreetName, Suburb, State);
+            }
+        }
+
+        public string GpsAddress
+        {
+            get
+            {
                 return string.Format("{0} {1}, {2}, {3}, {4}", Number, StreetName, Suburb, State, Country);
             }
         }

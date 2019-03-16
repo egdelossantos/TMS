@@ -56,5 +56,45 @@ namespace TMS.Common
                 return int.Parse(numAdd);
             }
         }
+
+        public static string KingdomHallNumber
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["KingdomHallNumber"];
+            }
+        }
+
+        public static string KingdomHallStreet
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["KingdomHallStreet"];
+            }
+        }
+
+        public static string KingdomHallSuburb
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["KingdomHallSuburb"];
+            }
+        }
+
+        public static string KingdomHallState
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["KingdomHallState"];
+            }
+        }
+
+        public static string KingdomHallCountry
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["KingdomHallCountry"];
+            }
+        }
     }
 }
