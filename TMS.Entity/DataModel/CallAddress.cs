@@ -35,11 +35,12 @@ namespace TMS.Entity.DataModel
         public Nullable<double> Latitude { get; set; }
         public string Address { get; set; }
         public string GpsAddress { get; set; }
+        public Nullable<int> SuggestedCallGroupId { get; set; }
     
         public virtual ICollection<CallActivityAddress> CallActivityAddresses { get; set; }
         public virtual CallActivityStatu CallActivityStatu { get; set; }
+        public virtual CallGroup CallGroup { get; set; }
         public virtual Suburb Suburb { get; set; }
         public virtual ICollection<CallAddressNote> CallAddressNotes { get; set; }
-        public virtual CallGroup CallGroup { get; set; }
     }
 }

@@ -16,5 +16,13 @@ namespace TMS.Logic.Service
                 return ConfigurationManager.AppSettings["ApplicationEnvironment"];
             }
         }
+
+        public static string DomainName
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["DomainName"];
+            }
+        }
     }
 }

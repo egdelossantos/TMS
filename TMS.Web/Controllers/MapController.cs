@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Net;
-using System.Net.Http;
-using TMS.Entity.DataModel;
 using TerritoryManagementSystem.Models;
-using TMS.Common;
 using TMS.Logic.Service;
 using Newtonsoft.Json;
 using tms.api.Model;
+using TMS.Common;
+using TMS.Entity.DataModel;
 
 namespace TerritoryManagementSystem.Controllers
 {
@@ -101,6 +97,74 @@ namespace TerritoryManagementSystem.Controllers
             ModelState.Clear();
 
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult AddAddress()
+        {
+            var model = new AddressModel
+            {
+                CallGroupId = 0,
+                Maps = GetActiveCallGroups()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddAddress(AddressModel model)
+        {
+            var isSaved = false;
+
+            if (ModelState.IsValid)
+            {
+                var callAddress = MapModelToCallAddress(model);
+                var validateResult = mapService.ValidateCallAddress(callAddress);
+                if (!string.IsNullOrWhiteSpace(validateResult))
+                {
+                    ModelState.AddModelError("ErrorMessage", validateResult);
+                }
+                else
+                {
+                    callAddress.Suburb = null;
+                    mapService.SaveCallAddress(callAddress);
+                    isSaved = true;
+                }
+               
+            }
+
+            if (isSaved)
+            {
+                return RedirectToAction("Index", "CallActivity");
+            }
+            else
+            {
+                model.Maps = GetActiveCallGroups();
+                return View("AddAddress", model);
+            }
+        }
+
+        private List<CallGroup> GetActiveCallGroups()
+        {
+            return mapService.GetCallGroups(CurrentCycle, false, false).OrderBy(o => o.LastCallDate).ThenBy(o => o.CallGroupName).ThenBy(o => o.GroupCode, new SemiNumericComparer()).ToList();
+        }
+
+        private CallAddress MapModelToCallAddress(AddressModel model)
+        {
+            var suburb = mapService.GetSuburbByName(model.Suburb);
+
+            return new CallAddress
+            {
+                Unit = model.Unit ?? "",
+                Number = model.Number ?? "",
+                Street = model.Street ?? "",
+                Suburb = suburb,
+                SuburbId = suburb != null ? suburb.Id : 0,
+                SuggestedCallGroupId = model.CallGroupId,
+                IsValid = true,
+                Latitude = model.Latitude,
+                Longtitude = model.Longtitude
+            };
         }
     }
 }

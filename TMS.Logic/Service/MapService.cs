@@ -4,10 +4,8 @@ using Google.Maps.DistanceMatrix;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TMS.Entity.DataModel;
-using TMS.Entity.Enum;
 using TMS.Common;
 using TMS.Logic.Repository;
 using tms.api.Model;
@@ -20,14 +18,16 @@ namespace TMS.Logic.Service
         private readonly CallAddressRepository callAddressRepository;
         private readonly SystemReferenceRepository systemReferenceRepository;
         private readonly CycleRepository cycleRepository;
+        private readonly SuburbRepository suburbRepository;
         public Address KingdomHallLocation;
         
-        public MapService(CallGroupRepository callGroupRepository, CallAddressRepository callAddressRepository, SystemReferenceRepository systemReferenceRepository, CycleRepository cycleRepository)
+        public MapService(CallGroupRepository callGroupRepository, CallAddressRepository callAddressRepository, SystemReferenceRepository systemReferenceRepository, CycleRepository cycleRepository, SuburbRepository suburbRepository)
         {
             this.callGroupRepository = callGroupRepository;
             this.callAddressRepository = callAddressRepository;
             this.systemReferenceRepository = systemReferenceRepository;
             this.cycleRepository = cycleRepository;
+            this.suburbRepository = suburbRepository;
             this.KingdomHallLocation = new Address
             {
                 Unit = string.Empty,
@@ -158,6 +158,11 @@ namespace TMS.Logic.Service
             }
 
             callGroupRepository.SaveOrUpdate(callGroup);
+        }
+
+        public void SaveCallAddress(CallAddress callAddress)
+        {
+            callAddressRepository.SaveOrUpdate(callAddress);
         }
 
         public void UpdateAddressGeoCode(IList<CallAddress> addresses)
@@ -344,6 +349,52 @@ namespace TMS.Logic.Service
             }
 
             return addresses;
+        }
+
+        public string ValidateCallAddress(CallAddress callAddress)
+        {
+            if (string.IsNullOrEmpty(callAddress.Street))
+            {
+                return "Please enter address.";
+            }
+
+            if (callAddress.Suburb == null)
+            {
+                return "Suburb not exists yet in our system. Please contact Territory Overseer.";
+            }
+
+            var address = callAddressRepository.GetAll().ToList().Where(w => w.CompleteAddress() == callAddress.CompleteAddress()).FirstOrDefault();
+            if (address == null)
+            {
+                address = callAddressRepository.GetAll().ToList().Where(w => w.CompleteAddress(false) == callAddress.CompleteAddress(false)).FirstOrDefault();
+                if (address == null)
+                {
+                    address = callAddressRepository.GetAll().ToList().Where(w => w.CompleteAddress(true) == callAddress.CompleteAddress(true, true)).FirstOrDefault();
+                    if (address == null)
+                    {
+                          address = callAddressRepository.GetAll().ToList().Where(w => w.CompleteAddress(false) == callAddress.CompleteAddress(false, true)).FirstOrDefault();
+                    }
+                }
+            }
+
+            if (address == null) return string.Empty;
+
+            var errorMsg = string.Empty;
+            if (address.IsValid)
+            {
+                errorMsg = address.CallGroup != null ? string.Format(" {0}", address.CallGroup.CallGroupName) : string.Empty;
+                return string.Format("Address already exists in map{0}.", errorMsg);
+            }
+            else
+            {
+                errorMsg = address.CallActivityStatu != null ? string.Format(" Last call activity status : {0}.", address.CallActivityStatu.Status) : string.Empty;
+                return string.Format("Address already exists but was set as invalid.{0} Please contact your Territory Overseer if you want this to be added.", errorMsg);
+            }
+        }
+
+        public Suburb GetSuburbByName(string suburbName)
+        {
+            return suburbRepository.GetSuburbByName(suburbName);
         }
     }
 }

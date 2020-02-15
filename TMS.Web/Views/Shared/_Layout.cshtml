@@ -18,11 +18,11 @@
     <body>
         <header>
             <div style="background-color: #4e94ab; ">
-                @Html.Partial("_ViewHeader")                
-            </div>          
+                @Html.Partial("_ViewHeader")
+            </div>
         </header>
-       
-        <div id="body">               
+
+        <div id="body">
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 <div id="wrapper">
@@ -38,31 +38,33 @@
                         </div>
                     </div>
                 </div>
-            </section>            
-        </div>      
-               
+            </section>
+        </div>
+
         @Scripts.Render("~/scripts/tms-bootstrap/require.config.js")
-        @Scripts.Render("~/scripts/libs/require/require.js")        
-        @Scripts.Render("~/scripts/tms-bootstrap/spa.startup.js")        
-        @Scripts.Render("~/scripts/jquery-2.0.3.min.js")    
+        @Scripts.Render("~/scripts/libs/require/require.js")
+        @Scripts.Render("~/scripts/tms-bootstrap/spa.startup.js")
+        @Scripts.Render("~/scripts/jquery-2.0.3.min.js")
         @Scripts.Render("~/scripts/bootstrap-datepicker.js")
         @Scripts.Render("~/scripts/moment.js")
-        @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyCSBJ9jDvWV1QS27UTuh59F6kBhepYJ5Js&callback=initMap")
-        @Scripts.Render("~/scripts/mapwithmarker.js")        
-        @Scripts.Render("~/scripts/page/actionBarFunctions.js")      
-        @Scripts.Render("~/scripts/page/tmx.ajax.js") 
-        @Scripts.Render("~/scripts/page/mapPlotter.js") 
-       
+        @Scripts.Render("https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+        @*@Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyCSBJ9jDvWV1QS27UTuh59F6kBhepYJ5Js&libraries=places&callback=initMap")
+        @Scripts.Render("~/scripts/mapwithmarker.js")
+        @Scripts.Render("~/scripts/page/mapPlotter.js")*@
+        @Scripts.Render("~/scripts/page/actionBarFunctions.js")
+        @Scripts.Render("~/scripts/page/tmx.ajax.js")
+
+
         @RenderSection("scripts", required: false)
-        
+
         @if (IsSectionDefined("scriptFiles"))
         {
             @RenderSection("scriptFiles")
         }
-        
+
         @if (IsSectionDefined("scriptBody"))
         {
             @RenderSection("scriptBody")
-        } 
+        }
     </body>
 </html>

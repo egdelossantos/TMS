@@ -42,9 +42,11 @@ namespace TMS.Entity.DataModel
         public virtual DbSet<CallActivity> CallActivities { get; set; }
         public virtual DbSet<CallActivityAddress> CallActivityAddresses { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
-        public virtual DbSet<CallAddress> CallAddresses { get; set; }
         public virtual DbSet<vwAddress> vwAddresses { get; set; }
         public virtual DbSet<CallGroup> CallGroups { get; set; }
+        public virtual DbSet<CallAddress> CallAddresses { get; set; }
+        public virtual DbSet<Color> Colors { get; set; }
+        public virtual DbSet<InactiveCallAddress> InactiveCallAddresses { get; set; }
     
         public virtual ObjectResult<GetUnReturnedCallAddress_Result> GetUnReturnedCallAddress(Nullable<int> publisherId)
         {
@@ -79,15 +81,6 @@ namespace TMS.Entity.DataModel
                 new ObjectParameter("dateTo", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMapActivitySummary_Result>("GetMapActivitySummary", dateFromParameter, dateToParameter);
-        }
-    
-        public virtual ObjectResult<GetUnreturnedMap_Result> GetUnreturnedMap(Nullable<int> publisherId)
-        {
-            var publisherIdParameter = publisherId.HasValue ?
-                new ObjectParameter("publisherId", publisherId) :
-                new ObjectParameter("publisherId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUnreturnedMap_Result>("GetUnreturnedMap", publisherIdParameter);
         }
     
         public virtual int DeactivateCallAddress(Nullable<int> callAddressId, Nullable<System.DateTime> approvedDate, Nullable<int> approvedBy)
@@ -147,6 +140,33 @@ namespace TMS.Entity.DataModel
                 new ObjectParameter("isActive", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SavePublisher", idParameter, emailParameter, nameParameter, phoneNumberParameter, roleIDParameter, isActiveParameter);
+        }
+    
+        public virtual int GetUnreturnedMap1(Nullable<int> publisherId)
+        {
+            var publisherIdParameter = publisherId.HasValue ?
+                new ObjectParameter("publisherId", publisherId) :
+                new ObjectParameter("publisherId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetUnreturnedMap1", publisherIdParameter);
+        }
+    
+        public virtual ObjectResult<GetUnreturnedMap2_Result> GetUnreturnedMap2(Nullable<int> publisherId)
+        {
+            var publisherIdParameter = publisherId.HasValue ?
+                new ObjectParameter("publisherId", publisherId) :
+                new ObjectParameter("publisherId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUnreturnedMap2_Result>("GetUnreturnedMap2", publisherIdParameter);
+        }
+    
+        public virtual ObjectResult<GetUnreturnedMap_Result> GetUnreturnedMap(Nullable<int> publisherId)
+        {
+            var publisherIdParameter = publisherId.HasValue ?
+                new ObjectParameter("publisherId", publisherId) :
+                new ObjectParameter("publisherId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUnreturnedMap_Result>("GetUnreturnedMap", publisherIdParameter);
         }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="Repository\CallGroupRepository.cs" />
     <Compile Include="Repository\CallActivityRepository.cs" />
     <Compile Include="Repository\CallActivityStatusRepository.cs" />
+    <Compile Include="Repository\SuburbRepository.cs" />
     <Compile Include="Repository\SystemReferenceRepository.cs" />
     <Compile Include="Repository\CycleRepository.cs" />
     <Compile Include="Repository\PublisherRepository.cs" />

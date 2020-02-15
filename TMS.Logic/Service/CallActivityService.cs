@@ -50,7 +50,8 @@ namespace TMS.Logic.Service
                 Publisher = new Publisher { Id = s.ReleasedToPublisherId, Name = s.PublisherName, EmailAddress = s.EmailAddress },
                 DaysOut = s.DaysOut,
                 WarningSeverity = s.WarningSeverity,
-                WarningColour = s.WarningColour
+                WarningColour = s.WarningColour,
+                Cycle = new Cycle { Id = s.CycleId, CycleName = s.CycleName, CycleNumber = s.CycleNumber }
             }).ToList();
 
             return callActivities;
@@ -189,6 +190,12 @@ namespace TMS.Logic.Service
             {
                 var callGroup = callGroupRepository.GetById(callActivity.CallGroupId);
                 return string.Format("{0} is currently assigned to {1}.", callGroup.GroupNameWithCount, currentMapOwner.Publisher.Name);
+            }
+
+            var userCurrentMap = callActivityRepository.GetAll().Where(w => w.ReleasedToPublisherId == callActivity.ReleasedToPublisherId && w.DateReturned == null).ToList();
+            if (userCurrentMap != null && userCurrentMap.Count > 0)
+            {
+                return string.Format("Publisher has {0} map(s) currently assigned, please ask to complete it before getting a new one.", userCurrentMap.Count);
             }
 
             return string.Empty;

@@ -11,7 +11,7 @@ namespace TMS.Entity.DataModel
 {
     using System;
     
-    public partial class GetUnreturnedMap_Result
+    public partial class GetUnreturnedMap_Result1
     {
         public int Id { get; set; }
         public int CallTypeId { get; set; }

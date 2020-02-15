@@ -12,20 +12,15 @@ namespace TMS.Entity.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Suburb
+    public partial class InactiveCallAddress
     {
-        public Suburb()
-        {
-            this.CallAddresses = new HashSet<CallAddress>();
-        }
-    
         public int Id { get; set; }
-        public int StateId { get; set; }
-        public string SuburbName { get; set; }
-        public string PostCode { get; set; }
-        public string AlternativeName { get; set; }
-    
-        public virtual State State { get; set; }
-        public virtual ICollection<CallAddress> CallAddresses { get; set; }
+        public Nullable<int> CallAddressId { get; set; }
+        public Nullable<int> CallGroupId { get; set; }
+        public Nullable<int> CallStatus { get; set; }
+        public Nullable<System.DateTime> DateDeactivated { get; set; }
+        public Nullable<int> LastCallActivityId { get; set; }
+        public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public Nullable<int> ApprovedBy { get; set; }
     }
 }

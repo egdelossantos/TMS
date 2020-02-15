@@ -29,14 +29,7 @@ namespace TMS.Logic.Service
 
             appName = "Territory Management System";
 
-            if (appEnvironment.ToUpper() == "PROD")
-            {
-                domainName = "http://territory101.info";
-            }
-            else
-            {
-                domainName = "http://localhost/TMS";
-            }
+            domainName = ApplicationConfig.DomainName;            
         }
 
         public string ResetPasswordEmailBody(string encryptedLogon)

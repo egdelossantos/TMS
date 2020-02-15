@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2050
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Web", "TMS.Web\TMS.Web.csproj", "{B61673E4-8B21-476B-88DE-802CF29A0C38}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{6A85439D-CD49-47D6-8A7E-B599B99763BA}"
 	ProjectSection(SolutionItems) = preProject
-		appSettings.config = appSettings.config
-		connectionstring.config = connectionstring.config
+		Config\appSettings.config = Config\appSettings.config
+		Config\connectionstring.config = Config\connectionstring.config
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Entity", "TMS.Entity\TMS.Entity.csproj", "{D4F8B539-F422-43E8-B29E-70A95EC6F737}"

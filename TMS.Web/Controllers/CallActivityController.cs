@@ -57,7 +57,7 @@ namespace TerritoryManagementSystem.Controllers
                 var validateResult = model.IsEditMode ? string.Empty : callActivityService.ValidateCallActivity(model.CallActivity);
                 if (!string.IsNullOrWhiteSpace(validateResult))
                 {
-                    ModelState.AddModelError("CallActivity.CallGroupId", validateResult);
+                    ModelState.AddModelError("ErrorMessage", validateResult);
                 }
                 else
                 {
@@ -203,41 +203,8 @@ namespace TerritoryManagementSystem.Controllers
                     if (callAddress.CallAddress == null)
                     {
                         callAddress.CallAddress = mapService.GetCallAddress(callAddress.CallAddressId);
-                    }
-
-                    //var result = new CallActivityAddress
-                    //{
-                    //    Id = callAddress.Id,
-                    //    CallActivityId = callAddress.CallActivityId,
-                    //    CallAddressId = callAddress.CallAddressId,
-                    //    DateFinished = callAddress.DateFinished,
-                    //    CallActivityStatusId = callAddress.CallActivityStatusId,
-                    //    Note = callAddress.Note,
-                    //    CallActivity = null,
-                    //    CallActivityStatu = new CallActivityStatu { Id = callAddress.CallActivityStatu.Id, Status = callAddress.CallActivityStatu.Status, Code = callAddress.CallActivityStatu.Code, IsValidAddress = callAddress.CallActivityStatu.IsValidAddress },
-                    //    CallAddress = new CallAddress { 
-                    //            Id = callAddress.CallAddress.Id,    
-                    //            Unit = callAddress.CallAddress.Unit,
-                    //            Number = callAddress.CallAddress.Number,
-                    //            Street = callAddress.CallAddress.Street,
-                    //            SuburbId = callAddress.CallAddress.SuburbId,
-                    //            MelwayRefNo = callAddress.CallAddress.MelwayRefNo,
-                    //            RouteOrderFromKh = callAddress.CallAddress.RouteOrderFromKh,
-                    //            CallGroupId = callAddress.CallAddress.CallGroupId,
-                    //            IsValid = callAddress.CallAddress.IsValid,
-                    //            LastCallDate = callAddress.CallAddress.LastCallDate,
-                    //            LastCallActivityStatusId = callAddress.CallAddress.LastCallActivityStatusId,
-                    //            Longtitude = callAddress.CallAddress.Longtitude,
-                    //            Latitude = callAddress.CallAddress.Latitude,
-                    //            Address = callAddress.CallAddress.Address,
-                    //            GpsAddress = callAddress.CallAddress.GpsAddress
-                    //    }
-                    //};
-
-                    //list.Add(result);
-                }
-
-                //callActivityAddresses = list;
+                    }                    
+                }                
             }
         }
 

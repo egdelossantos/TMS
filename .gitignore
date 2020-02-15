@@ -5,3 +5,10 @@ obj/
 *.user
 *.suo
 TMS.Web/Properties/PublishProfiles/TMSWeb.pubxml
+/.vs/slnx.sqlite
+/.vs/TMS/DesignTimeBuild/.dtbcache
+/.vs/TMS/v16/Server/sqlite3/db.lock
+/.vs/TMS/v16/Server/sqlite3/storage.ide
+/.vs/TMS/v16/Server/sqlite3/storage.ide-shm
+/.vs/TMS/v16/Server/sqlite3/storage.ide-wal
+/.vs/VSWorkspaceState.json

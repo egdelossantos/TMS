@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Call Activity";
-    var allowAssign = ViewBag.LoggedInPublisher.IsElder || ViewBag.LoggedInPublisher.IsAssistantBrother;    
+    var allowAssign = ViewBag.LoggedInPublisher.IsElder || ViewBag.LoggedInPublisher.IsAssistantBrother;
 }
 
 @section actionBar
@@ -12,14 +12,19 @@
 
 @section scripts
 {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSBJ9jDvWV1QS27UTuh59F6kBhepYJ5Js&callback=initMap"></script>
+    <script src="~/scripts/mapwithmarker.js"></script>
+    <script src="~/scripts/page/mapPlotter.js"></script>
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-      ga('create', 'UA-58938754-1', 'auto');
-      ga('send', 'pageview');
+        ga('create', 'UA-58938754-1', 'auto');
+        ga('send', 'pageview');
 
     </script>
 }
@@ -28,19 +33,19 @@
     <div class="table-responsive">
         <div style="margin-bottom: 5px; padding:0px;">
             <div style="float:left;">
-                <input type="text" ng-model="filterTerms.searchTerm" placeholder="Search by map or publisher name" style="width: 250px;"/>
+                <input type="text" ng-model="filterTerms.searchTerm" placeholder="Search by map or publisher name" style="width: 250px;" />
                 <i>* Please click Map Name to see addresses.</i>
             </div>
             <div style="float:right;">
                 @if (allowAssign)
-                {   
+                {
                     <text>
                         <button class="btn btn-info" data-ng-click="addCallActivity()"><i class="glyphicon glyphicon-file"></i> Assign Map to Publisher</button>&nbsp;&nbsp;
-                    </text>                    
+                    </text>
                 }
-            </div>            
+            </div>
         </div>
-        
+
         <table class="table table-condensed" style="border-collapse:collapse;">
             <thead>
                 <tr>
@@ -49,7 +54,8 @@
                     <th>Activity Type</th>
                     <th>Map Name</th>
                     <th>Publisher</th>
-                    <th>Date Released</th>                    
+                    <th>Date Released</th>
+                    <th>Cycle</th>
                 </tr>
             </thead>
             <tbody data-ng-repeat="callActivity in CallActivities | callActivityFilter: filterTerms.searchTerm">
@@ -62,10 +68,11 @@
                     </td>
                     <td><span>{{ callActivity.CallType.CallTypeName }}</span></td>
                     <td>
-                        <a data-toggle="collapse" data-target="#mapAddress{{ $index + 1 }}" class="accordion-toggle" data-ng-click="mapNameOnClick(callActivity, $index + 1)"> {{ callActivity.CallGroup.CallGroupName }}</a>                        
+                        <a data-toggle="collapse" data-target="#mapAddress{{ $index + 1 }}" class="accordion-toggle" data-ng-click="mapNameOnClick(callActivity, $index + 1)"> {{ callActivity.CallGroup.CallGroupName }}</a>
                     </td>
                     <td><span>{{ callActivity.Publisher.Name }}</span></td>
                     <td><span>{{ callActivity.DateReleasedText }}</span></td>
+                    <td><span>{{ callActivity.Cycle.CycleNumber }}</span></td>
                 </tr>
                 <tr>
                     <td colspan="6" class="hiddenRow">
@@ -119,7 +126,7 @@
         </div>
     </div>
 
-    
+
 </div>
 
 @section pageCss{

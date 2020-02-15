@@ -1,0 +1,268 @@
+﻿@using TMS.Web.Helpers
+@using TerritoryManagementSystem.Models
+@model TerritoryManagementSystem.Models.AddressModel
+
+@{
+    ViewBag.Title = "Add Address";
+    ActionBarModel actionBarModel = new ActionBarModel(ViewBag.Title, Url.Action("Index", "CallActivity")) { ShowSaveExit = true, ShowClear = true };
+}
+
+@section actionBar
+{
+    @Html.Partial("_ViewActionBar", actionBarModel)
+}
+
+@section scripts
+{
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSBJ9jDvWV1QS27UTuh59F6kBhepYJ5Js&libraries=places&callback=initAutocomplete" async defer></script>
+    <script>
+        // This sample uses the Autocomplete widget to help the user select a
+        // place, then it retrieves the address components associated with that
+        // place, and then it populates the form fields with those details.
+        // This sample requires the Places library. Include the libraries=places
+        // parameter when you first load the API. For example:
+
+        var placeSearch, autocomplete;
+
+        var componentForm = {
+            street_number: 'short_name',
+            route: 'long_name',
+            locality: 'long_name',
+            administrative_area_level_1: 'short_name',
+            country: 'long_name',
+            postal_code: 'short_name'
+        };
+
+        function initMap() {
+            initAutocomplete();
+        }
+
+        function initAutocomplete() {
+            // Create the autocomplete object, restricting the search predictions to
+            // geographical location types.
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'), { types: ['geocode'], componentRestrictions: { country: 'au' } });
+
+            // Avoid paying for data that you don't need by restricting the set of
+            // place fields that are returned to just the address components.
+            autocomplete.setFields(['address_component', 'geometry']);
+
+            // When the user selects an address from the drop-down, populate the
+            // address fields in the form.
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        function fillInAddress() {
+            resetFields(false);
+            var place = autocomplete.getPlace();
+            var placeAddress = "";
+
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                if (componentForm[addressType]) {
+                    var val = place.address_components[i][componentForm[addressType]];
+                    var txtbox = document.getElementById(addressType);
+                    if (txtbox != null) {
+                        txtbox.value = val;
+                        placeAddress = placeAddress + val;
+                    }
+                }
+            }
+
+            var addressUnit = getHouseUnitNumber(document.getElementById("autocomplete").value);
+
+            document.getElementById("unit").value = addressUnit;
+            document.getElementById("latitude").value = place.geometry.location.lat();
+            document.getElementById("longtitude").value = place.geometry.location.lng();
+        }
+
+        function getHouseUnitNumber(searchAddress) {
+            var street = searchAddress.split(",")[0];
+            var idx = street.indexOf("/");
+            var unit = street.substring(0, idx);
+            return unit;
+        }
+
+        function resetFields(clearAutocomplete) {
+            document.getElementById("unit").value = "";
+            document.getElementById("street_number").value = "";
+            document.getElementById("route").value = "";
+            document.getElementById("locality").value = "";
+            document.getElementById("administrative_area_level_1").value = "";
+            document.getElementById("country").value = "";
+            document.getElementById("latitude").value = "";
+            document.getElementById("longtitude").value = "";
+            $(".field-validation-error").empty();
+           
+            if (clearAutocomplete) {
+                document.getElementById("autocomplete").value = "";
+                $("#CallGroupId").val(0);
+            }
+        }
+
+        function geolocate() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var circle = new google.maps.Circle(
+                        { center: geolocation, radius: position.coords.accuracy });
+                    autocomplete.setBounds(circle.getBounds());
+                });
+            }
+        }
+
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        }); 
+    </script>
+}
+
+<style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+<style>
+    #locationField, #controls {
+        position: relative;
+        width: 85%;
+    }
+
+    #locationField {
+        margin-bottom: 2px;
+    }
+
+    #foundAddress {
+        margin-top: 10px;
+        margin-bottom: 2px;
+        width: 100%;
+    }
+
+    #autocomplete {
+        width: 100%;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    .sectionTitle {
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .fieldLabel {
+        margin-bottom: 0px;
+    }
+</style>
+
+@using (Html.BeginForm("AddAddress", "Map", FormMethod.Post))
+{
+<div>
+    <div id="locationField">
+        <label class="sectionTitle">S E A R C H</label>
+        <input id="autocomplete"
+               placeholder="Enter address"
+               onFocus="geolocate()"
+               type="text" />
+    </div>
+
+    <div class="row">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span8">
+                    <div class="pull-left">
+                        @Html.HiddenFor(m => m.ErrorMessage)
+                        @Html.ValidationMessagesFor(m => m.ErrorMessage)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="foundAddress">
+        <label class="sectionTitle">A D D R E S S</label>
+        <div class="row">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span2">
+                        @Html.Label("Unit", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.Unit, new { @readonly = "readonly", id = "unit", @class = "field" })
+                    </div>
+                    <div class="span2">
+                        @Html.Label("Number", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.Number, new { @readonly = "readonly", id = "street_number", @class = "field" })
+                    </div>
+                    <div class="span6">
+                        @Html.Label("Street", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.Street, new { @readonly = "readonly", id = "route", @class = "field" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span4">
+                        @Html.Label("Suburb", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.Suburb, new { @readonly = "readonly", id = "locality", @class = "field" })
+                    </div>
+                    <div class="span2">
+                        @Html.Label("State", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.State, new { @readonly = "readonly", id = "administrative_area_level_1", @class = "field" })
+                    </div>
+                    <div class="span4">
+                        @Html.Label("Country", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.Country, new { @readonly = "readonly", id = "country", @class = "field" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span3">
+                        @Html.Label("Latitude", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.Latitude, new { @readonly = "readonly", id = "latitude", @class = "field" })
+                    </div>
+                    <div class="span3">
+                        @Html.Label("Longtitude", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.Longtitude, new { @readonly = "readonly", id = "longtitude", @class = "field" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span6">
+                        @Html.DropDownListWithLabelFor(m => m.CallGroupId, Model.MapsSelectList, "Which map do you suggest this address to be included?", false, new { @class = "field" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input id="btnsave" type="submit" class="hide" />
+    <input id="btnclear" type="button" onclick="resetFields(true);" class="hide" />
+</div>
+}

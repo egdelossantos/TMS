@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0f0618c84bd4489c99cc08e0ad759b6d" Name="Diagram1">
+      <Diagram DiagramId="0f0618c84bd4489c99cc08e0ad759b6d" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="TerritoryDataModel.CallActivityWarning" Width="1.5" PointX="0.875" PointY="10.625" />
         <EntityTypeShape EntityType="TerritoryDataModel.CallAddressNote" Width="1.5" PointX="5.25" PointY="14.5" />
         <EntityTypeShape EntityType="TerritoryDataModel.CallType" Width="1.5" PointX="0.75" PointY="8.375" />
@@ -36,17 +36,19 @@
         <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_Publisher3" />
         <AssociationConnector Association="TerritoryDataModel.FK_Publisher_webpages_Roles" />
         <AssociationConnector Association="TerritoryDataModel.FK_webpages_Membership_Publisher" />
-        <EntityTypeShape EntityType="TerritoryDataModel.CallAddress" Width="1.5" PointX="20.5" PointY="6.5" />
-        <AssociationConnector Association="TerritoryDataModel.FK_CallActivityAddress_CallAddress" />
-        <AssociationConnector Association="TerritoryDataModel.FK_CallAddress_CallActivityStatus" />
-        <AssociationConnector Association="TerritoryDataModel.FK_CallAddress_Suburb" />
-        <AssociationConnector Association="TerritoryDataModel.FK_CallAddressNote_CallAddress" />
         <EntityTypeShape EntityType="TerritoryDataModel.vwAddress" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="TerritoryDataModel.CallGroup" Width="1.5" PointX="18.25" PointY="0.75" />
         <AssociationConnector Association="TerritoryDataModel.FK_CallActivity_CallGroup" />
         <AssociationConnector Association="TerritoryDataModel.FK_CallGroup_CallActivity" />
         <AssociationConnector Association="TerritoryDataModel.FK_CallGroup_CallActivity1" />
+        <EntityTypeShape EntityType="TerritoryDataModel.CallAddress" Width="1.5" PointX="20.875" PointY="6.125" />
+        <EntityTypeShape EntityType="TerritoryDataModel.Color" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TerritoryDataModel.InactiveCallAddress" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallActivityAddress_CallAddress" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallAddress_CallActivityStatus" />
         <AssociationConnector Association="TerritoryDataModel.FK_CallAddress_CallGroup" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallAddress_Suburb" />
+        <AssociationConnector Association="TerritoryDataModel.FK_CallAddressNote_CallAddress" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

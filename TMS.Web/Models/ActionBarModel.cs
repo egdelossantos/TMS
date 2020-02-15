@@ -19,6 +19,8 @@ namespace TerritoryManagementSystem.Models
 
         public bool ShowCancel { get; set; }
         public bool ShowSaveContinue { get; set; }
+
+        public bool ShowClear { get; set; }
         public bool ShowSave { get; set; }
         public bool ShowSaveExit { get; set; }
         public string SaveExitClick { get; set; }        

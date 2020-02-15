@@ -34,5 +34,18 @@
         }
     };
 
-    return { confirmAction: confirmAction, saveExit: saveExit, saveOnly: saveOnly };
+    var clear = function () {
+        var inputs = $('form input[id="btnclear"]:not(.icon)');
+        if (inputs.length > 1) {
+            inputs.each(function () {
+                if ($(this).attr('id') == "btnclear") {
+                    $(this)[0].click();
+                }
+            });
+        } else {
+            inputs.click();
+        }
+    };
+
+    return { confirmAction: confirmAction, saveExit: saveExit, saveOnly: saveOnly, clear: clear };
 }();

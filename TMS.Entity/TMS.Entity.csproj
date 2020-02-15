@@ -75,6 +75,9 @@
     <Compile Include="DataModel\CallType.cs">
       <DependentUpon>TerritoryDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Color.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Country.cs">
       <DependentUpon>TerritoryDataModel.tt</DependentUpon>
     </Compile>
@@ -93,7 +96,16 @@
     <Compile Include="DataModel\GetUnReturnedCallAddress_Result.cs">
       <DependentUpon>TerritoryDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\GetUnreturnedMap2_Result.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\GetUnreturnedMap_Result.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GetUnreturnedMap_Result1.cs">
+      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\InactiveCallAddress.cs">
       <DependentUpon>TerritoryDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Interfaces\IEntity.cs" />
@@ -187,6 +199,9 @@
       <Project>{ba13fe3f-fda6-416d-93d3-7b56146d1fb6}</Project>
       <Name>TMS.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataModel\TerritoryDataModel.edmx.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -29,6 +29,13 @@
                     </li>
                 }
 
+                @if (Model.ShowClear)
+                {
+                    <li class="noUnderline actions">
+                        <a href="javascript:;" onclick=" return actionBar.clear(); " id="linkClear"><i class="icon-file"></i> Clear </a>
+                    </li>
+                }
+
                 @if (Model.ShowSave)
                 {
                     <li class="noUnderline actions">

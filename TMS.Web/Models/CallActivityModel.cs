@@ -9,6 +9,8 @@ namespace TerritoryManagementSystem.Models
 {
     public class CallActivityModel
     {
+        public string ErrorMessage { get; set; }
+
         public IList<Publisher> Publishers { get; set; }
         
         public IList<CallGroup> AvailableMaps { get; set; }
