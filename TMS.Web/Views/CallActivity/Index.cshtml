@@ -77,12 +77,12 @@
                 <tr>
                     <td colspan="6" class="hiddenRow">
                         <div class="collapse divAddress" id="mapAddress{{ $index + 1 }}">
-                            <div class="pull-left" style="width:50%;">
+                            <div class="pull-left" style="width:100%;">
                                 <table class="tblAddress table table-striped table-bordered table-condensed">
                                     <tr>
-                                        <td class="span7"><b>Address</b></td>
+                                        <td class="span5"><b>Address</b></td>
                                         <td class="span3" style="text-align:center"><b>Suggested<br />Route Order</b></td>
-                                        <td class="span2"><b>Status</b></td>
+                                        <td class="span4"><b>Status</b></td>
                                     </tr>
                                     <tr data-ng-repeat="callActivityAddress in callActivity.CallActivityAddresses">
                                         <td class="span7"><a data-ng-click="navigateToAddress(callActivityAddress)">{{ callActivityAddress.AddressDisplay }}</a></td>
@@ -91,12 +91,12 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="pull-right" style="width:50%;">
+                            @*<div class="pull-right" style="width:50%;">
                                 <div style="margin-left:10px; margin-top:7px;" data-ng-show="isGoogleMapHidden($index + 1)">
                                     Click <b><a data-ng-click="refreshMap(callActivity, $index + 1)" title="Refresh Map">H E R E</a></b> to refresh map.
                                 </div>
                                 <div id="googleMap{{ $index + 1 }}" class="googleMap"></div>
-                            </div>
+                            </div>*@
                         </div>
                     </td>
                 </tr>

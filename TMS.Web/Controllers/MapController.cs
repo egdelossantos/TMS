@@ -146,7 +146,7 @@ namespace TerritoryManagementSystem.Controllers
 
         private List<CallGroup> GetActiveCallGroups()
         {
-            return mapService.GetCallGroups(CurrentCycle, false, false).OrderBy(o => o.LastCallDate).ThenBy(o => o.CallGroupName).ThenBy(o => o.GroupCode, new SemiNumericComparer()).ToList();
+            return mapService.GetCallGroups(null, false, false, false).OrderBy(o => o.LastCallDate).ThenBy(o => o.CallGroupName).ThenBy(o => o.GroupCode, new SemiNumericComparer()).ToList();
         }
 
         private CallAddress MapModelToCallAddress(AddressModel model)
@@ -165,6 +165,16 @@ namespace TerritoryManagementSystem.Controllers
                 Latitude = model.Latitude,
                 Longtitude = model.Longtitude
             };
+        }
+
+        [HttpGet]
+        public JsonResult GetNewAddresses()
+        {
+            var addresses = mapService.GetNewAddresses();
+
+            var result = new JsonResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet, Data = mapService.HibernateCallAddress(addresses), MaxJsonLength = int.MaxValue };
+
+            return result;
         }
     }
 }

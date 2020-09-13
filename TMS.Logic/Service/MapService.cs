@@ -59,9 +59,9 @@ namespace TMS.Logic.Service
             return cycleRepository.GetById(id);
         }
 
-        public IList<CallGroup> GetCallGroups(Cycle cycle, bool availableOnly = true, bool approvedForReleaseOnly = false)
+        public IList<CallGroup> GetCallGroups(Cycle cycle, bool availableOnly = true, bool approvedForReleaseOnly = false, bool withAddressOnly = true)
         {
-            var callGroups = callGroupRepository.GetAll();
+            var callGroups = callGroupRepository.GetAll().Where(w => w.IsActive == true);
             
             // available means not called in this cycle
             if (availableOnly){
@@ -73,14 +73,20 @@ namespace TMS.Logic.Service
                 callGroups = callGroups.Where(w => w.CallActivity1 == null || w.CallActivity1.Cycle.CycleNumber < cycle.CycleNumber);
             }
 
-            var result = callGroups.ToList().Where(w => w.CallAddresses != null && w.CallAddresses.Count(ca => ca.IsValid == true) > 0).ToList();
+            var result = callGroups.ToList();
 
+            if (withAddressOnly)
+            {
+                result = result.Where(w => w.CallAddresses != null && w.CallAddresses.Count(ca => ca.IsValid == true) > 0)
+                               .ToList();
+            }
+            
             if (approvedForReleaseOnly)
             {
                 result = result.Where(w => w.AllowAssistantToRelease).ToList();
             }
 
-            result = result.OrderBy(o => o.GroupCode, new SemiNumericComparer()).ToList();
+            result = result.OrderBy(o => o.CallGroupName, new SemiNumericComparer()).ToList();
 
             return result;
         }
@@ -122,7 +128,15 @@ namespace TMS.Logic.Service
             return callAddress;
         }
 
-        public CallAddress GetCallAddress(int addressId)
+        public IList<CallAddress> GetNewAddresses()
+        {
+            return callAddressRepository
+                    .GetAll()
+                    .Where(w => w.IsValid == true && (w.CallGroupId == null || w.CallGroupId <= 0))
+                    .ToList();
+        }
+
+            public CallAddress GetCallAddress(int addressId)
         {
             var callAddress = callAddressRepository.GetById(addressId);
 

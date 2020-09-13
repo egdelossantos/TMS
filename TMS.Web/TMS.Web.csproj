@@ -220,6 +220,7 @@
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportsFilterController.cs" />
+    <Compile Include="Controllers\SuburbController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,6 +259,7 @@
     <Content Include="Images\logo-TMS.png" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers\app.controller.js" />
+    <Content Include="Scripts\app\controllers\maps.controller.js" />
     <Content Include="Scripts\app\controllers\publisher.controller.js" />
     <Content Include="Scripts\app\controllers\callactivity.controller.js" />
     <Content Include="Scripts\app\controllers\home.controller.js" />
@@ -328,6 +330,8 @@
     <Content Include="Views\Publisher\EditPublisher.cshtml" />
     <Content Include="Views\Map\AddressBestRoute.cshtml" />
     <Content Include="Views\Map\AddAddress.cshtml" />
+    <Content Include="Views\Suburb\Index.cshtml" />
+    <Content Include="Views\Map\NewAddressIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap\img\glyphicons-halflings-white.png" />

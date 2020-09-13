@@ -14,7 +14,7 @@
 
 @section scripts
 {
-    <script src="https://maps.googleapis.com/maps/api/js?key=<<<API KEY>>>&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSBJ9jDvWV1QS27UTuh59F6kBhepYJ5Js&libraries=places&callback=initAutocomplete" async defer></script>
     <script>
         // This sample uses the Autocomplete widget to help the user select a
         // place, then it retrieves the address components associated with that
@@ -69,18 +69,34 @@
                 }
             }
 
-            var addressUnit = getHouseUnitNumber(document.getElementById("autocomplete").value);
+            var houseNumber = document.getElementById("street_number").value;
+            if (houseNumber == "") {
+                document.getElementById("street_number").value = getHouseUnitNumber(document.getElementById("autocomplete").value, "number");
+            }
+
+            var addressUnit = getHouseUnitNumber(document.getElementById("autocomplete").value, "unit");
 
             document.getElementById("unit").value = addressUnit;
             document.getElementById("latitude").value = place.geometry.location.lat();
             document.getElementById("longtitude").value = place.geometry.location.lng();
         }
 
-        function getHouseUnitNumber(searchAddress) {
+        function getHouseUnitNumber(searchAddress, unitOrNumber) {
             var street = searchAddress.split(",")[0];
-            var idx = street.indexOf("/");
-            var unit = street.substring(0, idx);
-            return unit;
+            var unitNumber = street.split(" ")[0];
+            var idx = unitNumber.indexOf("/");
+            var unit = unitNumber.substring(0, idx);
+            var houseNumber = unitNumber.substring(idx + 1);
+
+            if (unitOrNumber == "unit") {
+                return unit;
+            }
+            else if (unitOrNumber == "number") {
+                return houseNumber;
+            }
+            else {
+                return "";
+            }            
         }
 
         function resetFields(clearAutocomplete) {

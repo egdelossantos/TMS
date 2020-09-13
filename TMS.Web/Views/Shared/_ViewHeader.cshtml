@@ -1,4 +1,10 @@
-﻿    <div class="container" data-ng-controller="menu.controller">
+﻿<style>
+    hr.divider{
+        margin-top:0px;
+        margin-bottom:0px;
+    }
+</style>
+<div class="container" data-ng-controller="menu.controller">
     <div class="pull-left" style="width:100%;">
         <div class="pull-left">
             <a href='@Url.Action("Index", "Home")' class="logo"></a>
@@ -24,7 +30,7 @@
                                 </li>
                                 <li class="noPadding">
                                     @Html.ActionLink("Current Map Address", "CurrentMapAddressReport", "Reports", null, new { target = "_blank" })
-                                </li>                                
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -33,29 +39,32 @@
                             </a>
                             <ul class="dropdown-menu noUnderline" id="managesubmenu">
                                 <li class="noPadding">
-                                    @Html.ActionLink("Set Maps To Be Released", "MapsAllowedToBeReleased", "Map")
-                                </li>
-                                <li class="noPadding">
                                     @Html.ActionLink("Publisher", "", "Publisher")
                                 </li>
                                 <li class="noPadding">
-                                    @Html.ActionLink("Address Suggested Route", "AddressBestRoute", "Map")
+                                    <hr class="divider" />
+                                </li>
+                                <li class="noPadding">
+                                    @Html.ActionLink("Set Maps To Be Released", "MapsAllowedToBeReleased", "Map")
                                 </li>
                                 <li class="noPadding">
                                     @Html.ActionLink("Add Address", "AddAddress", "Map")
                                 </li>
+                                <li class="noPadding">
+                                    @Html.ActionLink("Address Suggested Route", "AddressBestRoute", "Map")
+                                </li>
                             </ul>
                         </li>
                     }
-                    
+
                     <li>
-                       
+
                             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                             {
-                                @Html.AntiForgeryToken()                                
-                                <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-off"></i> LOG OUT</a>                               
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-off"></i> LOG OUT</a>
                             }
-                        
+
                     </li>
                 }
                 else
@@ -64,12 +73,6 @@
                 }
             </ul>
         </div>
-        @*<div class="pull-right">
-            <section id="login">
-                @Html.Partial("_LoginPartial")
-            </section>
-        </div>*@
-        
     </div>
 </div>
 
