@@ -118,7 +118,7 @@
             $scope.mapNameOnClick = function (callActivity, rowId) {
                 if (!($('#mapAddress' + rowId).hasClass('in'))) {
                     callActivity = $scope.CallActivities[rowId - 1];
-                    $scope.getCallActivityAddresses(callActivity, rowId, "plotmap");                    
+                    $scope.getCallActivityAddresses(callActivity, rowId, "");                    
                 }
                 return false;
             };
@@ -128,25 +128,25 @@
                 return false;
             };
 
-            $scope.isGoogleMapHidden = function(rowId){
-                var mapElement = document.getElementById("googleMap" + rowId);
-                if (mapElement != undefined) {
-                    return mapElement.innerHTML == "";
-                }
-                else {
-                    return true;
-                }
-            }
+            //$scope.isGoogleMapHidden = function(rowId){
+            //    var mapElement = document.getElementById("googleMap" + rowId);
+            //    if (mapElement != undefined) {
+            //        return mapElement.innerHTML == "";
+            //    }
+            //    else {
+            //        return true;
+            //    }
+            //}
 
             $scope.getCallActivityAddresses = function (callActivity, rowId, todoNext) {
                 if (callActivity.CallActivityAddresses == undefined || callActivity.CallActivityAddresses == null || callActivity.CallActivityAddresses.length == 0) {
                     var promise = callactivityApiService.getCallActivityAddresses(callActivity.Id);
                     promise.then(function (data) {
                         callActivity.CallActivityAddresses = data.callAddress;
-                        $scope.$apply(function () {
-                            $scope.CallActivities[rowId - 1].CallActivityAddresses = callActivity.CallActivityAddresses;
-                            $scope.isGoogleMapHidden(rowId);
-                        });                        
+                        //$scope.$apply(function () {
+                        //    $scope.CallActivities[rowId - 1].CallActivityAddresses = callActivity.CallActivityAddresses;
+                        //    //$scope.isGoogleMapHidden(rowId);
+                        //});                        
                         $scope.DoNext(callActivity, rowId, todoNext); $scope.DoNext(callActivity, rowId, todoNext);
                     }, function (status) {
                         console.log(status);
@@ -159,21 +159,21 @@
             };
 
             $scope.DoNext = function (callActivity, rowId, todoNext) {
-                if (todoNext == "plotmap")
-                {
-                    $scope.plotAddressInMap(callActivity, rowId);
-                }
+                //if (todoNext == "plotmap")
+                //{
+                //    $scope.plotAddressInMap(callActivity, rowId);
+                //}
                
                 if (todoNext == "sendemail") {
                     $scope.sendEmail(callActivity, rowId);
                 }                    
             }
 
-            $scope.plotAddressInMap = function (callActivity, rowId) {                
-                var mapElement = document.getElementById("googleMap" + rowId);
-                plotAddressInMap(callActivity.CallActivityAddresses, mapElement);                
-                return false;
-            };
+            //$scope.plotAddressInMap = function (callActivity, rowId) {                
+            //    var mapElement = document.getElementById("googleMap" + rowId);
+            //    plotAddressInMap(callActivity.CallActivityAddresses, mapElement);                
+            //    return false;
+            //};
 
             $scope.navigateToAddress = function (callActivityAddress) {
                 var address = callActivityAddress.GpsAddress.replace(/ /g, "+"); 

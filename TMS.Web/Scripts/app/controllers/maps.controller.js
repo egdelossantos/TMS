@@ -35,7 +35,7 @@
             $scope.mapNameOnClick = function (callActivity, rowId) {
                 if (!($('#mapAddress' + rowId).hasClass('in'))) {
                     callActivity = $scope.CallActivities[rowId - 1];
-                    $scope.getCallActivityAddresses(callActivity, rowId, "plotmap");                    
+                    $scope.getCallActivityAddresses(callActivity, rowId, "");                    
                 }
                 return false;
             };
@@ -47,7 +47,7 @@
                         callActivity.CallActivityAddresses = data.callAddress;
                         $scope.$apply(function () {
                             $scope.CallActivities[rowId - 1].CallActivityAddresses = callActivity.CallActivityAddresses;
-                            $scope.isGoogleMapHidden(rowId);
+                            //$scope.isGoogleMapHidden(rowId);
                         });
                         $scope.DoNext(callActivity, rowId, todoNext); $scope.DoNext(callActivity, rowId, todoNext);
                     }, function (status) {
