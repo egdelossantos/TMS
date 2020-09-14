@@ -12,6 +12,11 @@ using tms.api.Model;
 
 namespace TMS.Logic.Service
 {
+    public enum AustraliaState
+    {
+        Victoria = 1
+    }
+
     public class MapService
     {
         private readonly CallGroupRepository callGroupRepository;
@@ -19,15 +24,17 @@ namespace TMS.Logic.Service
         private readonly SystemReferenceRepository systemReferenceRepository;
         private readonly CycleRepository cycleRepository;
         private readonly SuburbRepository suburbRepository;
+        private readonly StateRepository stateRepository;
         public Address KingdomHallLocation;
-        
-        public MapService(CallGroupRepository callGroupRepository, CallAddressRepository callAddressRepository, SystemReferenceRepository systemReferenceRepository, CycleRepository cycleRepository, SuburbRepository suburbRepository)
+
+        public MapService(CallGroupRepository callGroupRepository, CallAddressRepository callAddressRepository, SystemReferenceRepository systemReferenceRepository, CycleRepository cycleRepository, SuburbRepository suburbRepository, StateRepository stateRepository)
         {
             this.callGroupRepository = callGroupRepository;
             this.callAddressRepository = callAddressRepository;
             this.systemReferenceRepository = systemReferenceRepository;
             this.cycleRepository = cycleRepository;
             this.suburbRepository = suburbRepository;
+            this.stateRepository = stateRepository;
             this.KingdomHallLocation = new Address
             {
                 Unit = string.Empty,
@@ -37,6 +44,14 @@ namespace TMS.Logic.Service
                 State = Config.KingdomHallState,
                 Country = Config.KingdomHallCountry
             };
+        }
+
+        public State VictoriaState
+        {
+            get
+            {
+                return stateRepository.GetStateByName(AustraliaState.Victoria.ToString());                
+            }
         }
 
         public Cycle GetCurrentCycle()
@@ -218,6 +233,11 @@ namespace TMS.Logic.Service
             }).OrderBy(o => o.CallGroupId).ThenBy(o1 => o1.RouteOrder).ToList();
 
             return result;
+        }
+
+        public void SaveSuburb(Suburb suburb)
+        {
+            suburbRepository.SaveOrUpdate(suburb);
         }
 
         private Cycle CreateNewCycle(SystemReference sysRef)
@@ -402,7 +422,7 @@ namespace TMS.Logic.Service
             else
             {
                 errorMsg = address.CallActivityStatu != null ? string.Format(" Last call activity status : {0}.", address.CallActivityStatu.Status) : string.Empty;
-                return string.Format("Address already exists but was set as invalid.{0} Please contact your Territory Overseer if you want this to be added.", errorMsg);
+                return string.Format("Address already exists but was deactivated.{0} Please contact your Territory Overseer if you want this to be added.", errorMsg);
             }
         }
 

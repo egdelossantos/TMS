@@ -13,6 +13,7 @@ namespace TerritoryManagementSystem.Models
         public string Street { get; set; }
         public string Suburb { get; set; }
         public string State { get; set; }
+        public string Postcode { get; set; }
         public string Country { get; set; }
         public float Latitude { get; set; }
         public float Longtitude { get; set; }

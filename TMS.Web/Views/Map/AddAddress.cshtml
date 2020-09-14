@@ -242,7 +242,11 @@
                         @Html.Label("State", new { @class = "fieldLabel" })
                         @Html.TextBoxFor(m => m.State, new { @readonly = "readonly", id = "administrative_area_level_1", @class = "field" })
                     </div>
-                    <div class="span4">
+                    <div class="span1">
+                        @Html.Label("Postcode", new { @class = "fieldLabel" })
+                        @Html.TextBoxFor(m => m.Postcode, new { @readonly = "readonly", id = "postal_code", @class = "field" })
+                    </div>
+                    <div class="span3">
                         @Html.Label("Country", new { @class = "fieldLabel" })
                         @Html.TextBoxFor(m => m.Country, new { @readonly = "readonly", id = "country", @class = "field" })
                     </div>

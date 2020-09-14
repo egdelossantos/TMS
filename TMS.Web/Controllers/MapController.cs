@@ -119,6 +119,14 @@ namespace TerritoryManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 var callAddress = MapModelToCallAddress(model);
+
+                if (callAddress.Suburb == null)
+                {
+                    var suburb = AddSuburb(model.Suburb, model.Postcode);
+                    callAddress.Suburb = suburb;
+                    callAddress.SuburbId = suburb != null ? suburb.Id : 0;
+                }
+
                 var validateResult = mapService.ValidateCallAddress(callAddress);
                 if (!string.IsNullOrWhiteSpace(validateResult))
                 {
@@ -152,7 +160,7 @@ namespace TerritoryManagementSystem.Controllers
         private CallAddress MapModelToCallAddress(AddressModel model)
         {
             var suburb = mapService.GetSuburbByName(model.Suburb);
-
+            
             return new CallAddress
             {
                 Unit = model.Unit ?? "",
@@ -165,6 +173,27 @@ namespace TerritoryManagementSystem.Controllers
                 Latitude = model.Latitude,
                 Longtitude = model.Longtitude
             };
+        }
+
+        private Suburb AddSuburb(string suburbName, string postCode)
+        {
+            var suburb = new Suburb
+            {
+                SuburbName = suburbName,
+                PostCode = postCode,
+                StateId = mapService.VictoriaState.Id
+            };
+
+            mapService.SaveSuburb(suburb);
+
+            suburb = mapService.GetSuburbByName(suburbName);   
+            
+            if (suburb != null)
+            {
+                suburb.State = mapService.VictoriaState;
+            }
+
+            return suburb;
         }
 
         [HttpGet]
