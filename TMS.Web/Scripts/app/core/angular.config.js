@@ -34,6 +34,7 @@ define(['console'],
             commonService: 'common.service',           
             callactivityApiService: 'callactivity.api.service',
             publisherApiService: 'publisher.api.service',
+            calladdressApiService: 'calladdress.api.service',
         };
 
         //controllers
@@ -42,7 +43,8 @@ define(['console'],
                 menuController: 'menu.controller',
                 appController: 'app.controller',
                 callactivityController: 'callactivity.controller',
-                publisherController: 'publisher.controller'
+                publisherController: 'publisher.controller',
+                calladdressController: 'calladdress.controller',
             }
         };
 

@@ -215,6 +215,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CallActivityController.cs" />
+    <Compile Include="Controllers\CallAddressController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\PublisherController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -259,7 +260,7 @@
     <Content Include="Images\logo-TMS.png" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers\app.controller.js" />
-    <Content Include="Scripts\app\controllers\maps.controller.js" />
+    <Content Include="Scripts\app\controllers\calladdress.controller.js" />
     <Content Include="Scripts\app\controllers\publisher.controller.js" />
     <Content Include="Scripts\app\controllers\callactivity.controller.js" />
     <Content Include="Scripts\app\controllers\home.controller.js" />
@@ -280,6 +281,7 @@
     <Content Include="Scripts\app\directives\date.js" />
     <Content Include="Scripts\app\directives\integer.js" />
     <Content Include="Scripts\app\directives\validation.message.js" />
+    <Content Include="Scripts\app\services\calladdress.api.service.js" />
     <Content Include="Scripts\app\services\publisher.api.service.js" />
     <Content Include="Scripts\app\services\callactivity.api.service.js" />
     <Content Include="Scripts\app\services\common.service.js" />
@@ -331,7 +333,7 @@
     <Content Include="Views\Map\AddressBestRoute.cshtml" />
     <Content Include="Views\Map\AddAddress.cshtml" />
     <Content Include="Views\Suburb\Index.cshtml" />
-    <Content Include="Views\Map\NewAddressIndex.cshtml" />
+    <Content Include="Views\Map\ManageNewAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap\img\glyphicons-halflings-white.png" />

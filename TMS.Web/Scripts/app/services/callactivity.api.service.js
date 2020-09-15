@@ -49,6 +49,6 @@
 
     service.$inject = [angularConfig.core.services.commonService];
 
-    console.debug('package api service created');
+    console.debug('callactivity api service created');
     return service;
 });

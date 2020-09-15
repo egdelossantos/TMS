@@ -5,6 +5,7 @@
     , 'app/services/common.service'
     , 'app/services/callactivity.api.service'
     , 'app/services/publisher.api.service'
+    , 'app/services/calladdress.api.service'
 ], function (
           console
         , _
@@ -12,6 +13,7 @@
         , commonService
         , callactivityApiService
         , publisherApiService
+        , calladdressApiService
 
 ) {
     "use strict";
@@ -20,7 +22,8 @@
     var services = {
         commonService : commonService, 
         callactivityApiService: callactivityApiService,
-        publisherApiService: publisherApiService
+        publisherApiService: publisherApiService,
+        calladdressApiService: calladdressApiService
     };
 
     _.each(services, function (value, key) {

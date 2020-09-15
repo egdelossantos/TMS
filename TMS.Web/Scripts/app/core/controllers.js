@@ -6,6 +6,7 @@
     , 'app/controllers/menu.controller'
     , 'app/controllers/callactivity.controller'
     , 'app/controllers/publisher.controller'
+    , 'app/controllers/calladdress.controller'
 ], function (
         console
         , _
@@ -14,6 +15,7 @@
         , menuController
         , callactivityController
         , publisherController
+        , calladdressController
     ) {
     "use strict";
     console.group("Entering controllers module.");
@@ -22,7 +24,8 @@
         appController: appController,
         menuController: menuController,
         callactivityController: callactivityController,
-        publisherController: publisherController
+        publisherController: publisherController,
+        calladdressController: calladdressController
     };
 
     _.each(registeredControllers, function (value, key) {
