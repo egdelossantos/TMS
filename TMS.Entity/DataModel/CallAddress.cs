@@ -36,6 +36,7 @@ namespace TMS.Entity.DataModel
         public string Address { get; set; }
         public string GpsAddress { get; set; }
         public Nullable<int> SuggestedCallGroupId { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
     
         public virtual ICollection<CallActivityAddress> CallActivityAddresses { get; set; }
         public virtual CallActivityStatu CallActivityStatu { get; set; }

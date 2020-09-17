@@ -96,13 +96,7 @@
     <Compile Include="DataModel\GetUnReturnedCallAddress_Result.cs">
       <DependentUpon>TerritoryDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\GetUnreturnedMap2_Result.cs">
-      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\GetUnreturnedMap_Result.cs">
-      <DependentUpon>TerritoryDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\GetUnreturnedMap_Result1.cs">
       <DependentUpon>TerritoryDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\InactiveCallAddress.cs">

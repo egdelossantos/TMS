@@ -20,5 +20,7 @@ namespace TMS.Entity.DataModel
         public Nullable<int> TotalNotDoneMap { get; set; }
         public Nullable<int> CurrentCycle { get; set; }
         public Nullable<int> CycleUndoneMap { get; set; }
+        public int TotalNumberOfActiveAddress { get; set; }
+        public int TotalNumberOfNewAddress { get; set; }
     }
 }

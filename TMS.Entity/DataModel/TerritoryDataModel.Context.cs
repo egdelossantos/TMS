@@ -142,24 +142,6 @@ namespace TMS.Entity.DataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SavePublisher", idParameter, emailParameter, nameParameter, phoneNumberParameter, roleIDParameter, isActiveParameter);
         }
     
-        public virtual int GetUnreturnedMap1(Nullable<int> publisherId)
-        {
-            var publisherIdParameter = publisherId.HasValue ?
-                new ObjectParameter("publisherId", publisherId) :
-                new ObjectParameter("publisherId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetUnreturnedMap1", publisherIdParameter);
-        }
-    
-        public virtual ObjectResult<GetUnreturnedMap2_Result> GetUnreturnedMap2(Nullable<int> publisherId)
-        {
-            var publisherIdParameter = publisherId.HasValue ?
-                new ObjectParameter("publisherId", publisherId) :
-                new ObjectParameter("publisherId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUnreturnedMap2_Result>("GetUnreturnedMap2", publisherIdParameter);
-        }
-    
         public virtual ObjectResult<GetUnreturnedMap_Result> GetUnreturnedMap(Nullable<int> publisherId)
         {
             var publisherIdParameter = publisherId.HasValue ?

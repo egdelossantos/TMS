@@ -71,6 +71,7 @@
           <Property Name="Address" Type="nvarchar" MaxLength="602" StoreGeneratedPattern="Computed" />
           <Property Name="GpsAddress" Type="nvarchar" MaxLength="551" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="SuggestedCallGroupId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="CallAddressNote">
           <Key>
@@ -126,6 +127,8 @@
           <Property Name="EndDate" Type="date" />
           <Property Name="CycleName" Type="nvarchar" MaxLength="26" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'kpterritory.dbo.InactiveCallAddress' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="InactiveCallAddress">
           <Key>
             <PropertyRef Name="Id" />
@@ -583,7 +586,6 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cycle" EntityType="Self.Cycle" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="InactiveCallAddress" EntityType="Self.InactiveCallAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Publisher" EntityType="Self.Publisher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suburb" EntityType="Self.Suburb" Schema="dbo" store:Type="Tables" />
@@ -592,6 +594,18 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           <EntitySet Name="webpages_PasswordResets" EntityType="Self.webpages_PasswordResets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InactiveCallAddress" EntityType="Self.InactiveCallAddress" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InactiveCallAddress].[Id] AS [Id], 
+    [InactiveCallAddress].[CallAddressId] AS [CallAddressId], 
+    [InactiveCallAddress].[CallGroupId] AS [CallGroupId], 
+    [InactiveCallAddress].[CallStatus] AS [CallStatus], 
+    [InactiveCallAddress].[DateDeactivated] AS [DateDeactivated], 
+    [InactiveCallAddress].[LastCallActivityId] AS [LastCallActivityId], 
+    [InactiveCallAddress].[ApprovedDate] AS [ApprovedDate], 
+    [InactiveCallAddress].[ApprovedBy] AS [ApprovedBy]
+    FROM [dbo].[InactiveCallAddress] AS [InactiveCallAddress]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwAddress" EntityType="Self.vwAddress" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwAddress].[Id] AS [Id], 
@@ -862,12 +876,6 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
             <End Role="CallAddress" EntitySet="CallAddresses" />
             <End Role="CallAddressNote" EntitySet="CallAddressNotes" />
           </AssociationSet>
-          <FunctionImport Name="GetUnreturnedMap1">
-          <Parameter Name="publisherId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetUnreturnedMap2" ReturnType="Collection(TerritoryDataModel.GetUnreturnedMap2_Result)">
-            <Parameter Name="publisherId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetUnreturnedMap" ReturnType="Collection(TerritoryDataModel.GetUnreturnedMap_Result)">
           <Parameter Name="publisherId" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1374,6 +1382,8 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           <Property Type="Int32" Name="TotalNotDoneMap" Nullable="true" />
           <Property Type="Int32" Name="CurrentCycle" Nullable="true" />
           <Property Type="Int32" Name="CycleUndoneMap" Nullable="true" />
+          <Property Type="Int32" Name="TotalNumberOfActiveAddress" Nullable="false" />
+          <Property Type="Int32" Name="TotalNumberOfNewAddress" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetMapActivityDetail_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1411,6 +1421,7 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           <NavigationProperty Name="CallGroup" Relationship="TerritoryDataModel.FK_CallAddress_CallGroup" FromRole="CallAddress" ToRole="CallGroup" />
           <NavigationProperty Name="Suburb" Relationship="TerritoryDataModel.FK_CallAddress_Suburb" FromRole="CallAddress" ToRole="Suburb" />
           <NavigationProperty Name="CallAddressNotes" Relationship="TerritoryDataModel.FK_CallAddressNote_CallAddress" FromRole="CallAddress" ToRole="CallAddressNote" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -1493,46 +1504,6 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GetUnreturnedMap2_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="Int32" Name="CallTypeId" Nullable="false" />
-          <Property Type="String" Name="CallTypeName" Nullable="false" />
-          <Property Type="Int32" Name="CallGroupId" Nullable="false" />
-          <Property Type="String" Name="CallGroupName" Nullable="false" />
-          <Property Type="DateTime" Name="DateReleased" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="ReleasedToPublisherId" Nullable="false" />
-          <Property Type="String" Name="PublisherName" Nullable="false" />
-          <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="500" />
-          <Property Type="Int32" Name="ReleasedByUserId" Nullable="false" />
-          <Property Type="String" Name="ReleasedBy" Nullable="false" />
-          <Property Type="Int32" Name="CycleId" Nullable="false" />
-          <Property Type="Int32" Name="CycleNumber" Nullable="false" />
-          <Property Type="String" Name="CycleName" Nullable="false" />
-          <Property Type="Int32" Name="IsComplete" Nullable="false" />
-          <Property Type="Int32" Name="DaysOut" Nullable="false" />
-          <Property Type="Int32" Name="WarningSeverity" Nullable="false" />
-          <Property Type="String" Name="WarningColour" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetUnreturnedMap_Result1">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="Int32" Name="CallTypeId" Nullable="false" />
-          <Property Type="String" Name="CallTypeName" Nullable="false" />
-          <Property Type="Int32" Name="CallGroupId" Nullable="false" />
-          <Property Type="String" Name="CallGroupName" Nullable="false" />
-          <Property Type="DateTime" Name="DateReleased" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="ReleasedToPublisherId" Nullable="false" />
-          <Property Type="String" Name="PublisherName" Nullable="false" />
-          <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="500" />
-          <Property Type="Int32" Name="ReleasedByUserId" Nullable="false" />
-          <Property Type="String" Name="ReleasedBy" Nullable="false" />
-          <Property Type="Int32" Name="CycleId" Nullable="false" />
-          <Property Type="Int32" Name="CycleNumber" Nullable="false" />
-          <Property Type="String" Name="CycleName" Nullable="false" />
-          <Property Type="Int32" Name="IsComplete" Nullable="false" />
-          <Property Type="Int32" Name="DaysOut" Nullable="false" />
-          <Property Type="Int32" Name="WarningSeverity" Nullable="false" />
-          <Property Type="String" Name="WarningColour" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="GetUnreturnedMap_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="CallTypeId" Nullable="false" />
@@ -1815,17 +1786,6 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetMapActivitySummary" FunctionName="TerritoryDataModel.Store.GetMapActivitySummary">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TerritoryDataModel.GetMapActivitySummary_Result">
-                <ScalarProperty Name="TotalActiveMap" ColumnName="TotalActiveMap" />
-                <ScalarProperty Name="TotalNumberOfMap" ColumnName="TotalNumberOfMap" />
-                <ScalarProperty Name="TotalCompletedMap" ColumnName="TotalCompletedMap" />
-                <ScalarProperty Name="NumberOfTimesDone" ColumnName="NumberOfTimesDone" />
-                <ScalarProperty Name="TotalNotDoneMap" ColumnName="TotalNotDoneMap" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DeactivateCallAddress" FunctionName="TerritoryDataModel.Store.DeactivateCallAddress" />
           <FunctionImportMapping FunctionImportName="GetMapActivityDetail" FunctionName="TerritoryDataModel.Store.GetMapActivityDetail">
             <ResultMapping>
@@ -1846,6 +1806,7 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           <EntitySetMapping Name="CallAddresses">
             <EntityTypeMapping TypeName="TerritoryDataModel.CallAddress">
               <MappingFragment StoreEntitySet="CallAddress">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="SuggestedCallGroupId" ColumnName="SuggestedCallGroupId" />
                 <ScalarProperty Name="GpsAddress" ColumnName="GpsAddress" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1909,6 +1870,21 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
                 <ScalarProperty Name="DaysOut" ColumnName="DaysOut" />
                 <ScalarProperty Name="WarningSeverity" ColumnName="WarningSeverity" />
                 <ScalarProperty Name="WarningColour" ColumnName="WarningColour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMapActivitySummary" FunctionName="TerritoryDataModel.Store.GetMapActivitySummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TerritoryDataModel.GetMapActivitySummary_Result">
+                <ScalarProperty Name="TotalActiveMap" ColumnName="TotalActiveMap" />
+                <ScalarProperty Name="TotalNumberOfMap" ColumnName="TotalNumberOfMap" />
+                <ScalarProperty Name="TotalCompletedMap" ColumnName="TotalCompletedMap" />
+                <ScalarProperty Name="NumberOfTimesDone" ColumnName="NumberOfTimesDone" />
+                <ScalarProperty Name="TotalNotDoneMap" ColumnName="TotalNotDoneMap" />
+                <ScalarProperty Name="CurrentCycle" ColumnName="CurrentCycle" />
+                <ScalarProperty Name="CycleUndoneMap" ColumnName="CycleUndoneMap" />
+                <ScalarProperty Name="TotalNumberOfActiveAddress" ColumnName="TotalNumberOfActiveAddress" />
+                <ScalarProperty Name="TotalNumberOfNewAddress" ColumnName="TotalNumberOfNewAddress" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
