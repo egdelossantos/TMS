@@ -96,5 +96,13 @@ namespace TMS.Common
                 return ConfigurationManager.AppSettings["KingdomHallCountry"];
             }
         }
+
+        public static string DbConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["DbConnectionString"];
+            }
+        }
     }
 }

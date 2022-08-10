@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 using TMS.Common;
 using TMS.Entity.DataModel;
 using TMS.Entity.Enum;
@@ -18,6 +20,7 @@ namespace TMS.Logic.Service
         private readonly CallGroupRepository callGroupRepository;
         private readonly CallActivityStatusRepository callActivityStatusRepository;
         private readonly CallAddressRepository callAddressRepository;
+        private readonly SqlConnection sqlConnection;
         
         public CallActivityService(CallActivityRepository callActivityRepository, 
                                    CallActivityAddressRepository callActivityAddressRepository,
@@ -31,7 +34,7 @@ namespace TMS.Logic.Service
             this.callTypeRepository = callTypeRepository;
             this.callGroupRepository = callGroupRepository;
             this.callActivityStatusRepository = callActivityStatusRepository;
-            this.callAddressRepository = callAddressRepository;
+            this.callAddressRepository = callAddressRepository;            
         }
 
         public IList<CallActivity> GetUnreturnedMaps(Publisher publisher)
@@ -172,15 +175,20 @@ namespace TMS.Logic.Service
 
         public IList<CallActivityStatu> GetStatusByCallType(int callTypeId)
         {
-            var status = GetStatus();
-
-            if (callTypeId == (int)CallTypeEnum.CallType.Campaign)
+            var callStatusByType = new List<CallActivityStatu>();
+            using (var sqlConnection = new SqlConnection(Config.DbConnectionString))
             {
-                var campaignStatus = new[] { (int)ActivityStatusEnum.Status.Done, (int)ActivityStatusEnum.Status.NotFilipino, (int)ActivityStatusEnum.Status.AddressNotFound };
-                status = status.Where(w => campaignStatus.Contains(w.Id)).ToList();
+                sqlConnection.Open();
+
+                var sql = "SELECT DISTINCT ca.* FROM [dbo].[CallTypeCallStatus] cc " +
+                    "JOIN [dbo].[CallActivityStatus] ca on cc.StatusId = ca.Id " +
+                    "JOIN [dbo].[CallType] ct on cc.CallTypeId = ct.Id WHERE cc.CallTypeID = {=CallTypeID}";
+
+                callStatusByType = sqlConnection.Query<CallActivityStatu>(sql, new { callTypeId }).ToList();
+
             }
 
-            return status.ToList();
+            return callStatusByType;
         }
 
         public string ValidateCallActivity(CallActivity callActivity)
