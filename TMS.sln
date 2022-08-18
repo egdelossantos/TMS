@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Common", "TMS.Common\TM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Maps", "Google.Maps\Google.Maps.csproj", "{0A1C15A5-D10A-468A-AF76-0E04E8571BBA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google.Maps.Test", "Google.Maps.Test\Google.Maps.Test.csproj", "{9B451A4B-6C9A-495D-8C7E-005F5BE792EE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{0A1C15A5-D10A-468A-AF76-0E04E8571BBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A1C15A5-D10A-468A-AF76-0E04E8571BBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A1C15A5-D10A-468A-AF76-0E04E8571BBA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B451A4B-6C9A-495D-8C7E-005F5BE792EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B451A4B-6C9A-495D-8C7E-005F5BE792EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B451A4B-6C9A-495D-8C7E-005F5BE792EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B451A4B-6C9A-495D-8C7E-005F5BE792EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
