@@ -28,23 +28,34 @@
 
         $(document).ready(function () {
             $("#CallActivity_CallGroupId").change(function () {
-                var callGroup = $("#CallActivity_CallGroupId").val();
-                $.ajax({
+                reloadAdressList();
+            });
+            $("#CallActivity_CallTypeId").change(function () {
+                reloadAdressList();
+            });
+        });
+
+        function validate(result) {
+            $("#addressList").html("");
+            $("#addressList").html(result);
+        }
+
+        function display(e) { }
+
+        function reloadAdressList() {
+            var callActivityId = $("#CallActivity_Id").val();
+            var callGroup = $("#CallActivity_CallGroupId").val();
+            var callType = $("#CallActivity_CallTypeId").val();
+            $.ajax({
                     type: "get",
-                    url: "GetAddressesByGroup?callGroupId=" + callGroup,
+                    url: "GetAddressesByGroup?callActivityId=" + callActivityId + "&callGroupId=" + callGroup + "&callTypeId=" + callType,
                     dataType: "html",
                     data: "CallActivity_CallGroupId=" + callGroup,
                     contentType: "application/x-www-form-urlencoded;charset=utf-8",                 
                     success: function (result) { validate(result); },
                     error: function (e) { display(e); }
                 });
-            });
-        });
-        function validate(result) {
-            $("#addressList").html("");
-            $("#addressList").html(result);
         }
-        function display(e) { }
     </script>
 }
 
@@ -66,6 +77,7 @@
 
         @if (hasSomeDone)
         {
+            @Html.HiddenFor(m => m.CallActivity.CallTypeId)
             @Html.HiddenFor(m => m.CallActivity.ReleasedToPublisherId)
         }
 
@@ -84,7 +96,7 @@
             <div class="span8">
                 <div class="row-fluid">
                     <div class="span6">
-                        @Html.DropDownListWithLabelFor(m => m.CallActivity.CallTypeId, Model.CallTypessSelectList, "Call Type", allDone)
+                        @Html.DropDownListWithLabelFor(m => m.CallActivity.CallTypeId, Model.CallTypessSelectList, "Call Type", (allDone || hasSomeDone))
                         @Html.ValidationMessagesFor(m => m.CallActivity.CallTypeId)
                     </div>
 

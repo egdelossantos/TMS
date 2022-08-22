@@ -40,7 +40,6 @@ namespace TerritoryManagementSystem.Controllers
                 CallActivityAddresses = new List<CallActivityAddress>()                
             };
 
-            HibernateCallActivityModel(model);
             LoadLists(model);
             
             return View(model);
@@ -72,7 +71,6 @@ namespace TerritoryManagementSystem.Controllers
             }
             else
             {
-                HibernateCallActivityModel(model);
                 LoadLists(model);
                 return View("Details", model);
             }
@@ -106,15 +104,15 @@ namespace TerritoryManagementSystem.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetAddressesByGroup(int callGroupId)
+        public ActionResult GetAddressesByGroup(int callActivityId, int callGroupId, int callTypeId)
         {
             var model = new CallActivityModel
             {
-                CallActivity = new CallActivity { CallGroupId = callGroupId },
+                CallActivity = new CallActivity { Id = callActivityId, CallGroupId = callGroupId, CallTypeId = callTypeId },
                 CallActivityAddresses = new List<CallActivityAddress>()
             };
 
-            LoadLists(model);
+            LoadLists(model, true);
 
             return PartialView("_CallActivityAddress", model);
         }
@@ -129,8 +127,10 @@ namespace TerritoryManagementSystem.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        private void LoadLists(CallActivityModel model)
+        private void LoadLists(CallActivityModel model, bool isReloadAddress = false)
         {
+            HibernateCallActivityModel(model);
+
             model.AvailableMaps = mapService.GetCallGroups(CurrentCycle, true, true).OrderBy(o => o.LastCallDate).ThenBy(o => o.CallGroupName).ThenBy(o => o.GroupCode, new SemiNumericComparer()).ToList();
 
             if (model.IsEditMode)
@@ -150,22 +150,22 @@ namespace TerritoryManagementSystem.Controllers
             model.Status = callActivityService.GetStatusByCallType(model.CallActivity.CallTypeId);
             model.Status.Insert(0, new CallActivityStatu { Id = -1, Status = " - " });
 
-            if (!model.IsEditMode)            
+            int callGroupId = -1;
+            if (model.CallActivity.CallGroupId <= 0)
             {
-                int callGroupId = -1;
-                if (model.CallActivity.CallGroupId <= 0)
-                {
-                    model.CallActivityAddresses = new List<CallActivityAddress>();
-                }
-                else
+                model.CallActivityAddresses = new List<CallActivityAddress>();
+            }
+            else
+            {
+                if (isReloadAddress || !model.IsEditMode)
                 {
                     callGroupId = model.CallActivity.CallGroupId;
                     model.CallActivityAddresses = mapService.GetCallAddressToCallActivity(callGroupId);
-                }                
+                }
+            }                
                 
-                model.Publishers.Insert(0, new Publisher { Id = -1, Name = " - " });
-                model.AvailableMaps.Insert(0, new CallGroup { Id = -1, CallGroupName = " - " });
-            }
+            model.Publishers.Insert(0, new Publisher { Id = -1, Name = " - " });
+            model.AvailableMaps.Insert(0, new CallGroup { Id = -1, CallGroupName = " - " });
         }
 
         private void HibernateCallActivityModel(CallActivityModel model)
