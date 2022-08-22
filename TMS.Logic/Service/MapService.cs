@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Dapper;
 using TMS.Entity.DataModel;
 using TMS.Common;
 using TMS.Logic.Repository;
@@ -101,7 +103,7 @@ namespace TMS.Logic.Service
                 result = result.Where(w => w.AllowAssistantToRelease).ToList();
             }
 
-            result = result.OrderBy(o => o.CallGroupName, new SemiNumericComparer()).ToList();
+            //result = result.OrderBy(o => o.CallGroupName, new SemiNumericComparer()).ToList();
 
             return result;
         }
@@ -173,8 +175,26 @@ namespace TMS.Logic.Service
 
         public void SetMapsAllowToBeReleased(IList<CallGroup> callGroups)
         {
-            foreach(var callGroup in callGroups){
-                SetMapAllowToBeReleased(callGroup.Id, callGroup.AllowAssistantToRelease);
+            UpdateAllowToBeReleased2(callGroups.Where(w => w.AllowAssistantToRelease == true).ToList(), true);
+            UpdateAllowToBeReleased2(callGroups.Where(w => w.AllowAssistantToRelease == false).ToList(), false);
+        }
+
+        public void UpdateAllowToBeReleased2(List<CallGroup> callGroups, bool allowToRelease)
+        {
+            if (callGroups.Count <= 0) return;
+
+            string listUpdateCallGroups = string.Join(",", callGroups.Select(p => p.Id));
+            string allowToReleaseValue = allowToRelease ? "1" : "0";
+                        
+            using (var sqlConnection = new SqlConnection(Config.DbConnectionString))
+            {
+                sqlConnection.Open();
+
+                var sql = "UPDATE CallGroup " +
+                    "SET AllowAssistantToRelease = " + allowToReleaseValue + " " +
+                    "WHERE Id IN (" + listUpdateCallGroups + ")";
+
+                sqlConnection.Execute(sql);
             }
         }
 

@@ -39,6 +39,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsValidAddress" Type="bit" Nullable="false" />
+          <Property Name="IsDone" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CallActivityWarning">
           <Key>
@@ -1039,6 +1040,7 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsValidAddress" Type="Boolean" Nullable="false" />
+          <Property Name="IsDone" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CallActivityAddresses" Relationship="TerritoryDataModel.FK_CallActivityAddress_CallActivityStatus" FromRole="CallActivityStatu" ToRole="CallActivityAddress" />
           <NavigationProperty Name="CallAddresses" Relationship="TerritoryDataModel.FK_CallAddress_CallActivityStatus" FromRole="CallActivityStatu" ToRole="CallAddress" />
         </EntityType>
@@ -1634,6 +1636,7 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           <EntitySetMapping Name="CallActivityStatus">
             <EntityTypeMapping TypeName="TerritoryDataModel.CallActivityStatu">
               <MappingFragment StoreEntitySet="CallActivityStatus">
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
                 <ScalarProperty Name="IsValidAddress" ColumnName="IsValidAddress" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

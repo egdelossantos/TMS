@@ -24,6 +24,7 @@ namespace TMS.Entity.DataModel
         public string Status { get; set; }
         public string Code { get; set; }
         public bool IsValidAddress { get; set; }
+        public bool IsDone { get; set; }
     
         public virtual ICollection<CallActivityAddress> CallActivityAddresses { get; set; }
         public virtual ICollection<CallAddress> CallAddresses { get; set; }

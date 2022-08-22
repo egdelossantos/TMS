@@ -12,7 +12,9 @@ namespace TMS.Entity.Enum
         {
             Regular = 1,
             PersonalTerritory = 2,
-            Campaign = 3
+            Campaign = 3,
+            CampaignVirtual = 4,
+            VirtualWitnessing = 5
         }
     }
 }

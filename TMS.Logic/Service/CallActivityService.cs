@@ -229,16 +229,19 @@ namespace TMS.Logic.Service
             }
 
             if (callActivity.DateReturned != null)
-            {
-                var doneStatus = callActivityStatusRepository.GetById((int)ActivityStatusEnum.Status.Done);
+            {                
                 foreach (var callActivityAddress in callActivityAddresses)
                 {
-                    if (callActivityAddress.CallActivityStatusId == null || callActivityAddress.CallActivityStatusId <= 0)
+                    if (callActivity.CallTypeId != (int)CallTypeEnum.CallType.VirtualWitnessing)
                     {
-                        callActivityAddress.CallActivityStatusId = doneStatus.Id; //Done
-                        callActivityAddress.CallActivityStatu = doneStatus;
-                        UpdateCallActivityAddress(callActivityAddress);
-                    }
+                        var doneStatus = callActivityStatusRepository.GetById((int)ActivityStatusEnum.Status.Done);
+                        if (callActivityAddress.CallActivityStatusId == null || callActivityAddress.CallActivityStatusId <= 0)
+                        {
+                            callActivityAddress.CallActivityStatusId = doneStatus.Id; //Done
+                            callActivityAddress.CallActivityStatu = doneStatus;
+                            UpdateCallActivityAddress(callActivityAddress);
+                        }
+                    }                    
 
                     UpdateCallAddressLatestInfo(callActivityAddress);
 
@@ -358,9 +361,11 @@ namespace TMS.Logic.Service
                 dbCallActivity.ReleasedToPublisherId = callActivity.ReleasedToPublisherId;
             }
 
+            var callTypeStatus = GetStatusByCallType(dbCallActivity.CallTypeId).ToList();
+
             if (callActivity.DateReturned == null)
             {
-                var doneActivities = callActivityAddresses.Count(c => c.CallActivityStatusId == (int)ActivityStatusEnum.Status.Done || c.CallActivityStatusId == (int)ActivityStatusEnum.Status.NotAtHome2);
+                var doneActivities = callActivityAddresses.Count(c => callTypeStatus.Where(w => w.IsDone).Select(s => s.Id).ToList().Contains(c.CallActivityStatusId ?? 0) );
                 if (doneActivities == callActivityAddresses.Count)
                 {
                     callActivity.DateReturned = TimeConverter.ConvertToLocalTime(DateTime.Now);

@@ -244,7 +244,8 @@ CREATE TABLE [dbo].[CallActivityStatus] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Status] nvarchar(50)  NOT NULL,
     [Code] nvarchar(50)  NOT NULL,
-    [IsValidAddress] bit  NOT NULL
+    [IsValidAddress] bit  NOT NULL,
+    [IsDone] bit  NOT NULL
 );
 GO
 
