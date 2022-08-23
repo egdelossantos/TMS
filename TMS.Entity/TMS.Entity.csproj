@@ -168,7 +168,6 @@
     </None>
     <EntityDeploy Include="DataModel\TerritoryDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TerritoryDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="DataModel\TerritoryDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

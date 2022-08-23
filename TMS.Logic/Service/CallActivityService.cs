@@ -166,6 +166,11 @@ namespace TMS.Logic.Service
             return callTypes.ToList();
         }
 
+        public CallType GetCallTypeById(int id)
+        {
+            return callTypeRepository.GetById(id);
+        }
+
         public IList<CallActivityStatu> GetStatus()
         {
             var status = callActivityStatusRepository.GetAll();
@@ -191,19 +196,28 @@ namespace TMS.Logic.Service
             return callStatusByType;
         }
 
-        public string ValidateCallActivity(CallActivity callActivity)
+        public string ValidateCallActivity(Boolean isEditMode, CallActivity callActivity, IList<CallActivityAddress> callActivityAddresses)
         {
-            var currentMapOwner = callActivityRepository.GetAll().FirstOrDefault(w => w.CallGroupId == callActivity.CallGroupId && w.DateReturned == null);
-            if (currentMapOwner != null)
+            if (isEditMode)
             {
-                var callGroup = callGroupRepository.GetById(callActivity.CallGroupId);
-                return string.Format("{0} is currently assigned to {1}.", callGroup.GroupNameWithCount, currentMapOwner.Publisher.Name);
+                if (callActivity.CallActivityIsVirtual && callActivity.DateReturned != null & callActivityAddresses.Any(w => (w.CallActivityStatusId ?? -1) <= 0))
+                {
+                    return "Please finish calling all the addresses in this map before setting Date Completed.";
+                }
             }
+            else {
+                var currentMapOwner = callActivityRepository.GetAll().FirstOrDefault(w => w.CallGroupId == callActivity.CallGroupId && w.DateReturned == null);
+                if (currentMapOwner != null)
+                {
+                    var callGroup = callGroupRepository.GetById(callActivity.CallGroupId);
+                    return string.Format("{0} is currently assigned to {1}.", callGroup.GroupNameWithCount, currentMapOwner.Publisher.Name);
+                }
 
-            var userCurrentMap = callActivityRepository.GetAll().Where(w => w.ReleasedToPublisherId == callActivity.ReleasedToPublisherId && w.DateReturned == null).ToList();
-            if (userCurrentMap != null && userCurrentMap.Count > 0)
-            {
-                return string.Format("Publisher has {0} map(s) currently assigned, please ask to complete it before getting a new one.", userCurrentMap.Count);
+                var userCurrentMap = callActivityRepository.GetAll().Where(w => w.ReleasedToPublisherId == callActivity.ReleasedToPublisherId && w.DateReturned == null).ToList();
+                if (userCurrentMap != null && userCurrentMap.Count > 0)
+                {
+                    return string.Format("Publisher has {0} map(s) currently assigned, please ask to complete it before getting a new one.", userCurrentMap.Count);
+                }
             }
 
             return string.Empty;
@@ -232,7 +246,7 @@ namespace TMS.Logic.Service
             {                
                 foreach (var callActivityAddress in callActivityAddresses)
                 {
-                    if (callActivity.CallTypeId != (int)CallTypeEnum.CallType.VirtualWitnessing)
+                    if (!callActivity.CallActivityIsVirtual)
                     {
                         var doneStatus = callActivityStatusRepository.GetById((int)ActivityStatusEnum.Status.Done);
                         if (callActivityAddress.CallActivityStatusId == null || callActivityAddress.CallActivityStatusId <= 0)

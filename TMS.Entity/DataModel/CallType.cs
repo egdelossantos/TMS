@@ -22,6 +22,7 @@ namespace TMS.Entity.DataModel
     
         public int Id { get; set; }
         public string CallTypeName { get; set; }
+        public bool IsVirtual { get; set; }
     
         public virtual ICollection<CallActivityWarning> CallActivityWarnings { get; set; }
         public virtual ICollection<CallActivity> CallActivities { get; set; }

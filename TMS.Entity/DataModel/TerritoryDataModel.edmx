@@ -102,6 +102,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CallTypeName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsVirtual" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -909,8 +910,9 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CallTypeName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsVirtual" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CallActivityWarnings" Relationship="TerritoryDataModel.FK_CallActivityWarning_CallType" FromRole="CallType" ToRole="CallActivityWarning" />
-          <NavigationProperty Name="CallActivities" Relationship="TerritoryDataModel.FK_CallActivity_CallType" FromRole="CallType" ToRole="CallActivity" />
+          <NavigationProperty Name="CallActivities" Relationship="TerritoryDataModel.FK_CallActivity_CallType" FromRole="CallType" ToRole="CallActivity" />          
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -1557,6 +1559,7 @@ warning 6002: The table/view 'kpterritory.dbo.vwAddress' does not have a primary
           <EntitySetMapping Name="CallTypes">
             <EntityTypeMapping TypeName="TerritoryDataModel.CallType">
               <MappingFragment StoreEntitySet="CallType">
+                <ScalarProperty Name="IsVirtual" ColumnName="IsVirtual" />
                 <ScalarProperty Name="CallTypeName" ColumnName="CallTypeName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

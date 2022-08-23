@@ -179,7 +179,8 @@ GO
 -- Creating table 'CallTypes'
 CREATE TABLE [dbo].[CallTypes] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [CallTypeName] nvarchar(500)  NOT NULL
+    [CallTypeName] nvarchar(500)  NOT NULL,
+    [IsVirtual] bit  NOT NULL
 );
 GO
 

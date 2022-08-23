@@ -53,7 +53,9 @@ namespace TerritoryManagementSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                var validateResult = model.IsEditMode ? string.Empty : callActivityService.ValidateCallActivity(model.CallActivity);
+                HibernateCallActivityModel(model);
+
+                var validateResult = callActivityService.ValidateCallActivity(model.IsEditMode, model.CallActivity, model.CallActivityAddresses);
                 if (!string.IsNullOrWhiteSpace(validateResult))
                 {
                     ModelState.AddModelError("ErrorMessage", validateResult);
@@ -136,8 +138,9 @@ namespace TerritoryManagementSystem.Controllers
             if (model.IsEditMode)
             {
                 model.AvailableMaps.Add(mapService.GetCallGroup(model.CallActivity.CallGroupId));
+
                 model.CallActivity.TempDateReleased = string.Empty;
-                if (!model.CallActivityAddresses.Any(c => c.CallActivityStatusId == null) && model.CallActivity.DateReturned == null)
+                if (!model.CallActivityAddresses.Any(c => c.CallActivityStatusId == null) && model.CallActivity.DateReturned == null && !model.CallActivity.CallActivityIsVirtual)
                 {
                     model.CallActivity.TempDateReleased = string.Format(" ({0:yyyy-MM-dd})", model.CallActivityAddresses.Max(m => m.DateFinished));
                 }
@@ -188,6 +191,11 @@ namespace TerritoryManagementSystem.Controllers
             if ((model.CallActivityAddresses == null || model.CallActivityAddresses.Count == 0) && model.IsEditMode)
             {
                 model.CallActivityAddresses = callActivityService.GetCallActivityAddresses(model.CallActivity.Id);
+            }
+
+            if (model.CallActivity.CallType == null && model.CallActivity.CallTypeId > 0)
+            {
+                model.CallActivity.CallType = callActivityService.GetCallTypeById(model.CallActivity.CallTypeId);
             }
 
             HibernateCallActivityAddress(model.CallActivityAddresses);

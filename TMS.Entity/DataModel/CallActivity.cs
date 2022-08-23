@@ -42,5 +42,11 @@ namespace TMS.Entity.DataModel
         public virtual CallGroup CallGroup { get; set; }
         public virtual ICollection<CallGroup> CallGroups { get; set; }
         public virtual ICollection<CallGroup> CallGroups1 { get; set; }
+
+        public Boolean CallActivityIsVirtual {
+            get {
+                return CallType == null ? false : CallType.IsVirtual;
+            }
+        }
     }
 }
