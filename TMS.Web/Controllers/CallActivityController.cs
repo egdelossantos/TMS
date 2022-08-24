@@ -188,10 +188,26 @@ namespace TerritoryManagementSystem.Controllers
                 model.CallActivity.Cycle = mapService.GetCycleById(model.CallActivity.CycleId);
             }
 
-            if ((model.CallActivityAddresses == null || model.CallActivityAddresses.Count == 0) && model.IsEditMode)
+            if (model.IsEditMode)
             {
-                model.CallActivityAddresses = callActivityService.GetCallActivityAddresses(model.CallActivity.Id);
-            }
+                if (model.CallActivityAddresses == null || model.CallActivityAddresses.Count == 0)
+                {
+                    model.CallActivityAddresses = callActivityService.GetCallActivityAddresses(model.CallActivity.Id);
+                }
+                else if (model.CallActivityAddresses.Any(w => w.CallAddress == null))
+                {
+                    var callActivityAddresses = callActivityService.GetCallActivityAddresses(model.CallActivity.Id);
+                    foreach (CallActivityAddress callActivityAddress in model.CallActivityAddresses)
+                    {
+                        if (callActivityAddress.CallAddress == null)
+                        {
+                            var callActivityAddressFromDb = callActivityAddresses.First(w => w.Id == callActivityAddress.Id);
+                            callActivityAddress.CallAddress = callActivityAddressFromDb.CallAddress;
+                            callActivityAddress.CallAddressId = callActivityAddressFromDb.CallAddressId;
+                        }
+                    }
+                }            
+            }            
 
             if (model.CallActivity.CallType == null && model.CallActivity.CallTypeId > 0)
             {

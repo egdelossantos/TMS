@@ -10,6 +10,32 @@ UPDATE [CallActivityStatus] SET IsDone = 1 WHERE Code IN ('DONE', 'NOTATHOME2')
 ALTER TABLE [dbo].[CallActivityStatus] ALTER COLUMN IsDone BIT NOT NULL
 GO
 
+--CallType
+ALTER TABLE [dbo].[CallType] ADD IsVirtual BIT
+GO
+
+UPDATE [CallType] SET IsVirtual = 0
+
+ALTER TABLE [dbo].[CallType]  ALTER COLUMN IsVirtual BIT NOT NULL
+GO
+
+UPDATE [CallType] SET CallTypeName = 'Campaign (In-Person)' WHERE Id = 3
+
+-----[CallTypeCallStatus]
+CREATE TABLE [dbo].[CallTypeCallStatus](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CallTypeId] [int] NOT NULL,
+	[StatusId] [int] NOT NULL
+) ON [PRIMARY]
+GO
+
+
+ROLLBACK
+
+-------------
+
+BEGIN TRAN
+
 SET IDENTITY_INSERT [dbo].[CallActivityStatus] ON
 
 INSERT INTO [dbo].[CallActivityStatus]
@@ -31,16 +57,8 @@ VALUES (7, 'Home(Filo)', 'HOMEFILO', 1, 1)
 	  ,(17, 'Disconnected', 'DISCONNECTED', 1, 1)
 	  ,(18, 'Letter Writing', 'LETTERWRITING', 1, 1)
 
---CallType
-ALTER TABLE [dbo].[CallType] ADD IsVirtual BIT
-GO
+SET IDENTITY_INSERT [dbo].[CallActivityStatus] OFF
 
-UPDATE [CallType] SET IsVirtual = 0
-
-ALTER TABLE [dbo].[CallType] ADD IsVirtual BIT NOT NULL
-GO
-
-UPDATE [CallType] SET CallTypeName = 'Campaign (In-Person)' WHERE Id = 3
 
 SET IDENTITY_INSERT [dbo].[CallType] ON
 
@@ -50,15 +68,6 @@ VALUES (4, 'Campaign (Virtual)', 1)
 
 SET IDENTITY_INSERT [dbo].[CallType] OFF
 
-
------[CallTypeCallStatus]
-CREATE TABLE [dbo].[CallTypeCallStatus](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[CallTypeId] [int] NOT NULL,
-	[StatusId] [int] NOT NULL
-) ON [PRIMARY]
-GO
-
 INSERT INTO [dbo].[CallTypeCallStatus]
            ([CallTypeId]
            ,[StatusId])
@@ -67,7 +76,5 @@ UNION	SELECT 2, Id FROM CallActivityStatus WHERE Code IN ('DONE', 'NOTATHOME1', 
 UNION	SELECT 3, Id FROM CallActivityStatus WHERE Code IN ('DONE', 'ADDRESSNOTFOUND', 'NOTFILIPINO', 'DONOTCALL')
 UNION	SELECT 4, Id FROM CallActivityStatus WHERE Code IN ('HOMEFILO', 'HOMENOTFILO', 'HOMEBUSY', 'NOANSWER', 'MESSAGEBANK', 'RINGINGONLY', 'LINEBUSY', 'HUNGUP', 'BUSINESSNUMBER', 'FAXNUMBER', 'DISCONNECTED', 'LETTERWRITING')
 UNION	SELECT 5, Id FROM CallActivityStatus WHERE Code IN ('HOMEFILO', 'HOMENOTFILO', 'HOMEBUSY', 'NOANSWER', 'MESSAGEBANK', 'RINGINGONLY', 'LINEBUSY', 'HUNGUP', 'BUSINESSNUMBER', 'FAXNUMBER', 'DISCONNECTED', 'LETTERWRITING')
-
-
 
 ROLLBACK
