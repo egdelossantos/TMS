@@ -197,7 +197,7 @@ namespace TerritoryManagementSystem.Controllers
                 else if (model.CallActivityAddresses.Any(w => w.CallAddress == null))
                 {
                     var callActivityAddresses = callActivityService.GetCallActivityAddresses(model.CallActivity.Id);
-                    foreach (CallActivityAddress callActivityAddress in model.CallActivityAddresses)
+                    foreach (CallActivityAddress callActivityAddress in model.CallActivityAddresses.Where(w => w.Id > 0))
                     {
                         if (callActivityAddress.CallAddress == null)
                         {

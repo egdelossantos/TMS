@@ -83,6 +83,7 @@
 
         @if (Model.IsEditMode)
         {
+            @Html.HiddenFor(m => m.CallActivity.CallTypeId)
             @Html.HiddenFor(m => m.CallActivity.CallGroupId)
             @Html.HiddenFor(m => m.CallActivity.CycleId)
             <div class="row">
@@ -96,7 +97,7 @@
             <div class="span8">
                 <div class="row-fluid">
                     <div class="span6">
-                        @Html.DropDownListWithLabelFor(m => m.CallActivity.CallTypeId, Model.CallTypessSelectList, "Call Type", (allDone || hasSomeDone))
+                        @Html.DropDownListWithLabelFor(m => m.CallActivity.CallTypeId, Model.CallTypessSelectList, "Call Type", Model.IsEditMode)
                         @Html.ValidationMessagesFor(m => m.CallActivity.CallTypeId)
                     </div>
 
